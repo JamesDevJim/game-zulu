@@ -2,8 +2,13 @@ import pygame
 import time
 from pyfirmata import ArduinoMega, util
 
+pygame.init
+
 clock = pygame.time.Clock()
 useArduino = True
+DEBOUNCE_THRESHOLD = 1
+debounceCounter = 0
+moveTicker = 0
 
 # Try to connect to the arduino board. If it fails, then we will use the keyboard.
 try:
@@ -110,6 +115,7 @@ class Control:
 
     if not useArduino:
         def one(self):
+            pygame.key.set_repeat(0)
             keys = pygame.key.get_pressed()
             if keys[pygame.K_1]:
                 return True
@@ -134,37 +140,40 @@ class Control:
             return False
 
         def right(self):
+            keys = [0]
+            time.sleep(0.3)
             keys = pygame.key.get_pressed()
             if keys[pygame.K_RIGHT]:
                 return True
             return False
 
+        # moveTicker = 0    
         def up(self):
+            global moveTicker
+            if moveTicker > 0:
+                moveTicker -= 1
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
-                return True
-            return False
-
-        def down(self):
-            keys = pygame.key.get_pressed()
-            buttonState = False
-            if keys[pygame.K_UP] != buttonState:
-                return True
+                if moveTicker == 0:
+                    moveTicker = 10
+                    return True
             return False
            
-            if button_now() != button_state:
-            debounce_counter += 1
-            if debounce_counter == DEBOUNCE_THRESHOLD:
-                button_state = not button_state
-            else:
-                debounce_counter = 0
-
+        def down(self):
+            print('called down method')
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:
+                        print('inside keydown function')
+                        return True
+                    return False
+       
         # def down(self):
-        #     for event in pygame.event.get():
-        #         if event.type == pygame.KEYDOWN:
-        #             if event.key == pygame.K_DOWN:
-        #                 return True
-        #             return False
+        #     keys = pygame.key.get_pressed()
+        #     if any(keys) and pygame.KEYDOWN and keys[pygame.K_DOWN]:
+        #         return True
+        #     return False
+
 
         def back(self):
             keys = pygame.key.get_pressed()

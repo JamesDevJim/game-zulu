@@ -37,6 +37,8 @@ def testLoop():
  
     while not gameExit:
 
+        print(control.down())
+
         # Enabled ability to exit game
         for event in pygame.event.get():   
             if event.type == pygame.QUIT:

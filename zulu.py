@@ -148,6 +148,9 @@ def gate_1():
     if control.back():
         quitgame()
 
+    if control.down() or control.up() or control.left() or control.right() or control.three():
+        soundButtonDead.play()
+
     #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
     if control.one():      
         global gateSuccess
@@ -160,9 +163,6 @@ def gate_1():
 
     if control.two():
         fail()
-
-    if control.down() or control.up() or control.left() or control.right() or control.three():
-        soundButtonDead.play()
 
     pygame.display.update()
     clock.tick(60)
@@ -236,15 +236,15 @@ def game_loop():
     while not gameExit:
         
         # Ability to quit from screen or keyboard
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         pygame.quit()
+        #         quit()
             
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    pygame.quit()
-                    quit()
+        #     if event.type == pygame.KEYDOWN:
+        #         if event.key == pygame.K_q:
+        #             pygame.quit()
+        #             quit()
 
         # Button box logic
         # Make game assign random LED on to determine which one wins the gate.
