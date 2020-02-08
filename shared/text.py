@@ -1,4 +1,4 @@
-from shared.color import WHITE
+from shared.color import *
 
 def text_objects(text, font):
     textSurface = font.render(text, True, WHITE)

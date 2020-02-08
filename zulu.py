@@ -8,86 +8,25 @@ import time
 # This game is the first game of the series.  
 # Game Play: A button will light up. The player must hit a coorosponding button. Other buttons will trigger a fail condition. 
 
+from shared.control import * 
+from shared.images import *
+
 pygame.init()
+control = Control()
+light = Light()
+
 pygame.mixer.init()
 clock = pygame.time.Clock()
 
-##### DISPLAY ##### 
 from shared.display import gameDisplay, DISPLAY_WIDTH, DISPLAY_HEIGHT, fullScreenImage
 pygame.display.set_caption('Game Zulu')
-
-###### IMAGES #####
-stars = fullScreenImage('images/stars.jpg')
-spaceShip = fullScreenImage('images/inside_space_ship.jpg')
-spaceShipFail = fullScreenImage('images/inside_space_ship_fail.jpg')
-spaceShipSuccess = fullScreenImage('images/inside_space_ship_success.jpg')
-gameIcon = pygame.image.load('images/space_ship_2.png')
 pygame.display.set_icon(gameIcon)
 
-##### ARDUINO #####
-from shared.arduino_setup import getArduino
-arduino = getArduino()
+from shared.color import *
+from shared.text import *
+from shared.sounds import *
+from shared.buttons import *
 
-from shared.color import BLACK, WHITE, RED, GREEN, BRIGHT_RED, BRIGHT_GREEN
-from shared.text import text_objects
-from shared.sounds import soundMissile, soundButtonDead, soundGateSuccess, gamePlayMusic, soundTrumpet, introMusicSpace, soundButtonPushDead, soundButtonPush1, soundbuttonPush2
-
-##### LIGHT ASSIGNMENTS #####
-lights = {
-  'button1': arduino.get_pin('d:11:p'),
-  'button2': arduino.get_pin('d:10:p'),
-  'led1': arduino.get_pin('d:3:p'),
-  'led2': arduino.get_pin('d:2:p'),
-  'led3': arduino.get_pin('d:5:p'),
-  'led4': arduino.get_pin('d:4:p'),
-  'led5': arduino.get_pin('d:13:p')
-}
-
-def lightsOn(lightArray):
-    for lightName in lightArray:
-        try:
-            light = lights[lightName]
-        except:
-            return False
-        if (light.read() != ON):
-            return False
-    return True
-
-##### BUTTONS #####
-from shared.buttons import button, BUTTON_WIDTH, BUTTON_HEIGHT,BUTTON_CENTER_HORIZONTAL, BUTTON_CENTER_ONE_THIRD, BUTTON_CENTER_TWO_THIRD, BUTTON_CENTER_VERTICAL
-buttons = {
-  'button2': arduino.get_pin('d:36:i'),
-  'button1': arduino.get_pin('d:37:i'),
-  'center': arduino.get_pin('d:35:i'),  
-  'back': arduino.get_pin('d:30:i'),
-  'left': arduino.get_pin('d:32:i'),
-  'right': arduino.get_pin('d:31:i'),
-  'up': arduino.get_pin('d:34:i'),
-  'down': arduino.get_pin('d:33:i'),
-}
-
-BUTTON_PRESSED = False
-def buttonsPressed(buttonArray):
-    for buttonName in buttonArray:
-        try:
-            button = buttons[buttonName]
-        except:
-            return False
-        if (button.read() != BUTTON_PRESSED):
-            return False
-    return True
-
-pause = False
-ON = 1
-OFF = 0
-### HELP: How to write if "ALL, ON" then all lights come on. Help with this function. "ALL does not work."
-def light(light, state):
-    if (light == 'ALL'):
-        for lightName in lights:
-            lightName.write(state)
-    else:
-        light.write(state)
- 
 def success():
     #### SOUNDS ####
     pygame.mixer.music.stop()    
@@ -101,62 +40,24 @@ def success():
    
     largeText = pygame.font.SysFont("comicsansms",250)
     TextSurf, TextRect = text_objects("", largeText)
-    TextRect.center = ((DISPLAY_WIDTH * 0.5),(DISPLAY_HEIGHT * 0.33))
+    TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.33)))
     gameDisplay.blit(TextSurf, TextRect)
     
     pygame.display.update()
     clock.tick(15)
 
-    #### BUTTON BOX ####
-    # HELP: How to make light function so we can do 'light(lights['ALL'], ON)
-    light(lights.values(), ON)
-    light(lights['button1'], ON)
-    light(lights['button2'], ON)
-    light(lights['led1'], ON)
-    light(lights['led2'], ON)
-    light(lights['led3'], ON)
-    light(lights['led4'], ON)
-    light(lights['led5'], ON)
-    time.sleep(0.3)
-    light(lights['button1'], OFF)
-    light(lights['button2'], OFF)
-    light(lights['led1'], OFF)
-    light(lights['led2'], OFF)
-    light(lights['led3'], OFF)
-    light(lights['led4'], OFF)
-    light(lights['led5'], OFF)
-    time.sleep(0.3)
-    light(lights['button1'], ON)
-    light(lights['button2'], ON)
-    light(lights['led1'], ON)
-    light(lights['led2'], ON)
-    light(lights['led3'], ON)
-    light(lights['led4'], ON)
-    light(lights['led5'], ON)
-    time.sleep(0.3)
-    light(lights['button1'], OFF)
-    light(lights['button2'], OFF)
-    light(lights['led1'], OFF)
-    light(lights['led2'], OFF)
-    light(lights['led3'], OFF)
-    light(lights['led4'], OFF)
-    light(lights['led5'], OFF)
-    time.sleep(0.3)    
-    light(lights['button1'], ON)
-    light(lights['button2'], ON)
-    light(lights['led1'], ON)
-    light(lights['led2'], ON)
-    light(lights['led3'], ON)
-    light(lights['led4'], ON)
-    light(lights['led5'], ON)
-    time.sleep(0.3)
-    light(lights['button1'], OFF)
-    light(lights['button2'], OFF)
-    light(lights['led1'], OFF)
-    light(lights['led2'], OFF)
-    light(lights['led3'], OFF)
-    light(lights['led4'], OFF)
-    light(lights['led5'], OFF)
+    # TODO: Put into blink method.
+    light.ALL(1)
+    time.sleep(0.2)
+    light.ALL(0)
+    time.sleep(0.2)
+    light.ALL(1)
+    time.sleep(0.2)
+    light.ALL(0)
+    time.sleep(0.2)
+    light.ALL(1)
+    time.sleep(0.2)
+    light.ALL(0)
 
     while True:
         for event in pygame.event.get():
@@ -188,42 +89,13 @@ def fail():
 
     largeText = pygame.font.SysFont("comicsansms",250)
     TextSurf, TextRect = text_objects("", largeText)
-    TextRect.center = ((DISPLAY_WIDTH * 0.5),(DISPLAY_HEIGHT * 0.33))
+    TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.33)))
     gameDisplay.blit(TextSurf, TextRect)
 
     pygame.display.update()
     clock.tick(15)   
 
-    #### BUTTON BOX #####
-    #### HELP: How to get this for loop working
-    # for counter in range(0,10):
-    #     light(lights['led5'], ON)
-    #     light(lights['led1'], OFF)
-    #     time.sleep(1)
-    #     light(lights['led1'], OFF)
-    #     light(lights['led5'], ON)        
-    #     time.sleep(1)
-    
-    # light(lights['led1'], OFF)
-    # light(lights['led5'], ON)  
-    # time.sleep(0.3)
-    # light(lights['led1'], ON)
-    # light(lights['led5'], OFF)        
-    # time.sleep(0.3)
-    # light(lights['led1'], OFF)
-    # light(lights['led5'], ON)  
-    # time.sleep(0.3)
-    # light(lights['led1'], ON)
-    # light(lights['led5'], OFF)        
-    # time.sleep(0.3)
-
-    light(lights['button1'], OFF)
-    light(lights['button2'], OFF)
-    light(lights['led1'], OFF)
-    light(lights['led2'], OFF)
-    light(lights['led3'], OFF)
-    light(lights['led4'], OFF)
-    light(lights['led5'], OFF)
+    light.ALL(0)
 
     while True:
         for event in pygame.event.get():
@@ -274,89 +146,82 @@ def game_intro():
         gameDisplay.blit(stars, (0,0))
         largeText = pygame.font.SysFont("comicsansms",250)
         TextSurf, TextRect = text_objects("Zulu", largeText)
-        TextRect.center = ((DISPLAY_WIDTH * 0.5),(DISPLAY_HEIGHT * 0.3))
+        TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.3)))
         gameDisplay.blit(TextSurf, TextRect)
 
-        button("Enter",BUTTON_CENTER_HORIZONTAL,DISPLAY_HEIGHT * 0.6,BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_loop)
+        button("Enter",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.6),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_loop)
         
         pygame.display.update()
         clock.tick(15)
         
 def gate_1():
-    light(lights['button1'], ON)
+    light.buttonOne(1)
     
-    if buttonsPressed(['back']):
+    if control.back():
         quitgame()
 
     #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
-    if buttonsPressed(['button1']):      
+    if control.one():      
         global gateSuccess
-
         gateSuccess = [False,True,False]
 
         soundGateSuccess.play()
-        light(lights['button1'], OFF)
+        light.buttonOne(0)
         time.sleep(0.3)       
         gate_2()
 
-    if buttonsPressed(['button2']):
+    if control.two():
         fail()
-    
-    # TODO: Change all these to button dead sound
-    # HELP: How to make an if statement like if buttonsPressed(['center',up,down....]). So we only need to write one time.
 
-    if buttonsPressed(['down']) or buttonsPressed(['up']) or buttonsPressed(['left']) or buttonsPressed(['right']) or buttonsPressed(['center']):
+    if control.down() or control.up() or control.left() or control.right() or control.three():
         soundButtonDead.play()
 
     pygame.display.update()
     clock.tick(60)
    
 def gate_2():
-
-    light(lights['button2'], ON)
+    light.buttonTwo(1)
     
-    if buttonsPressed(['back']):
-        pygame.quit()
+    if control.back():
+        quitgame()
         quit()
 
     #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
-    if buttonsPressed(['button2']):      
+    if control.two():      
         global gateSuccess
         gateSuccess = [False, False, True]
         soundGateSuccess.play()
-        light(lights['button2'], OFF)    
+        light.buttonTwo(0)    
         time.sleep(0.3)     
         gate_3()
 
-    if buttonsPressed(['button1']):
+    if control.one:
         fail()
     
-    # TODO: Change all these to button dead sound
-    # HELP: How to make an if statement like if buttonsPressed(['center',up,down....]). So we only need to write one time.
-    if buttonsPressed(['down']) or buttonsPressed(['up']) or buttonsPressed(['left']) or buttonsPressed(['right']) or buttonsPressed(['center']):
+    if control.down() or control.up() or control.left() or control.right() or control.three():
         soundButtonDead.play()
 
     pygame.display.update()
     clock.tick(60)
 
 def gate_3():
-    light(lights['led1'], ON)
-    light(lights['led2'], ON)
-    
-    if buttonsPressed(['back']):
+    light.LED1(1)
+    light.LED2(1)   
+   
+    if control.back():
         pygame.quit()
         quit()
 
     #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
-    if buttonsPressed(['up']):      
+    if control.up():      
         global gateSuccess
         gateSuccess = [False, False, False]
-        light(lights['led1'], OFF)
-        light(lights['led2'], OFF)
+        light.LED1(1)
+        light.LED2(1)  
         time.sleep(0.3)       
         success()
 
-    if buttonsPressed(['button1']) or buttonsPressed(['button2']) or buttonsPressed(['down']) or buttonsPressed(['right']) or buttonsPressed(['left']) or buttonsPressed(['center']):
+    if control.one() or control.two() or control.down() or control.left() or control.right() or control.three():
         fail()
     
     pygame.display.update()
@@ -364,7 +229,6 @@ def gate_3():
 
 def game_loop():
     
-    global pause
     global gateSuccess
 
     # Start the game play music
