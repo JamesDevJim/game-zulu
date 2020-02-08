@@ -1,13 +1,14 @@
 import pygame
 import time
 from shared.control import * 
-from shared.color import *
+from shared.constants import *
 
 pygame.init()
 control = Control()
 light = Light()
 
 ###### DISPLAY #####
+# Not importing screen so we can test with out own display size
 display_width = 800
 display_height = 600
 
@@ -41,6 +42,9 @@ def testLoop():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+
+        if control.buttonAny():
+            print('Any Button')
  
         if control.one():
             gameDisplay.fill(WHITE)  
@@ -60,9 +64,9 @@ def testLoop():
         if control.three():
             gameDisplay.fill(WHITE)  
             TextSurf, TextRect = text_objects("THREE", largeText) 
-            light.ALL(1)
+            light.blink(0.3,4)
         else:            
-            light.ALL(0) 
+            light.all(0) 
 
         if control.up():
             gameDisplay.fill(WHITE)  
@@ -90,9 +94,9 @@ def testLoop():
         if control.right():
             gameDisplay.fill(WHITE)  
             TextSurf, TextRect = text_objects("RIGHT", largeText)
-            light.ALL(3)          
+            light.all(1)          
         else:            
-            pass
+            light.all(0)
 
         if control.back():
             gameDisplay.fill(WHITE)  

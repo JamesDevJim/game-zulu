@@ -1,15 +1,16 @@
 import pygame
 import random
-import os
 import logging
 import time
+from shared.control import * 
+from shared.images import *
+from shared.screen import *
+from shared.sounds import *
+from shared.constants import *
 
 # Game Zulu
 # This game is the first game of the series.  
 # Game Play: A button will light up. The player must hit a coorosponding button. Other buttons will trigger a fail condition. 
-
-from shared.control import * 
-from shared.images import *
 
 pygame.init()
 control = Control()
@@ -18,14 +19,9 @@ light = Light()
 pygame.mixer.init()
 clock = pygame.time.Clock()
 
-from shared.display import gameDisplay, DISPLAY_WIDTH, DISPLAY_HEIGHT, fullScreenImage
 pygame.display.set_caption('Game Zulu')
 pygame.display.set_icon(gameIcon)
 
-from shared.color import *
-from shared.text import *
-from shared.sounds import *
-from shared.buttons import *
 
 def success():
     #### SOUNDS ####
@@ -46,18 +42,7 @@ def success():
     pygame.display.update()
     clock.tick(15)
 
-    # TODO: Put into blink method.
-    light.ALL(1)
-    time.sleep(0.2)
-    light.ALL(0)
-    time.sleep(0.2)
-    light.ALL(1)
-    time.sleep(0.2)
-    light.ALL(0)
-    time.sleep(0.2)
-    light.ALL(1)
-    time.sleep(0.2)
-    light.ALL(0)
+    light.blink(0.2,6)
 
     while True:
         for event in pygame.event.get():
@@ -95,7 +80,7 @@ def fail():
     pygame.display.update()
     clock.tick(15)   
 
-    light.ALL(0)
+    light.all(0)
 
     while True:
         for event in pygame.event.get():
@@ -155,8 +140,7 @@ def game_intro():
         clock.tick(15)
         
 def gate_1():
-    light.buttonOne(1)
-    
+    light.buttonOne(1)  
     if control.back():
         quitgame()
 
@@ -181,7 +165,6 @@ def gate_1():
    
 def gate_2():
     light.buttonTwo(1)
-    
     if control.back():
         quitgame()
         quit()
@@ -195,7 +178,7 @@ def gate_2():
         time.sleep(0.3)     
         gate_3()
 
-    if control.one:
+    if control.one():
         fail()
     
     if control.down() or control.up() or control.left() or control.right() or control.three():
@@ -206,7 +189,7 @@ def gate_2():
 
 def gate_3():
     light.LED1(1)
-    light.LED2(1)   
+    light.LED2(1)  
    
     if control.back():
         pygame.quit()

@@ -42,7 +42,7 @@ class Control:
         self.pressed = [0,]*1000
         self.released = [0,]*1000    
         #TODO: Create an object to detect return true is ANY button is pushed.
-            
+
     if useArduino:
         def one(self):
             keys = PIN_ONE.read()
@@ -91,6 +91,12 @@ class Control:
             if not keys:
                 return True
             return False   
+        
+        def buttonAny(self):
+            keys = [PIN_ONE.read(), PIN_TWO.read(), PIN_THREE.read(), PIN_LEFT.read(), PIN_RIGHT.read(), PIN_UP.read(), PIN_DOWN.read(), PIN_BACK.read()]
+            if not keys:
+                return True
+            return False
 
     if not useArduino:
         def one(self):
@@ -140,19 +146,12 @@ class Control:
             if keys[pygame.K_q]:
                 return True
             return False
-        
 
 # Set up a class to turn on/off the LEDs. If LEDs are not available then ignore them.       
 class Light:
     def __init__(self):
         self.pressed = [0,]*1000
         self.released = [0,]*1000          
-        
-        #TODO: Create an object to turn on ALL lights here....
-        #TODO: Create an object to blink and trail sequence lights here...
-
-    lightArrayOn = [PIN_LED_B1.write(1), PIN_LED_B2.write(1), PIN_LED1.write(1), PIN_LED2.write(1), PIN_LED3.write(1), PIN_LED4.write(1), PIN_LED5.write(1)]
-    lightArrayOff = [PIN_LED_B1.write(0), PIN_LED_B2.write(0), PIN_LED1.write(0), PIN_LED2.write(0), PIN_LED3.write(0), PIN_LED4.write(0), PIN_LED5.write(0)]
 
     if useArduino:
         def buttonOne(self, state):
@@ -197,20 +196,34 @@ class Light:
             if state == 0:
                 return PIN_LED5.write(0)
         
-        def ALL(self, state):
+        # TODO: Make all lights into an array to make code cleaner. 
+        def all(self, state):           
             if state == 1:
-                return (PIN_LED_B1.write(1), PIN_LED_B2.write(1), PIN_LED1.write(1), PIN_LED2.write(1), PIN_LED3.write(1), PIN_LED4.write(1), PIN_LED5.write(1))  
+                return (PIN_LED_B1.write(1), PIN_LED_B2.write(1), PIN_LED1.write(1), PIN_LED2.write(1), PIN_LED3.write(1), PIN_LED4.write(1), PIN_LED5.write(1))
             if state == 0:
-                return (PIN_LED_B1.write(0), PIN_LED_B2.write(0), PIN_LED1.write(0), PIN_LED2.write(0), PIN_LED3.write(0), PIN_LED4.write(0), PIN_LED5.write(0))
-            if state == 3:
-                for i in range(4):
-                    (PIN_LED_B1.write(1), PIN_LED_B2.write(1), PIN_LED1.write(1), PIN_LED2.write(1), PIN_LED3.write(1), PIN_LED4.write(1), PIN_LED5.write(1))
-                    time.sleep(0.2)
-                    (PIN_LED_B1.write(0), PIN_LED_B2.write(0), PIN_LED1.write(0), PIN_LED2.write(0), PIN_LED3.write(0), PIN_LED4.write(0), PIN_LED5.write(0))  
-                    time.sleep(0.2)
+                return (PIN_LED_B1.write(0), PIN_LED_B2.write(0), PIN_LED1.write(0), PIN_LED2.write(0), PIN_LED3.write(0), PIN_LED4.write(0), PIN_LED5.write(0))  
+            if state == None:
+                pass
 
+        # TODO: ALLOW LIGHTS to blink but not thread block.    
+        def blink(self,rate,times):
+            for i in range(times):
+                (PIN_LED_B1.write(1), PIN_LED_B2.write(1), PIN_LED1.write(1), PIN_LED2.write(1), PIN_LED3.write(1), PIN_LED4.write(1), PIN_LED5.write(1))
+                time.sleep(rate)
+                (PIN_LED_B1.write(0), PIN_LED_B2.write(0), PIN_LED1.write(0), PIN_LED2.write(0), PIN_LED3.write(0), PIN_LED4.write(0), PIN_LED5.write(0))  
+                time.sleep(rate)  
 
+        # TODO: Create a method that sequences through all lights
+        # Def sequence(self, rate, times):
+        #   for i in range(times):
+        #       for i in range LIGHT:
+        #           # LIGHT[i] ON
+        #           # time.sleep(rate) 
+        #           # LIGHT[i] OFF
+        #           # time.sleep(rate)
+        #                      
 
+    # TODO: If neccessary, create an list of simulated lights so tester w/o arduino board can see what is lit and what is not
     if not useArduino:   
         def buttonOne(self, state):
             pass
@@ -226,5 +239,7 @@ class Light:
             pass 
         def LED5(self, state):
             pass 
-        def ALL(self, state):
+        def all(self, state):
             pass
+        def blink(self,rate,times):
+            pass            
