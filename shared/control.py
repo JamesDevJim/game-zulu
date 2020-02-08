@@ -93,10 +93,19 @@ class Control:
             return False   
         
         def buttonAny(self):
-            keys = [PIN_ONE.read(), PIN_TWO.read(), PIN_THREE.read(), PIN_LEFT.read(), PIN_RIGHT.read(), PIN_UP.read(), PIN_DOWN.read(), PIN_BACK.read()]
-            if not keys:
-                return True
-            return False
+            key1 = PIN_ONE.read()
+            key2 = PIN_TWO.read()
+            key3 = PIN_THREE.read()
+            key4 = PIN_LEFT.read()
+            key5 = PIN_RIGHT.read()
+            key6 = PIN_UP.read()
+            key7 = PIN_DOWN.read()
+            key8 = PIN_BACK.read()
+            keys = [key1, key2, key3, key4, key5, key6, key7, key8]
+            
+            if all(keys):
+                return False
+            return True
 
     if not useArduino:
         def one(self):
@@ -146,6 +155,14 @@ class Control:
             if keys[pygame.K_q]:
                 return True
             return False
+        
+        def buttonAny(self):            
+            keys = pygame.key.get_pressed()
+            if any(keys):
+                return True
+            return False
+    # Debounce to make sure we don't send two button pushed
+    time.sleep(0.3)
 
 # Set up a class to turn on/off the LEDs. If LEDs are not available then ignore them.       
 class Light:

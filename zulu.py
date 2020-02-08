@@ -140,7 +140,11 @@ def game_intro():
         clock.tick(15)
         
 def gate_1():
-    light.buttonOne(1)  
+    light.buttonOne(1) 
+
+    # print('gate 1')
+    # print(control.one()) 
+    print(control.down())
     if control.back():
         quitgame()
 
@@ -165,6 +169,8 @@ def gate_1():
    
 def gate_2():
     light.buttonTwo(1)
+    print('gate 2')
+    print(control.one())
     if control.back():
         quitgame()
         quit()
