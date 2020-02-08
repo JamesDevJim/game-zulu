@@ -44,6 +44,7 @@ class Control:
         #TODO: Create an object to detect return true is ANY button is pushed.
 
     if useArduino:
+        
         def one(self):
             keys = PIN_ONE.read()
             if not keys:
@@ -146,9 +147,24 @@ class Control:
 
         def down(self):
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_DOWN]:
+            buttonState = False
+            if keys[pygame.K_UP] != buttonState:
                 return True
             return False
+           
+            if button_now() != button_state:
+            debounce_counter += 1
+            if debounce_counter == DEBOUNCE_THRESHOLD:
+                button_state = not button_state
+            else:
+                debounce_counter = 0
+
+        # def down(self):
+        #     for event in pygame.event.get():
+        #         if event.type == pygame.KEYDOWN:
+        #             if event.key == pygame.K_DOWN:
+        #                 return True
+        #             return False
 
         def back(self):
             keys = pygame.key.get_pressed()
@@ -161,8 +177,6 @@ class Control:
             if any(keys):
                 return True
             return False
-    # Debounce to make sure we don't send two button pushed
-    time.sleep(0.3)
 
 # Set up a class to turn on/off the LEDs. If LEDs are not available then ignore them.       
 class Light:
