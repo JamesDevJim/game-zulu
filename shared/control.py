@@ -114,10 +114,14 @@ class Control:
             return True
 
     if not useArduino:
+
         def one(self):
-            pygame.key.set_repeat(0)
             keys = pygame.key.get_pressed()
             if keys[pygame.K_1]:
+                while pygame.key.get_pressed()[pygame.K_1]:
+                    print('in the while looopppp!!!!!!!',pygame.key.get_pressed())
+                    pygame.event.pump()
+                    time.sleep(1)
                 return True
             return False         
        
@@ -140,8 +144,6 @@ class Control:
             return False
 
         def right(self):
-            keys = [0]
-            time.sleep(0.3)
             keys = pygame.key.get_pressed()
             if keys[pygame.K_RIGHT]:
                 return True
@@ -160,11 +162,13 @@ class Control:
             return False
            
         def down(self):
-            print('called down method')
+            print('     In down function')
+            pygame.init
             for event in pygame.event.get():
+                print('     in event in pygame')
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:
-                        print('inside keydown function')
+
                         return True
                     else:
                         return False

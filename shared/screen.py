@@ -1,9 +1,13 @@
 import pygame
 from shared.constants import *
 
+# Use this screen size for testing purposes 
+SCREEN_SIZE = (1200, 800)   #James work PC is 1920 1080
+
 # Set screen to full and get screen size to scale buttons
-gameDisplay = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
-SCREEN_SIZE = gameDisplay.get_size()   #James work PC is 1920 1080
+gameDisplay = pygame.display.set_mode(SCREEN_SIZE, pygame.RESIZABLE)
+#SCREEN_SIZE = gameDisplay.get_size()   #James work PC is 1920 1080 # Uncomment this once testing is complete.
+
 DISPLAY_WIDTH = SCREEN_SIZE[0]
 DISPLAY_HEIGHT = SCREEN_SIZE[1]
 

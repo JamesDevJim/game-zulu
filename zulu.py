@@ -141,53 +141,57 @@ def game_intro():
 def gate_1():
     light.buttonOne(1) 
 
-    # print('gate 1')
-    # print(control.one()) 
-    print(control.down())
-    if control.back():
-        quitgame()
+    if control.buttonAny():
+        print('Gate 1 --------- Any button pushed')
+        print('    Button 1 Pressed: ',control.one()) 
+        print('    Button Down Pressed:', control.down())
+        if control.back():
+            quitgame()
 
-    if control.down() or control.up() or control.left() or control.right() or control.three():
-        print('Playing Sound')
-        soundButtonDead.play()
+        if control.down() or control.up() or control.left() or control.right() or control.three():
+            print('Playing Sound')
+            soundButtonDead.play()
 
-    #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
-    if control.one():      
-        global gateSuccess
-        gateSuccess = [False,True,False]
+        #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
+        print('Button 1 Pressed: ',control.one())         
+        if control.one():      
+            global gateSuccess
+            gateSuccess = [False,True,False]
+            print('Entering gate 2.')
 
-        soundGateSuccess.play()
-        light.buttonOne(0)
-        time.sleep(0.8)       
-        gate_2()
+            soundGateSuccess.play()
+            light.buttonOne(0)      
 
-    if control.two():
-        fail()
+        if control.two():
+            fail()
 
     pygame.display.update()
     clock.tick(60)
    
 def gate_2():
     light.buttonTwo(1)
-    print('gate 2')
-    if control.back():
-        quitgame()
-        quit()
 
-    #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
-    if control.two():      
-        global gateSuccess
-        gateSuccess = [False, False, True]
-        soundGateSuccess.play()
-        light.buttonTwo(0)    
-        time.sleep(0.3)     
-        gate_3()
+    if control.buttonAny():
+        print('Entered Gate 2 and any button pressed.')
+        print('Button 1 Pressed: ', control.one())
+        if control.back():
+            quitgame()
+            quit()
 
-    if control.one():
-        fail()
-    
-    if control.down() or control.up() or control.left() or control.right() or control.three():
-        soundButtonDead.play()
+        #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
+        if control.two():      
+            global gateSuccess
+            gateSuccess = [False, False, True]
+            soundGateSuccess.play()
+            light.buttonTwo(0)    
+            time.sleep(0.3)     
+            gate_3()
+
+        if control.one():
+            fail()
+        
+        if control.down() or control.up() or control.left() or control.right() or control.three():
+            soundButtonDead.play()
 
     pygame.display.update()
     clock.tick(60)
