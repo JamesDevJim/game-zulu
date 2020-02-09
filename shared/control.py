@@ -166,14 +166,8 @@ class Control:
                     if event.key == pygame.K_DOWN:
                         print('inside keydown function')
                         return True
-                    return False
-       
-        # def down(self):
-        #     keys = pygame.key.get_pressed()
-        #     if any(keys) and pygame.KEYDOWN and keys[pygame.K_DOWN]:
-        #         return True
-        #     return False
-
+                    else:
+                        return False
 
         def back(self):
             keys = pygame.key.get_pressed()
