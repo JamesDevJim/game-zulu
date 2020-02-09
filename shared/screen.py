@@ -20,14 +20,14 @@ BUTTON_CENTER_TWO_THIRD = round((DISPLAY_WIDTH*0.66)-(BUTTON_WIDTH/2))
 BUTTON_CENTER_VERTICAL = round((DISPLAY_HEIGHT*0.5)-(BUTTON_HEIGHT/2))
 
 ##### BUTTONS #####
-def button(msg,x,y,w,h,ic,ac,action=None):
+async def button(msg,x,y,w,h,ic,ac,action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         if click[0] == 1 and action != None:
-            action()         
+            await action()         
     else:
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
     smallText = pygame.font.SysFont("comicsansms",20)

@@ -115,15 +115,13 @@ class Control:
 
     if not useArduino:
 
-        def one(self):
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_1]:
-                while pygame.key.get_pressed()[pygame.K_1]:
-                    print('in the while looopppp!!!!!!!',pygame.key.get_pressed())
-                    pygame.event.pump()
-                    time.sleep(1)
-                return True
-            return False         
+        async def button(self):
+            pressed = False
+            while pressed == False:
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        pressed = event.key
+            return pressed
        
         def two(self):
             keys = pygame.key.get_pressed()

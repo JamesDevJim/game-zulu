@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import random
 import logging
@@ -23,7 +24,7 @@ pygame.display.set_caption('Game Zulu')
 pygame.display.set_icon(gameIcon)
 
 
-def success():
+async def success():
     #### SOUNDS ####
     pygame.mixer.music.stop()    
     soundTrumpet.play()
@@ -54,14 +55,14 @@ def success():
                 if event.key == pygame.K_q:
                     quitgame()
         # TODO: Make Proceed only available if game was successful.
-        button("Proceed",BUTTON_CENTER_ONE_THIRD,BUTTON_CENTER_VERTICAL,BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_intro)
+        await button("Proceed",BUTTON_CENTER_ONE_THIRD,BUTTON_CENTER_VERTICAL,BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_intro)
         # TODO: Make Leave go back to main screen with list of games
-        button("Leave",BUTTON_CENTER_TWO_THIRD,BUTTON_CENTER_VERTICAL,BUTTON_WIDTH,BUTTON_HEIGHT,RED,BRIGHT_RED,game_intro)
+        await button("Leave",BUTTON_CENTER_TWO_THIRD,BUTTON_CENTER_VERTICAL,BUTTON_WIDTH,BUTTON_HEIGHT,RED,BRIGHT_RED,game_intro)
  
         pygame.display.update()
         clock.tick(15) 
 
-def fail():
+async def fail():
     #### SOUNDS ####
     pygame.mixer.music.stop()
     soundMissile.play()
@@ -94,9 +95,9 @@ def fail():
 
         # TODO: Make Enter only available if game was successful. Put LOCK symbol for this fail.
         # TODO: Make dead sound if pushed. Make so nothing happens        
-        button("Proceed (LOCKED)",BUTTON_CENTER_ONE_THIRD,BUTTON_CENTER_VERTICAL,BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_intro)
+        await button("Proceed (LOCKED)",BUTTON_CENTER_ONE_THIRD,BUTTON_CENTER_VERTICAL,BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_intro)
         # TODO: Make Leave go back to main screen with list of games        
-        button("Leave",BUTTON_CENTER_TWO_THIRD,BUTTON_CENTER_VERTICAL,BUTTON_WIDTH,BUTTON_HEIGHT,RED,BRIGHT_RED,game_intro)
+        await button("Leave",BUTTON_CENTER_TWO_THIRD,BUTTON_CENTER_VERTICAL,BUTTON_WIDTH,BUTTON_HEIGHT,RED,BRIGHT_RED,game_intro)
 
         pygame.display.update()
         clock.tick(15)
@@ -105,7 +106,7 @@ def quitgame():
     pygame.quit()
     quit()
 
-def game_intro():
+async def game_intro():
     intro = True
     startMusicPlay = False
     while intro:
@@ -133,42 +134,34 @@ def game_intro():
         TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.3)))
         gameDisplay.blit(TextSurf, TextRect)
 
-        button("Enter",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.6),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_loop)
+        await button("Enter",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.6),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_loop)
         
         pygame.display.update()
         clock.tick(15)
         
-def gate_1():
+async def gate_1():
     light.buttonOne(1) 
 
-    if control.buttonAny():
-        print('Gate 1 --------- Any button pushed')
-        print('    Button 1 Pressed: ',control.one()) 
-        print('    Button Down Pressed:', control.down())
-        if control.back():
-            quitgame()
+    if control.back():
+        quitgame()
 
-        if control.down() or control.up() or control.left() or control.right() or control.three():
-            print('Playing Sound')
-            soundButtonDead.play()
+    if control.down() or control.up() or control.left() or control.right() or control.three():
+        print('Playing Sound')
+        soundButtonDead.play()
 
-        #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?
-        print('Button 1 Pressed: ',control.one())         
-        if control.one():      
-            global gateSuccess
-            gateSuccess = [False,True,False]
-            print('Entering gate 2.')
-
-            soundGateSuccess.play()
-            light.buttonOne(0)      
-
-        if control.two():
-            fail()
+    #HELP: How to I make this if statement change gate0Success and gate1Success states and not require to put gate_2() funtion?  
+    buttonPressed = await control.button()
+    if (buttonPressed == 49):
+        global gateSuccess
+        gateSuccess = [False,True,False]
+        soundGateSuccess.play()
+        light.buttonOne(0)
+    else:
+        await fail()
 
     pygame.display.update()
-    clock.tick(60)
    
-def gate_2():
+async def gate_2():
     light.buttonTwo(1)
 
     if control.buttonAny():
@@ -188,7 +181,7 @@ def gate_2():
             gate_3()
 
         if control.one():
-            fail()
+            await fail()
         
         if control.down() or control.up() or control.left() or control.right() or control.three():
             soundButtonDead.play()
@@ -196,7 +189,7 @@ def gate_2():
     pygame.display.update()
     clock.tick(60)
 
-def gate_3():
+async def gate_3():
     light.LED1(1)
     light.LED2(1)  
    
@@ -211,7 +204,7 @@ def gate_3():
         light.LED1(1)
         light.LED2(1)  
         time.sleep(0.3)       
-        success()
+        await success()
 
     if control.one() or control.two() or control.down() or control.left() or control.right() or control.three():
         fail()
@@ -219,7 +212,7 @@ def gate_3():
     pygame.display.update()
     clock.tick(60)
 
-def game_loop():
+async def game_loop():
     
     global gateSuccess
 
@@ -251,7 +244,7 @@ def game_loop():
 
         #Make game assign random LED on to determine which one wins the gate.
         if gateSuccess[0]:
-            gate_1()
+            await gate_1()
 
         if gateSuccess[1]:
             gate_2()
@@ -262,7 +255,7 @@ def game_loop():
         pygame.display.update()
         clock.tick(60)
 
-game_intro()
-game_loop()
+asyncio.run(game_intro())
+asyncio.run(game_loop())
 pygame.quit()
 quit()
