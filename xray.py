@@ -13,11 +13,13 @@ from shared.constants import *
 # Must push button1,2,3 in the correct sequence
 # lights1,2,3,4,5 will come on consequitively when correct sequence is pushed.
 
+# Initialize pygame, pygame sounds, control class, and light classes
 pygame.init()
+pygame.mixer.init()
 control = Control()
 light = Light()
 
-pygame.mixer.init()
+
 clock = pygame.time.Clock()
 
 pygame.display.set_caption('Game Xray')
@@ -128,7 +130,7 @@ def game_intro():
             startMusicPlay = True
 
         # Background and title
-        gameDisplay.blit(stars, (0,0))
+        gameDisplay.blit(spaceship2, (0,0))
         largeText = pygame.font.SysFont("comicsansms",250)
         TextSurf, TextRect = text_objects("XRAY", largeText)
         TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.3)))

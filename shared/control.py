@@ -6,9 +6,6 @@ pygame.init
 
 clock = pygame.time.Clock()
 useArduino = True
-DEBOUNCE_THRESHOLD = 1
-debounceCounter = 0
-moveTicker = 0
 
 # Try to connect to the arduino board. If it fails, then we will use the keyboard.
 try:

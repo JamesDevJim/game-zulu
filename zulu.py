@@ -1,3 +1,9 @@
+##########################################################################
+# GAME ZULU
+# This game is the first game of the series.  
+# Game Play: A button will light up. The player must hit a coorosponding button. Other buttons will trigger a fail condition in later gates. 
+##########################################################################
+
 import pygame
 import random
 import logging
@@ -8,11 +14,10 @@ from shared.screen import *
 from shared.sounds import *
 from shared.constants import *
 
-# GAME ZULU
-# This game is the first game of the series.  
-# Game Play: A button will light up. The player must hit a coorosponding button. Other buttons will trigger a fail condition in later gates. 
 
-# Initialize pygame and control & light classes
+
+
+# Initialize pygame, pygame sounds, control class, and light classes
 pygame.init()
 pygame.mixer.init()
 control = Control()
