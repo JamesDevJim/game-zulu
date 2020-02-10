@@ -1,3 +1,11 @@
+##########################################################################
+# GAME XRAY
+# 3rd in the 5 game series. Proof of concept for Perplesso.  
+# Game Play: Players must push buttons 1, 2, and 3 in the correct sequence. Lights 1, 2, 3, 4, 5 with 
+# consequitively illuminate when correct sequence is pushed. When an incorrect sequence is pushed. The 
+# lights turn off and the play must start over. The player has X amount of attempts. 
+##########################################################################
+
 import pygame
 import random
 import logging
@@ -8,23 +16,16 @@ from shared.screen import *
 from shared.sounds import *
 from shared.constants import *
 
-#Game Details:
-# lights1,2,3,4,5 will sequence when won
-# Must push button1,2,3 in the correct sequence
-# lights1,2,3,4,5 will come on consequitively when correct sequence is pushed.
-
 # Initialize pygame, pygame sounds, control class, and light classes
 pygame.init()
 pygame.mixer.init()
 control = Control()
 light = Light()
 
-
 clock = pygame.time.Clock()
 
 pygame.display.set_caption('Game Xray')
 pygame.display.set_icon(gameIcon)
-
 
 def success():
     #### SOUNDS ####

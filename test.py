@@ -1,16 +1,13 @@
+##########################################################################
+# TEST PROGRAM
+# Purpose: Use this to test button box button functionality (buttons & lights) and keyboard presses.
+##########################################################################
+
 import pygame
 import time
 from shared.control import * 
 from shared.constants import *
 from shared.screen import *
-
-#################################
-#
-# TEST PROGRAM
-# Use this to test the button functionality and lights on the button box
-#
-#################################
-
 
 # Initialize pygame and control & light classes
 pygame.init()

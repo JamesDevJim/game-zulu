@@ -1,7 +1,8 @@
 ##########################################################################
 # GAME ZULU
-# This game is the first game of the series.  
-# Game Play: A button will light up. The player must hit a coorosponding button. Other buttons will trigger a fail condition in later gates. 
+# 1st in the 5 game series. Proof of concept for Perplesso.  
+# Game Play: A button or light will illuminate. The player must press the coorosponding button. In the 1st 
+# and 2nd gate other buttons do nothing. In the 3rd other buttons will trigger a fail condition. 
 ##########################################################################
 
 import pygame
@@ -14,9 +15,6 @@ from shared.screen import *
 from shared.sounds import *
 from shared.constants import *
 
-
-
-
 # Initialize pygame, pygame sounds, control class, and light classes
 pygame.init()
 pygame.mixer.init()
@@ -27,8 +25,6 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption('Game Zulu')
 pygame.display.set_icon(gameIcon)
-
-
 
 def success():
     print('Game is won')

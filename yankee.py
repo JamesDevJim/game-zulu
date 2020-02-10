@@ -1,12 +1,17 @@
+##########################################################################
+# GAME YANKEE
+# 2nd in the 5 game series. Proof of concept for Perplesso.  
+# Game Play: Button 1 and 2 are active. Button 1 always wins. Button that is illuminated is 'Lava'. If 
+# player hits an illuminated button it triggers a fail condition. Players can move the lava with button 
+# left and button right in gate 2. In gate 3 player can move lava up with button up.
+##########################################################################
+
+# TODO: Implement format of game Zulu.
 import pygame
 import random
 import os
 import logging
 import time
-
-# Game Zulu
-# This game is the first game of the series.  
-# Game Play: A button will light up. The player must hit a coorosponding button. Other buttons will trigger a fail condition. 
 
 pygame.init()
 pygame.mixer.init()
