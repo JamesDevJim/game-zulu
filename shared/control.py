@@ -43,6 +43,7 @@ except:
 
 # Set up a class to read all the inputs on the box. If box is not availabled then use the keyboard.
 class Control:
+
     def __init__(self):
         self.pressed = [0,]*1000
         self.released = [0,]*1000    
@@ -115,71 +116,64 @@ class Control:
 
     if not useArduino:
 
-        def one(self):
+        def one(self):          
+            pygame.event.pump()     # Use this to refresh pygame to pull most recent key press. W/o this multiple key presses can be recorded.
             keys = pygame.key.get_pressed()
             if keys[pygame.K_1]:
-                while pygame.key.get_pressed()[pygame.K_1]:
-                    print('in the while looopppp!!!!!!!',pygame.key.get_pressed())
-                    pygame.event.pump()
-                    time.sleep(1)
                 return True
             return False         
        
         def two(self):
+            pygame.event.pump()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_2]:
                 return True
             return False    
        
         def three(self):
+            pygame.event.pump()            
             keys = pygame.key.get_pressed()
             if keys[pygame.K_3]:
                 return True
             return False  
             
         def left(self):
+            pygame.event.pump()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT]:
                 return True
             return False
 
         def right(self):
+            pygame.event.pump()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_RIGHT]:
                 return True
             return False
-
-        # moveTicker = 0    
+   
         def up(self):
-            global moveTicker
-            if moveTicker > 0:
-                moveTicker -= 1
+            pygame.event.pump()            
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
-                if moveTicker == 0:
-                    moveTicker = 10
                     return True
             return False
            
         def down(self):
-            print('     In down function')
-            pygame.init
-            for event in pygame.event.get():
-                print('     in event in pygame')
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_DOWN:
-
-                        return True
-                    else:
-                        return False
+            pygame.event.pump()           
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_DOWN]:
+                    return True
+            return False
 
         def back(self):
+            pygame.event.pump()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_q]:
                 return True
             return False
         
         def buttonAny(self):            
+            pygame.event.pump()            
             keys = pygame.key.get_pressed()
             if any(keys):
                 return True
