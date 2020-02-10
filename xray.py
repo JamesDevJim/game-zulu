@@ -1,9 +1,9 @@
 ##########################################################################
-# GAME XRAY
-# 3rd in the 5 game series. Proof of concept for Perplesso.  
-# Game Play: Players must push buttons 1, 2, and 3 in the correct sequence. Lights 1, 2, 3, 4, 5 with 
-# consequitively illuminate when correct sequence is pushed. When an incorrect sequence is pushed. The 
-# lights turn off and the play must start over. The player has X amount of attempts. 
+# Title:        GAME XRAY
+# Description:  3rd in the 5 game series. Proof of concept for Perplesso.  
+# Game Play:    Players must push buttons 1, 2, and 3 in the correct sequence. Lights 1, 2, 3, 4, 5 with 
+#               consequitively illuminate when correct sequence is pushed. When an incorrect sequence is pushed. The 
+#               lights turn off and the play must start over. The player has X amount of attempts. 
 ##########################################################################
 
 import pygame

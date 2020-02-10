@@ -1,8 +1,8 @@
 ##########################################################################
-# GAME ZULU
-# 1st in the 5 game series. Proof of concept for Perplesso.  
-# Game Play: A button or light will illuminate. The player must press the coorosponding button. In the 1st 
-# and 2nd gate other buttons do nothing. In the 3rd other buttons will trigger a fail condition. 
+# Title:        GAME ZULU
+# Description:  1st in the 5 game series. Proof of concept for Perplesso.  
+# Game Play:    A button or light will illuminate. The player must press the coorosponding button. In the 1st 
+#               and 2nd gate other buttons do nothing. In the 3rd other buttons will trigger a fail condition. 
 ##########################################################################
 
 import pygame

@@ -1,6 +1,7 @@
 ##########################################################################
-# TEST PROGRAM
-# Purpose: Use this to test button box button functionality (buttons & lights) and keyboard presses.
+# Title:        CONTROL & LIGHT TEST
+# Description:  Test for buttons, keyboard, and lights.
+# Purpose:      Use this to test button box button functionality (buttons & lights) and keyboard presses.
 ##########################################################################
 
 import pygame
