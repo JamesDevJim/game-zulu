@@ -131,7 +131,7 @@ def game_intro():
             startMusicPlay = True
 
         # Background and title
-        gameDisplay.blit(spaceship2, (0,0))
+        gameDisplay.blit(galaxy3, (0,0))
         largeText = pygame.font.SysFont("comicsansms",250)
         TextSurf, TextRect = text_objects("XRAY", largeText)
         TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.3)))
@@ -222,7 +222,7 @@ def game_loop():
     pygame.mixer.music.play(-1)
 
     # Background display
-    gameDisplay.blit(spaceShip, (0,0))    
+    gameDisplay.blit(spaceShip3, (0,0))    
     pygame.display.update()
 
     gameExit = False

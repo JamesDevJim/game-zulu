@@ -27,6 +27,8 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('Game Zulu')
 pygame.display.set_icon(gameIcon)
 
+gateSuccess = [True,False,False, False]
+
 def success():
     print('Game is won')
     #### SOUNDS ####
@@ -152,20 +154,8 @@ def gate_1():
         if control.back():
             quitgame()
 
-        if control.down() or control.up() or control.left() or control.right() or control.three():
-            soundButtonDead.play()
-     
-        if control.one():      
-            global gateSuccess
-            soundGateSuccess.play()
-            light.all(0)  
-            
-            time.sleep(0.5)
-            gateSuccess = [False,True,False, False]
-            print('Gate 1 Success. ...Entering Gate 2.')    
-
-        if control.two():
-            fail()
+        if control.one():
+            success()
 
     pygame.display.update()
     clock.tick(60)
@@ -179,20 +169,6 @@ def gate_2():
             quitgame()
             quit()
 
-        if control.two():      
-            global gateSuccess
-            soundGateSuccess.play()
-            light.all(0)   
-            
-            time.sleep(0.5)           
-            gateSuccess = [False, False, True, False] 
-            print('Gate 2 Success. ...Entering Gate 3.') 
-
-        if control.one():
-            fail()
-        
-        if control.down() or control.up() or control.left() or control.right() or control.three():
-            soundButtonDead.play()
 
     pygame.display.update()
     clock.tick(60)
@@ -207,16 +183,6 @@ def gate_3():
             pygame.quit()
             quit()
 
-        if control.up():      
-            global gateSuccess
-            light.all(0)     
-            
-            gateSuccess = [False, False, False, False]
-            print('Gate 3 Success.')
-            success()
-
-        if control.one() or control.two() or control.down() or control.left() or control.right() or control.three():
-            fail()
     
     pygame.display.update()
     clock.tick(60)
