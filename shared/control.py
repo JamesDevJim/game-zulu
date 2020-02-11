@@ -152,21 +152,21 @@ class Control:
             pygame.event.pump()            
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
-                    return True
+                return True
             return False
            
         def down(self):
             pygame.event.pump()           
             keys = pygame.key.get_pressed()
             if keys[pygame.K_DOWN]:
-                    return True
+                return True
             return False
 
         def back(self):
             pygame.event.pump()
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_q]:
-                return True
+            if keys[pygame.K_q] or keys[pygame.K_ESCAPE]:
+                return True           
             return False
         
         def buttonAny(self):            

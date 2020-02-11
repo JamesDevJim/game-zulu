@@ -143,18 +143,17 @@ def game_intro():
         clock.tick(15)
         
 def gate_1():
-    # Possible number of trys. Decrease this nuymber to increase difficulty.
+    # Decrease this number to increase difficulty.
     MAX_TRYS = 3
+    
+    # Initialize correctSteps. Number of steps in the sequence that the player must follow. Increase list to increase difficulty.
+    correctSteps = [0,0,0]
 
-    # COMMENTING OUT FOR TESTING
-    # Number of steps in the sequence that the player must follow. Add numbers to increase difficulty.
-    #correctSteps = [1,1,1]
-    #stepList = [control.one(), control.two(), control.three()]
-    # for i in range(2):
-    #     correctSteps[i] = random.choice(stepList)
-        
-    # Temporary Permanent Steps for testing
-    correctSteps = [1,1,1]
+    # Select buttons to include in the game. Randomly assigns correct button order
+    numberChoices = [1,2,3]
+    for i in range(len(correctSteps)):
+         correctSteps[i] = random.choice(numberChoices)
+    print(correctSteps)    
 
     # Initialize the guess list
     guesses = [0,0,0]
@@ -169,26 +168,65 @@ def gate_1():
     attempts = 1
 
     # Leave game loop when players beat the game or maximum # of trys are reached.
-    while currentStep < 3 and attempts <= MAX_TRYS:
-        # User enters their guess and it stores in the list as a number
-        print('Attempts: ', attempts) 
-        print('Current Step: ', currentStep)
+    print('Enter while loop')
+    while currentStep < len(correctSteps) and attempts <= MAX_TRYS:
+        
+        # Ability to exit game        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit() 
+
+        if control.back():
+            pygame.quit()
+            quit()        
+        
         if control.buttonAny(): 
-            # If the number equals the correct step, then add a light
-            if  correctSteps[currentStep] == True:
-                lights[currentStep]         
-                currentStep += 1    
-            # If the number does not equal correct step, then turn off all lights
-            else:
-                currentStep = 0
-                attempts += 1
-                light.all(0)
-                print('Incorrect input. Back to the beginning!')     
+            # These buttons do not do anything
+            if control.down() or control.up() or control.left() or control.right():
+                print('Dead Button')
+                soundButtonDead.play()
+            
+            # These buttons are in gameplay
+            if control.one() or control.two() or control.three():
+                
+                # User enters their guess and it stores in the guess list            
+                if control.one():
+                    guesses[currentStep] = 1
+                if control.two(): 
+                    guesses[currentStep] = 2
+                if control.three():
+                    guesses[currentStep] = 3                        
+                # TODO: Make class control able to return which button was pressed
+
+                # If the correct step equals the guess, then add a light
+                if  correctSteps[currentStep] == guesses[currentStep]:
+                    lights[currentStep]         
+                    currentStep += 1
+                    soundGateSuccess.play()
+                    print('Correct input')    
+                
+                # If the guess does not equal the correct step, then turn off all lights
+                else:
+                    currentStep = 0
+                    attempts += 1
+                    guesses = [0,0,0]
+                    light.all(0)
+                    # TODO: Insert negative sound here
+                    print('Incorrect input. Back to the beginning!')
+
+            print('Guess Array: ',guesses)
+            print('Attempts: ', attempts) 
+            print('Current Step: ', currentStep)
+            time.sleep(0.5)   
     
     # Check whether the puzzle has been solved
-    if currentStep == 4:
+    print('Exit while loop')
+    if currentStep == len(correctSteps):
+        print('Solved! Running success.')
         success()
     else:
+        print('Fail Condition')
         fail()
         
 
