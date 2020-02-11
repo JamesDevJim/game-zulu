@@ -35,7 +35,7 @@ def success():
     logging.info("Game Success")
    
     #### DISPLAY ####
-    gameDisplay.blit(spaceShipSuccess, (0,0))  
+    gameDisplay.blit(spaceship3Success, (0,0))  
     pygame.display.update()     
    
     largeText = pygame.font.SysFont("comicsansms",250)
@@ -72,7 +72,7 @@ def fail():
     logging.info("Game Failure")
     
     #### DISPLAY #####
-    gameDisplay.blit(spaceShipFail, (0,0))  
+    gameDisplay.blit(spaceship3Fail, (0,0))  
     pygame.display.update()  
 
     largeText = pygame.font.SysFont("comicsansms",250)
@@ -222,7 +222,7 @@ def game_loop():
     pygame.mixer.music.play(-1)
 
     # Background display
-    gameDisplay.blit(spaceShip3, (0,0))    
+    gameDisplay.blit(spaceship3, (0,0))    
     pygame.display.update()
 
     gameExit = False

@@ -3,38 +3,37 @@ from shared.screen import *
 
 ###### IMAGES #####
 
-
+gameIcon = pygame.image.load('images/space_ship_2.png')     # This broke the code when trying to load to big an image...
 
 # Game Zulu
-stars = fullScreenImage('images/stars.jpg')
+stars = fullScreenImage('images/galaxy1.jpg')
 spaceship1 = fullScreenImage('images/spaceship1.jpg')
 spaceship1Fail = fullScreenImage('images/spaceship1_fail.jpg')
 spaceship1Success = fullScreenImage('images/spaceship1_success.jpg')
-gameIcon = pygame.image.load('images/space_ship_2.png')     #This broke the code when trying to load to big an image...
 
 # Game Yankee
-# galaxy2 = fullScreenImage('images/galaxy2.jfif')
-# spaceship2 = fullScreenImage('images/spaceship2.png')
-# spaceship2Fail = fullScreenImage('images/spaceship2_fail.png')
-# spaceship2Success = fullScreenImage('images/spaceship2_success.png')
+galaxy2 = fullScreenImage('images/galaxy2.jpg')
+spaceship2 = fullScreenImage('images/spaceship2.jpg')
+spaceship2Fail = fullScreenImage('images/spaceship2_fail.jpg')
+spaceship2Success = fullScreenImage('images/spaceship2_success.jpg')
 
 # Game Xray
-galaxy3 = fullScreenImage('images/galaxy3.jfif')
-spaceship3 = fullScreenImage('images/spaceship3.png')
-spaceship3Fail = fullScreenImage('images/spaceship3_fail.png')
-spaceship3Success = fullScreenImage('images/spaceship3_success.png')
+galaxy3 = fullScreenImage('images/galaxy3.jpg')
+spaceship3 = fullScreenImage('images/spaceship3.jpg')
+spaceship3Fail = fullScreenImage('images/spaceship3_fail.jpg')
+spaceship3Success = fullScreenImage('images/spaceship3_success.jpg')
 
 # Game Whiskey
-# galaxy = 
-# spaceship = 
-# spaceshipFail = 
-# spaceshipSuccess = 
+galaxy4 = fullScreenImage('images/galaxy4.jpg')
+spaceship4 = fullScreenImage('images/spaceship4.png')
+spaceship4Fail = fullScreenImage('images/spaceship4_fail.png')
+spaceship4Success = fullScreenImage('images/spaceship4_success.png')
 
 # Game Victor
-# galaxy = 
-# spaceship = 
-# spaceshipFail = 
-# spaceshipSuccess = 
+galaxy5 = fullScreenImage('images/galaxy5.jpg')
+spaceship5 = fullScreenImage('images/spaceship5.jpg')
+spaceship5Fail = fullScreenImage('images/spaceship5_fail.jpg')
+spaceship5Success = fullScreenImage('images/spaceship5_success.jpg')
 
 
 
