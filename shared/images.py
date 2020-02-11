@@ -3,14 +3,14 @@ from shared.screen import *
 
 ###### IMAGES #####
 
-gameIcon = pygame.image.load('images/space_ship.png')
+
 
 # Game Zulu
 stars = fullScreenImage('images/stars.jpg')
 spaceShip = fullScreenImage('images/inside_space_ship.jpg')
 spaceShipFail = fullScreenImage('images/inside_space_ship_fail.jpg')
 spaceShipSuccess = fullScreenImage('images/inside_space_ship_success.jpg')
-
+gameIcon = pygame.image.load('images/space_ship.png')
 
 # Game Yankee
 # galaxy2 = fullScreenImage('images/galaxy2.jfif')
