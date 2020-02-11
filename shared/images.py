@@ -7,10 +7,10 @@ from shared.screen import *
 
 # Game Zulu
 stars = fullScreenImage('images/stars.jpg')
-spaceShip = fullScreenImage('images/inside_space_ship.jpg')
-spaceShipFail = fullScreenImage('images/inside_space_ship_fail.jpg')
-spaceShipSuccess = fullScreenImage('images/inside_space_ship_success.jpg')
-gameIcon = pygame.image.load('images/space_ship.png')
+spaceship1 = fullScreenImage('images/spaceship1.jpg')
+spaceship1Fail = fullScreenImage('images/spaceship1_fail.jpg')
+spaceship1Success = fullScreenImage('images/spaceship1_success.jpg')
+gameIcon = pygame.image.load('images/space_ship_2.png')     #This broke the code when trying to load to big an image...
 
 # Game Yankee
 # galaxy2 = fullScreenImage('images/galaxy2.jfif')
