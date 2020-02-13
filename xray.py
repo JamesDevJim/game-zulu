@@ -121,8 +121,9 @@ def game_intro():
 
             # Quit game from keyboard
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     quitgame()
+                    quit()
         
         # Start intro music
         while not startMusicPlay:
@@ -144,22 +145,26 @@ def game_intro():
         
 def gate_1():
     # Decrease this number to increase difficulty.
-    MAX_TRYS = 3
+    MAX_TRYS = 4
     
     # Initialize correctSteps. Number of steps in the sequence that the player must follow. Increase list to increase difficulty.
     correctSteps = [0,0,0]
 
     # Select buttons to include in the game. Randomly assigns correct button order
-    numberChoices = [1,2,3]
-    for i in range(len(correctSteps)):
-         correctSteps[i] = random.choice(numberChoices)
-    print(correctSteps)    
+    # numberChoices = [1,2,3]
+    # for i in range(len(correctSteps)):
+    #      correctSteps[i] = random.choice(numberChoices)
+    # print(correctSteps)    
+
+    #Comment line below and uncomment block above to randomly assign numbers and make game harderpygame.examples.aliens.main()
+    correctSteps = [2,3,2]
 
     # Initialize the guess list
     guesses = [0,0,0]
 
     # Lights to illuminate players progress
     lights = [light.LED1(1), light.LED2(1), light.LED3(1)]
+    light.all(0)
 
     # What step of the sequence is the player currently on? Initialize with 0 for first number in list.
     currentStep = 0
@@ -176,7 +181,12 @@ def gate_1():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit() 
-
+        
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+                    quitgame()
+                    quit()                
+        
         if control.back():
             pygame.quit()
             quit()        
@@ -201,7 +211,12 @@ def gate_1():
 
                 # If the correct step equals the guess, then add a light
                 if  correctSteps[currentStep] == guesses[currentStep]:
-                    lights[currentStep]         
+                    if currentStep == 0:
+                        light.LED2(1)
+                    if currentStep == 1:
+                        light.LED3(1)
+                    if currentStep == 2:
+                        light.LED4(1)         
                     currentStep += 1
                     soundGateSuccess.play()
                     print('Correct input')    
@@ -213,6 +228,7 @@ def gate_1():
                     guesses = [0,0,0]
                     light.all(0)
                     # TODO: Insert negative sound here
+                    soundButtonDead.play()
                     print('Incorrect input. Back to the beginning!')
 
             print('Guess Array: ',guesses)
@@ -276,8 +292,8 @@ def game_loop():
                 quit()
             
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    pygame.quit()
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+                    quitgame()
                     quit()
 
         #Make game assign random LED on to determine which one wins the gate.

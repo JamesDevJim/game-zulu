@@ -24,6 +24,7 @@ try:
     PIN_UP = arduino.get_pin('d:34:i')
     PIN_DOWN = arduino.get_pin('d:33:i')
     PIN_BACK = arduino.get_pin('d:30:i')
+    PIN_MOTION = arduino.get_pin('d:8:i')
 
     #Define all lights
     PIN_LED_B1 = arduino.get_pin('d:11:p')
@@ -95,8 +96,14 @@ class Control:
             if not keys:
                 return True
             return False   
+
+        def motion(self):
+            keys = PIN_MOTION.read()
+            if keys:
+                return True
+            return False               
         
-        def buttonAny(self):
+        def buttonAny(self):     # Does not include motion sensor
             key1 = PIN_ONE.read()
             key2 = PIN_TWO.read()
             key3 = PIN_THREE.read()
@@ -167,6 +174,13 @@ class Control:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_q] or keys[pygame.K_ESCAPE]:
                 return True           
+            return False
+
+        def motion(self):
+            pygame.event.pump()           
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                return True
             return False
         
         def buttonAny(self):            

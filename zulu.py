@@ -124,8 +124,9 @@ def game_intro():
 
             # Quit game from keyboard
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     quitgame()
+                    quit()
         
         # Start intro music
         while not startMusicPlay:
@@ -245,8 +246,8 @@ def game_loop():
                 quit()
             
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    pygame.quit()
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+                    quitgame()
                     quit()
 
         #Make game assign random LED on to determine which one wins the gate.

@@ -49,6 +49,17 @@ def testLoop():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+                    quitgame()
+                    quit()
+
+        if control.motion():
+            gameDisplay.fill(WHITE)     
+            TextSurf, TextRect = text_objects("MOTION", largeText)   
+            light.LED3(1)          
+        else:            
+            light.LED3(0) 
 
         if control.buttonAny():
             if control.one():
@@ -106,7 +117,9 @@ def testLoop():
             if control.back():
                 gameDisplay.fill(WHITE)  
                 TextSurf, TextRect = text_objects("BACK", largeText)  
-                quitgame()                      
+                quitgame()      
+
+    
         
         TextRect.center = ((round(display_width * 0.5)),(round(display_height * 0.5)))
         gameDisplay.blit(TextSurf, TextRect)    
