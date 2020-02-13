@@ -248,7 +248,8 @@ class Light:
             if state == None:
                 pass
 
-        # TODO: ALLOW LIGHTS to blink but not thread block.    
+        # TODO: ALLOW LIGHTS to blink but not thread block.
+        # TODO: Move this blink function up into all() function and add object. Ex: all(self, state, function) - function can be blink, sequence, or solid.    
         def blink(self,rate,times):
             for i in range(times):
                 (PIN_LED_B1.write(1), PIN_LED_B2.write(1), PIN_LED1.write(1), PIN_LED2.write(1), PIN_LED3.write(1), PIN_LED4.write(1), PIN_LED5.write(1))
@@ -264,6 +265,21 @@ class Light:
         #           # time.sleep(rate) 
         #           # LIGHT[i] OFF
         #           # time.sleep(rate)
+
+        # def strip(color, function, speed):
+        #     features
+        #         red alert: Blinking red
+        #         button box explosion: red and white flash
+        #         success condition: green
+        #         fail condition: red solid
+        #         gameplay: blueish whitish
+        #         game intro: very dim light
+        #     functions
+        #         chase sequence
+        #         blink
+        #         solid 
+        #         alternate (two colors)
+
         #                      
 
     # TODO: If neccessary, create an list of simulated lights so tester w/o arduino board can see what is lit and what is not
