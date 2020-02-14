@@ -23,7 +23,7 @@ soundGateSuccess = pygame.mixer.Sound("sound/sound_gate_success.wav")
 ##### ALERTS #####
 soundAlertCritical = pygame.mixer.Sound("sound/critical.wav")
 soundAlertDamage = pygame.mixer.Sound("sound/damagealarm.wav")
-soundAlertAlarm = pygame.mixer.Sound("sound/alarm_loops_08.wav")
+#soundAlertAlarm = pygame.mixer.Sound("sound/alarm_loops_08.wav")
 
 
 ##### BUTTON INPUTS #####
