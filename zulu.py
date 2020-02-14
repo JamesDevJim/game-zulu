@@ -113,9 +113,9 @@ def quitgame():
     quit()
 
 def game_intro():
-    intro = True
+    #intro = True
     startMusicPlay = False
-    while intro:
+    while not control.doorOpen:
         # Abilty to quit the game
         for event in pygame.event.get():
             # Quit game from window screen
@@ -141,10 +141,15 @@ def game_intro():
         TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.3)))
         gameDisplay.blit(TextSurf, TextRect)
 
-        button("Enter",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.6),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_loop)
+        # button("Enter",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.6),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_loop)
         
         pygame.display.update()
         clock.tick(15)
+    
+    soundGameDoors.play()
+    time.sleep(3)
+    
+    gameloop()
         
 def gate_1():
     light.buttonOne(1) 
@@ -234,10 +239,10 @@ def game_loop():
     gameDisplay.blit(spaceship1, (0,0))    
     pygame.display.update()
 
-    gameExit = False
+    # gameExit = False
     gateSuccess = [True, False, False, False]
   
-    while not gameExit:
+    while not control.doorOpen():
         
         # Ability to quit from screen or keyboard
         for event in pygame.event.get():
@@ -265,6 +270,11 @@ def game_loop():
 
         pygame.display.update()
         clock.tick(60)
+    
+    # if door is not closed then go back to the game intro
+    soundGameDoors.play()
+    time.sleep(3)
+    game_intro()
 
 game_intro()
 game_loop()

@@ -25,6 +25,7 @@ try:
     PIN_DOWN = arduino.get_pin('d:33:i')
     PIN_BACK = arduino.get_pin('d:30:i')
     PIN_MOTION = arduino.get_pin('d:8:i')
+    PIN_DOOR = arduino.get_pin('d:38:i')    
 
     #Define all lights
     PIN_LED_B1 = arduino.get_pin('d:11:p')
@@ -99,6 +100,12 @@ class Control:
 
         def motion(self):
             keys = PIN_MOTION.read()
+            if keys:
+                return True
+            return False
+
+        def doorOpen(self):
+            keys = PIN_DOOR.read()            
             if keys:
                 return True
             return False               
@@ -182,6 +189,13 @@ class Control:
             if keys[pygame.K_SPACE]:
                 return True
             return False
+
+        def doorOpen(self):
+            pygame.event.pump()           
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_TAB]:
+                return True
+            return False            
         
         def buttonAny(self):            
             pygame.event.pump()            

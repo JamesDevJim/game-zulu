@@ -61,6 +61,11 @@ def testLoop():
         else:            
             light.LED3(0) 
 
+        if control.doorOpen():
+            gameDisplay.fill(WHITE)     
+            TextSurf, TextRect = text_objects("DOOR OPEN", largeText)   
+            light.LED4(1)                
+
         if control.buttonAny():
             if control.one():
                 gameDisplay.fill(WHITE)  

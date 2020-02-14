@@ -13,12 +13,12 @@ soundButtonPush1 = pygame.mixer.Sound("sound/button_push_1.wav")
 soundbuttonPush2 = pygame.mixer.Sound("sound/button_push_2.wav")
 
 ##### COMMON GAMEPLAY #####
-soundGameWelcome = 
-soundGameDoors = pygame.mixer.Sound("sound/") # play when door opens and closes
+#soundGameWelcome = 
+soundGameDoors = pygame.mixer.Sound("sound/ds9_door.wav") # play when door opens and closes
 soundGateSuccess = pygame.mixer.Sound("sound/sound_gate_success.wav") 
 #soundGameFail = pygame.mixer.Sound("sound/")
 #soundGameIntro = pygame.mixer.Sound("sound/")
-soundGameExit = pygame.mixer.Sound("sound/Shut Off Engine_SI 03.wav")
+#soundGameExit = pygame.mixer.Sound("sound/Shut_Off_Engine_SI_03.wav")
 
 ##### ALERTS #####
 soundAlertCritical = pygame.mixer.Sound("sound/critical.wav")
