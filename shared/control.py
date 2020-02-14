@@ -8,6 +8,7 @@ clock = pygame.time.Clock()
 useArduino = True
 
 # Try to connect to the arduino board. If it fails, then we will use the keyboard.
+# TODO: create something that finds which port the arduino is connected to...
 try:
     arduino = ArduinoMega('COM7')
     time.sleep(0.2)  

@@ -130,7 +130,6 @@ def game_intro():
         
         pygame.display.update()
         clock.tick(15)
-       
     game_loop()
         
 def gate_1():
@@ -218,6 +217,7 @@ def game_loop():
     # Start the game play music
     pygame.mixer.music.stop()
     soundGameDoors.play()
+    time.sleep(3)
     soundVoiceWelcomeStarFleet.play()
     # TODO: Change to bridge music
     pygame.mixer.music.load(gamePlayBridge)
