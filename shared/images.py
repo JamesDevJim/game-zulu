@@ -7,9 +7,9 @@ gameIcon = pygame.image.load('images/space_ship_2.png')     # This broke the cod
 
 # Game Zulu
 stars = fullScreenImage('images/galaxy1.jpg')
-spaceship1 = fullScreenImage('images/spaceship1.jpg')
-spaceship1Fail = fullScreenImage('images/spaceship1_fail.jpg')
-spaceship1Success = fullScreenImage('images/spaceship1_success.jpg')
+spaceship1 = fullScreenImage('images/game_play1.jpg')
+spaceship1Fail = fullScreenImage('images/game_play1_fail.jpg')
+spaceship1Success = fullScreenImage('images/game_play1_success.jpg')
 
 # Game Yankee
 galaxy2 = fullScreenImage('images/galaxy2.jpg')

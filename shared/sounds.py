@@ -28,9 +28,8 @@ soundAlertDamage = pygame.mixer.Sound("sound/damagealarm.wav")
 
 ##### BUTTON INPUTS #####
 soundInputDeny = pygame.mixer.Sound("sound/denybeep4.wav")
-soundInputNegative = pygame.mixer.Sound("sound/input_failed_clean.wav") # maybe pick one.
 soundInputNegative = pygame.mixer.Sound("sound/input_failed2_clean.wav")
-soundInputPositve = pygame.mixer.Sound("sound/input_ok_3_clean.wav")
+soundInputPositive = pygame.mixer.Sound("sound/input_ok_3_clean.wav")
 
 ##### EXPLOSION #####
 soundExplodeConsole1 = pygame.mixer.Sound("sound/console_explo_01.wav")
@@ -42,6 +41,11 @@ soundMissile = pygame.mixer.Sound("sound/missile.wav")
 ##### Voice #####
 # Note: Implementation of Perplesso would not have voice sounds. Players will need to interpret more on there own. Vocal cues are big cue.
 soundWarningMissile = pygame.mixer.Sound("sound/warning_incoming_missile.wav")
+soundVoiceWelcomeStarFleet = pygame.mixer.Sound("sound/331_welcome_star_fleet.wav")
+soundVoiceNotAuthorized = pygame.mixer.Sound("sound/335_not_authorized.wav")
+soundVoiceEndSimulation = pygame.mixer.Sound("sound/026_end_simulation.wav")
+soundVoiceDiagnosticComplete = pygame.mixer.Sound("sound/021_diagnostic_complete.wav")
+
 # soundVoiceWelcome = pygame.mixer.Sound("sound/")
 # soundVoiceAuthorizationRequired = pygame.mixer.Sound("sound/")
 # soundVoiceAuthorizationAccepted = pygame.mixer.Sound("sound/")
@@ -49,8 +53,8 @@ soundWarningMissile = pygame.mixer.Sound("sound/warning_incoming_missile.wav")
 # SoundVoiceInputCodes = pygame.mixer.Sound("sound/")
 
 # Misc.
-soundSensor1 = pygame.mixer.Sound("sound/Utilities-Mine or System activation-13.wav")
-soundSensor2 = pygame.mixer.Sound("sound/Utilities-Sensor-02.wav")
+#soundSensor1 = pygame.mixer.Sound("sound/Utilities-Mine or System activation-13.wav")
+#soundSensor2 = pygame.mixer.Sound("sound/Utilities-Sensor-02.wav")
 
 
 #### Background Music ####
