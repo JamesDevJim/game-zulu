@@ -10,6 +10,7 @@ import pygame
 import random
 import logging
 import time
+import os
 from shared.control import * 
 from shared.images import *
 from shared.screen import *
@@ -27,8 +28,14 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('Game Zulu')
 pygame.display.set_icon(gameIcon)
 
+def nextGame():
+    os.system('xray.py')
+    time.sleep(2)
+    pygame.quit()
+    quit()
+
 def success():
-    print('Game is won')  
+    logging.info("Game Success")
     #### DISPLAY ####
     gameDisplay.blit(spaceship1Success, (0,0))  
     pygame.display.update()     
@@ -40,7 +47,6 @@ def success():
     time.sleep(2)
     soundVoiceDiagnosticComplete.play()
     pygame.mixer.music.stop()
-    logging.info("Game Success")
 
     light.blink(0.2,6)
 
@@ -54,31 +60,28 @@ def success():
                 if event.key == pygame.K_q:
                     quitgame()
 
-        # TODO: Make Proceed only available if game was successful.
-        button("Proceed (TBD)",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN) # add object to go to next game...
+        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,nextGame)
         
         pygame.display.update()
         clock.tick(15) 
 
 def fail():
-    print('Game is lost.')
-    
+    logging.info("Game Failure")
+
+    #### DISPLAY #####
+    gameDisplay.blit(spaceship1Fail, (0,0))  
+    pygame.display.update()  
+    clock.tick(15)       
+
     #### SOUNDS ####
     pygame.mixer.music.stop()
     soundVoiceEndSimulation.play()
     time.sleep(2)  
-    soundVoiceNotAuthorized.play()
-    logging.info("Game Failure")
+    soundVoiceAccessDenied.play()
     
-    #### DISPLAY #####
-    gameDisplay.blit(spaceship1Fail, (0,0))  
-    pygame.display.update()  
-
-    pygame.display.update()
-    clock.tick(15)   
-
     light.all(0)
 
+    # Player cannot proceed. Must exit the room.
     while not control.doorOpen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -90,16 +93,13 @@ def fail():
                 if event.key == pygame.K_q:
                     quitgame()
 
-        pygame.display.update()
-        clock.tick(15)
-  
 def quitgame():
     pygame.quit()
     quit()
 
 def game_intro():
-    #intro = True
     startMusicPlay = False
+    
     while control.doorOpen():
         # Abilty to quit the game
         for event in pygame.event.get():
@@ -125,8 +125,6 @@ def game_intro():
         TextSurf, TextRect = text_objects("Training Day", largeText)
         TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.5)))
         gameDisplay.blit(TextSurf, TextRect)
-
-        # button("Enter",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.6),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,game_loop)
         
         pygame.display.update()
         clock.tick(15)
@@ -219,7 +217,6 @@ def game_loop():
     soundGameDoors.play()
     time.sleep(3)
     soundVoiceWelcomeStarFleet.play()
-    # TODO: Change to bridge music
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)
   
@@ -237,7 +234,6 @@ def game_loop():
                     quitgame()
                     quit()
 
-        #Make game assign random LED on to determine which one wins the gate.
         if gateSuccess[0]:
             gate_1()
 

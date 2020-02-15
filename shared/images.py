@@ -19,9 +19,9 @@ spaceship2Success = fullScreenImage('images/spaceship2_success.jpg')
 
 # Game Xray
 galaxy3 = fullScreenImage('images/galaxy3.jpg')
-spaceship3 = fullScreenImage('images/spaceship3.jpg')
-spaceship3Fail = fullScreenImage('images/spaceship3_fail.jpg')
-spaceship3Success = fullScreenImage('images/spaceship3_success.jpg')
+spaceship3 = fullScreenImage('images/game_play3.jpg')
+spaceship3Fail = fullScreenImage('images/game_play3_fail.jpg')
+spaceship3Success = fullScreenImage('images/game_play3_success.jpg')
 
 # Game Whiskey
 galaxy4 = fullScreenImage('images/galaxy4.jpg')
