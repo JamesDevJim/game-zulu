@@ -42,16 +42,11 @@ def success():
     clock.tick(15)
 
     #### SOUNDS ####
-    pygame.mixer.music.stop()    
-    
-    # TODO: Change
-    soundVoiceEndSimulation.play()
+    time.sleep(1)
+    pygame.mixer.stop()
+    soundVoiceWarpEnergyIncrease.play()
     time.sleep(2)
-
-    # TODO: Change
-    soundVoiceDiagnosticComplete.play()
-    pygame.mixer.music.stop()
-
+    pygame.mixer.music.stop() 
     light.blink(0.2,6)
 
     while not control.doorOpen():
@@ -78,13 +73,13 @@ def fail():
     clock.tick(15)       
 
     #### SOUNDS ####
-    pygame.mixer.music.stop()
-    # TODO: Change
-    soundVoiceEndSimulation.play()
-    time.sleep(2) 
-    # TODO: Change 
-    soundVoiceAccessDenied.play()
-    
+    time.sleep(1)
+    pygame.mixer.stop()
+    soundExplodeLarge.play()
+    time.sleep(2)
+    soundVoiceLifeSupportTerminated.play()
+    pygame.mixer.music.stop() 
+
     light.all(0)
 
     # Player cannot proceed. Must exit the room.
@@ -143,7 +138,6 @@ def gate_1():
     buttonOneLight = True
     buttonTwoLight = False 
     playSoundFX1 = True
-    playSoundFX2 = True
 
     while buttonPushes < requiredButtonPushes:
         
@@ -201,6 +195,7 @@ def gate_1():
             # Sound FXs
             if buttonPushes == 2 and playSoundFX1:
                 soundVoiceDilithiumAdjustmentsComplete.play()
+                playSoundFX1 = False
 
  # Check whether the gate has been solved
     logging.info('Gate 1: Exit while loop')
@@ -209,15 +204,10 @@ def gate_1():
         gateSuccess = [False, True, False, False]        
         logging.info('Gate 1: Solved! Entering Gate 2')
         light.all(0)
-
-        soundGateSuccess.play()
         time.sleep(0.5)
     else:
         fail()
     
-    pygame.display.update()
-    clock.tick(60)
-
 def gate_2():
     #Decoy light
     light.buttonOne(1)
@@ -230,17 +220,19 @@ def gate_2():
     soundExplodeConsole2.play() 
     time.sleep(1)      
     soundExplodeConsole2.play() 
-    time.sleep(1)        
+    time.sleep(2)        
 
-    # Give players time to respond
-    time.sleep(4)
-    # Insert Flyby sound of attack
+    soundExplodeConsole3.play()
+    time.sleep(2)
+    soundExplodeConsole1.play() 
+    time.sleep(3)
+    soundExplodeConsole2.play()     
     
-    attackTime = 3000   # 5 secs
+    attackTime = 2000   # 2 secs
     setTime = pygame.time.get_ticks()
 
     releaseTime = setTime + attackTime
-    print(control.motion())
+    logging.info(control.motion())
     while setTime < releaseTime:
         setTime = pygame.time.get_ticks()
         
@@ -267,29 +259,26 @@ def gate_2():
             fail()   
     
     # Check whether the gate has been solved
-    print('Exit while loop')
+    logging.info('Exit while loop')
     if setTime >= releaseTime:
         global gateSuccess
         gateSuccess = [False, False, True, False]        
-        print('Solved! On to gate 3')
-        # TODO: change sound to something like. "systems restored"
-        soundGateSuccess.play()
+        logging.info('Gate 2: Solved')
+        soundVoiceReloadCircuitsInitializing.play()
         
         light.all(0)
         time.sleep(0.5)
     else:
-        print('Fail Condition')
+        logging.info('Fail Condition')
         fail()
          
-    pygame.display.update()
-    clock.tick(60)
-
 def gate_3():
 
     requiredButtonPushes = 4
     buttonPushes = 0
     buttonOneLight = True
     buttonTwoLight = False 
+    playSoundFX2 = True
 
     while buttonPushes < requiredButtonPushes:
         
@@ -318,7 +307,7 @@ def gate_3():
                 time.sleep(0.3)
 
             if buttonOneLight and control.one():
-                # TODO: Put BETTER SOUND HERE....
+    
                 soundInputPositive.play()
                 buttonOneLight = not buttonOneLight
                 buttonTwoLight = not buttonTwoLight     
@@ -330,8 +319,8 @@ def gate_3():
 
             if buttonTwoLight and control.two():
                 soundInputPositive.play()
-                print('Correct button')
-                print('button pushes', buttonPushes)
+                logging.info('Correct button')
+                logging.info('button pushes', buttonPushes)
                 buttonOneLight = not buttonOneLight
                 buttonTwoLight = not buttonTwoLight     
                 buttonPushes += 1
@@ -339,28 +328,29 @@ def gate_3():
 
             if not buttonTwoLight and control.two():
                 fail()   
+
+            # Sound FXs
+            if buttonPushes == 2 and playSoundFX2:
+                soundVoiceInitiatingUpdate.play()
+                playSoundFX2 = False  
+
         time.sleep(0.1) 
+    
     # Check whether the gate has been solved
-    print('Exit while loop 3')
+    logging.info('Exit while loop 3')
     if buttonPushes ==  requiredButtonPushes:
         global gateSuccess
-        print('Solved! Running success.')
+        logging.info('Solved! Running success.')
         gateSuccess = [False, False, False, True]
-        soundGateSuccess.play()
         time.sleep(0.5)
     else:
-        print('Fail Condition')
+        logging.info('Fail Condition')
         fail()
-
-    
-    pygame.display.update()
-    clock.tick(60)
 
 def game_loop():
     global gateSuccess
     gateSuccess = [True, False, False, False]  
 
-    # TODO: Get image that is more dramatic. Flaming ship. Broken Jeffery tube or engineering
     # Background display
     gameDisplay.blit(spaceship4, (0,0))    
     pygame.display.update()   
@@ -369,13 +359,12 @@ def game_loop():
     pygame.mixer.music.stop()
     soundGameDoors.play()
     time.sleep(3)
-    # TODO: Change. Insert warning warpcore breach....
+    soundAlertCritical.play(-1)    
+    soundVoiceShieldFailureRadiation.play()
 
-    # TODO: Change    
-    pygame.mixer.music.load(gamePlayBridge)
+    pygame.mixer.music.load(gamePlayShip2)
     pygame.mixer.music.play(-1)
-    soundAlertCritical.play(-1)
-  
+
     # Game play loop
     while not control.doorOpen():
         

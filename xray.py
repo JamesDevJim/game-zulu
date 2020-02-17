@@ -45,11 +45,12 @@ def success():
     pygame.display.update()     
     clock.tick(15)
 
-    #### SOUNDS ####
-    pygame.mixer.music.stop()
-    pygame.mixer.stop()    
-    soundVoiceAutoDefenseInitiated
+    #### SOUNDS #### 
     pygame.mixer.stop()
+    soundVoiceAutoDefenseInitiated.play()
+    time.sleep(2)
+    pygame.mixer.music.stop()    
+ 
 
     light.blink(0.2,6)
 
@@ -442,7 +443,7 @@ def gate_3():
         # Check time for timeLoss
         if pygame.time.get_ticks() > timeLoss:
             fail()
-            
+
         if loaded == True and control.three():
             global gateSuccess
             gateSuccess = [False,False,False, True]        
@@ -470,11 +471,11 @@ def game_loop():
     time.sleep(5)
     soundVoiceWarning.play()
     soundExplodeSmall.play()
-    soundAlertRedAlarm.play(-1)
-
+    
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)
-  
+    soundAlertRedAlarm.play(-1)
+
     # Game play loop
     while not control.doorOpen():
         
