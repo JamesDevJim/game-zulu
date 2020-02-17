@@ -7,7 +7,6 @@ pygame.mixer.init()
 
 ##### COMMON GAMEPLAY #####
 soundGameDoors = pygame.mixer.Sound("sound/ds9_door.wav") # play when door opens and closes
-soundGateSuccess = pygame.mixer.Sound("sound/sound_gate_success.wav") 
 #soundGameExit = pygame.mixer.Sound("sound/Shut_Off_Engine_SI_03.wav")
 
 ##### ALERTS #####
@@ -62,8 +61,6 @@ soundVoiceLifeSupportTerminated = pygame.mixer.Sound("sound/017_deck_lifesupport
 soundTorpedoLoad = pygame.mixer.Sound("sound/loading_torpedo.wav")
 soundTordedoFire = pygame.mixer.Sound("sound/torpedo_fire_clean.wav")
 soundShipFlyBy = pygame.mixer.Sound("sound/borg_flyby.wav")
-#soundSensor1 = pygame.mixer.Sound("sound/Utilities-Mine or System activation-13.wav")
-#soundSensor2 = pygame.mixer.Sound("sound/Utilities-Sensor-02.wav")
 
 #### Background Music ####
 introMusicSpace = "sound/intro_music_space.wav"

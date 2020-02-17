@@ -16,6 +16,7 @@ from shared.images import *
 from shared.screen import *
 from shared.sounds import *
 from shared.constants import *
+from game_changer import openNewGame
 
 # Initialize pygame, pygame sounds, control class, and light classes
 pygame.init()
@@ -29,9 +30,9 @@ pygame.display.set_caption('Game Xray')
 pygame.display.set_icon(gameIcon)
 
 def nextGame():
-    # os.system('xray.py')
-    # TODO: Figureout how to make next game play. If lose game subsequent game then go back to first game.
-    pass
+    openNewGame('xray.py')
+    pygame.quit()
+    quit()
 
 def success():
     logging.info('Game Success')
@@ -86,6 +87,11 @@ def fail():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     quitgame()
+    
+    # Go back to game Zulu
+    openNewGame('zulu.py')
+    pygame.quit()
+    quit()
 
 def quitgame():
     pygame.quit()

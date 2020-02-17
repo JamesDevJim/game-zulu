@@ -17,6 +17,7 @@ from shared.images import *
 from shared.screen import *
 from shared.sounds import *
 from shared.constants import *
+from game_changer import openNewGame
 
 # Initialize pygame, pygame sounds, control class, and light classes
 pygame.init()
@@ -30,9 +31,9 @@ pygame.display.set_caption('Game Whiskey')
 pygame.display.set_icon(gameIcon)
 
 def nextGame():
-    ## os.system('victor.py')
-    # TODO: Figureout how to make next game play. If lose game subsequent game then go back to first game.
-    pass
+    openNewGame('victor.py')
+    pygame.quit()
+    quit()
 
 def success():
     logging.info("Game Success")
