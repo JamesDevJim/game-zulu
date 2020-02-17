@@ -11,6 +11,7 @@ import pygame
 import random
 import logging
 import time
+import os
 from shared.control import * 
 from shared.images import *
 from shared.screen import *
@@ -29,11 +30,9 @@ pygame.display.set_caption('Game Whiskey')
 pygame.display.set_icon(gameIcon)
 
 def nextGame():
-    ## os.system('xray.py')
-    time.sleep(2)
-    pygame.quit()
-    quit()
-
+    ## os.system('victor.py')
+    # TODO: Figureout how to make next game play. If lose game subsequent game then go back to first game.
+    pass
 
 def success():
     logging.info("Game Success")

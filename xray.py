@@ -1,10 +1,10 @@
 ##########################################################################
-# Title:        GAME XRAY: Authorization Required
-# Description:  3rd in the 5 game series. Proof of concept for Perplesso.  
-# Game Play:    Players must push buttons 1, 2, and 3 in the correct sequence. Lights 1, 2, 3, 4, 5 with 
-#               consequitively illuminate when correct sequence is pushed. When an incorrect sequence is pushed. The 
-#               lights turn off and the play must start over. The player has X amount of attempts. 
+# Title:        GAME XRAY: Dog Fight
+# Description:  2nd in the 5 game series. Proof of concept for Perplesso.  
+# Game Play:    Player needs to launch torpedos based on visual clues from the lights
 ##########################################################################
+
+# Sean - Do not touch. : )
 
 import pygame
 import random
@@ -25,39 +25,46 @@ light = Light()
 
 clock = pygame.time.Clock()
 
-pygame.display.set_caption('Game Xray')
+pygame.display.set_caption('Game Yankee')
 pygame.display.set_icon(gameIcon)
 
+# Set time limit for game
+timeLimit = 3   # minutes
+setTime = pygame.time.get_ticks()
+timeLoss = setTime + timeLimit*1000*60   
+
 def nextGame():
-    # os.system('xray.py')
-    time.sleep(2)
-    pygame.quit()
-    quit()
+    # os.system('whiskey.py')
+    # TODO: Figureout how to make next game play. If lose game subsequent game then go back to first game.
+    pass
 
 def success():
-    logging.info('Game Success')
+    logging.info("Game Success")
     #### DISPLAY ####
-    gameDisplay.blit(spaceship3Success, (0,0))     
-    pygame.display.update()
-    clock.tick(15) 
-    
+    gameDisplay.blit(spaceship3Success, (0,0))  
+    pygame.display.update()     
+    clock.tick(15)
+
     #### SOUNDS ####
-    pygame.mixer.music.stop()    
-    soundVoiceAuthorizationAccepted.play()
     pygame.mixer.music.stop()
-   
-    # Ability to quit game
+    pygame.mixer.stop()    
+    soundVoiceAutoDefenseInitiated
+    pygame.mixer.stop()
+
+    light.blink(0.2,6)
+
     while not control.doorOpen():
-        for event in pygame.event.get():          
+        for event in pygame.event.get():
+            # Quit game from window screen            
             if event.type == pygame.QUIT:
                 quitgame()
-
+            # Quit game from keyboard
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     quitgame()
-        
+
         button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,nextGame)
- 
+        
         pygame.display.update()
         clock.tick(15) 
 
@@ -67,11 +74,13 @@ def fail():
     #### DISPLAY #####
     gameDisplay.blit(spaceship3Fail, (0,0))  
     pygame.display.update()  
-    clock.tick(15)   
+    clock.tick(15)       
 
     #### SOUNDS ####
     pygame.mixer.music.stop()
-    soundVoiceNotAuthorized.play()
+    pygame.mixer.stop()
+    soundVoiceWarning.play() 
+    soundMissile.play()
     
     light.all(0)
 
@@ -95,10 +104,13 @@ def game_intro():
     startMusicPlay = False
     
     while control.doorOpen():
+        # Abilty to quit the game
         for event in pygame.event.get():
+            # Quit game from window screen
             if event.type == pygame.QUIT:
                 quitgame()
 
+            # Quit game from keyboard
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     quitgame()
@@ -111,47 +123,32 @@ def game_intro():
             startMusicPlay = True
 
         # Background and title
-        gameDisplay.blit(galaxy3, (0,0))
+        gameDisplay.blit(stars, (0,0))
         largeText = pygame.font.SysFont("comicsansms",100)
-        TextSurf, TextRect = text_objects("Authorization Required", largeText)
+        TextSurf, TextRect = text_objects("Dog Fight", largeText)
         TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.5)))
         gameDisplay.blit(TextSurf, TextRect)
         
         pygame.display.update()
         clock.tick(15)
-    game_loop()    
-
+    game_loop()
+        
 def gate_1():
-    light.all(0)   
+    # Player must move light ('missle') to (torpedo bay) position 2
+    light.all(0)    
+    light.LED2(1)
+    time.sleep(2)
+    light.LED2(0)
 
-    # Decrease this number to increase difficulty.
-    MAX_TRYS = 4
+    # light position
+    lightPosition = 6 # hidden to right of LED5
+    lightPositionChange = 0
+    lightPositionCorrect = 2
+    loaded = False # TODO: must move this outside function so it does not keep replaying... 
+    gate1Success = False 
     
-    # Initialize correctSteps. Number of steps in the sequence that the player must follow. Increase list to increase difficulty.
-    correctSteps = [0,0,0]
-
-    # Select buttons to include in the game. Randomly assigns correct button order
-    # numberChoices = [1,2,3]
-    # for i in range(len(correctSteps)):
-    #      correctSteps[i] = random.choice(numberChoices)
-    # print(correctSteps)    
-
-    #Comment line below and uncomment block above to randomly assign numbers and make game harderpygame.examples.aliens.main()
-    correctSteps = [2,3,2]
-
-    # Initialize the guess list
-    guesses = [0,0,0]
-
-    # What step of the sequence is the player currently on? Initialize with 0 for first number in list.
-    currentStep = 0
-
-    # Players attempts. Initialize as 1st attempt.
-    attempts = 1
-
-    # Leave game loop when players beat the game or maximum # of trys are reached.
-    logging.info('Gate 1: Enter while loop')
-    while currentStep < len(correctSteps) and attempts <= MAX_TRYS:# and not control.doorOpen():
-              
+    while not gate1Success:
+        # Ability to quit
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -167,83 +164,295 @@ def gate_1():
             quit()        
         
         if control.doorOpen():
-            game_intro()
-
-        if control.buttonAny(): 
-            # These buttons do not do anything
-            if control.down() or control.up() or control.left() or control.right():
-                soundInputNegative.play()
-            
-            # These buttons are in gameplay
-            if control.one() or control.two() or control.three():
-
-                # User enters their guess and it stores in the guess list            
-                if control.one():
-                    guesses[currentStep] = 1
-                if control.two(): 
-                    guesses[currentStep] = 2
-                if control.three():
-                    guesses[currentStep] = 3                        
-                # TODO: Make class control able to return which button was pressed
-
-                # If the correct step equals the guess, then add a light
-                if  correctSteps[currentStep] == guesses[currentStep]:
-                    logging.info('Gate 1: Correct Input')
-                    soundInputPositive.play() 
-
-                    if currentStep == 0:
-                        light.LED2(1)
-                    if currentStep == 1:
-                        light.LED3(1)
-                    if currentStep == 2:
-                        light.LED4(1)         
-                    currentStep += 1 
-                
-                # If the guess does not equal the correct step, then turn off all lights
-                else:
-                    logging.info('Gate 1: Incorrect Input')
-                    currentStep = 0
-                    attempts += 1
-                    guesses = [0,0,0]
-                    light.all(0)
-                    
-                    soundInputDeny.play()
-                    time.sleep(1)
-                    # TODO: Change to "code incorrect"
-                    soundVoiceAuthorizationDenied.play()
-
-            logging.info('Guess Array: ',guesses)
-            logging.info('Attempts: ', attempts) 
-            logging.info('Current Step: ', currentStep)
-            time.sleep(0.3)   
-    
-    # Check whether the puzzle has been solved
-    logging.info('Exit while loop')
-    if currentStep == len(correctSteps):      
-        global gateSuccess
-        gateSuccess = [False, False, False, True]
-    
-    else:
-        fail()
+            game_intro()        
         
-    pygame.display.update()
-    clock.tick(60)
+        # Game play controls
+        if control.buttonAny():
+            if control.back():
+                quitgame()
 
+            if control.right():
+                lightPositionChange = 1
+                soundInputPositive.play()
+                time.sleep(0.3)
+
+            if control.left():
+                lightPositionChange = -1
+                soundInputPositive.play()
+                time.sleep(0.3)
+
+            if control.down() or control.one() or control.two():
+                soundInputNegative.play()
+                time.sleep(0.3)
+            
+            if lightPosition != lightPositionCorrect and control.up():
+                soundVoiceUnableToComply.play()
+                time.sleep(0.3)
+            
+            if lightPosition == lightPositionCorrect and control.up():
+                loaded = True
+                soundTorpedoLoad.play()
+                time.sleep(0.3)
+
+            print ('Light Position: ', lightPosition)
+            
+        else:
+            lightPositionChange = 0
+
+        # Change light position based on change
+        lightPosition += lightPositionChange   
+
+        # Bounding the light position to the board
+        if lightPosition > 6:
+            lightPosition = 1
+        if lightPosition < 1:
+            lightPosition = 6
+
+        # Assign light position
+        light.all(0)
+        if lightPosition == 1:
+            light.LED1(1)
+        if lightPosition == 2:
+            light.LED2(1)
+        if lightPosition == 3:
+            light.LED3(1)
+        if lightPosition == 4:
+            light.LED4(1)
+        if lightPosition == 5:
+            light.LED5(1)
+        if lightPosition == 6:
+            light.all(0)        
+
+        # Check time for timeLoss
+        if pygame.time.get_ticks() > timeLoss:
+            fail()
+
+        if loaded == True and control.three():
+            global gateSuccess
+            gateSuccess = [False,True,False, False]        
+            soundTordedoFire.play()
+            light.all(0)  
+            time.sleep(0.5)
+            print('Gate 1: Success') 
+            gate1Success = True
+
+    time.sleep(0.1)       
+ 
 def gate_2():
+    # Player must move light ('missle') to (torpedo bay) position 2
+    time.sleep(1)
+    light.all(0)    
+    light.LED4(1)
+    time.sleep(2)
+    light.LED4(0)
 
-    pass
-    # Do something here.
+    # light position
+    lightPosition = 6 # hidden to right of LED5
+    lightPositionChange = 0
+    lightPositionCorrect = 4
+    loaded = False 
+    gate2Success = False
 
-    pygame.display.update()
-    clock.tick(60)
+    while not gate2Success:
+        
+        # Ability to quit
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit() 
+        
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+                    quitgame()
+                    quit()                
+        
+        if control.back():
+            pygame.quit()
+            quit()        
+        
+        if control.doorOpen():
+            game_intro()        
+        
+        # Game play controls
+        if control.buttonAny():
+            if control.back():
+                quitgame()
+
+            if control.right():
+                lightPositionChange = 1
+                soundInputPositive.play()
+                time.sleep(0.3)
+
+            if control.left():
+                lightPositionChange = -1
+                soundInputPositive.play()
+                time.sleep(0.3)
+
+            if control.down() or control.one() or control.two():
+                soundInputNegative.play()
+                time.sleep(0.3)
+            
+            if lightPosition != lightPositionCorrect and control.up():
+                soundVoiceUnableToComply.play()
+                time.sleep(0.3)
+            
+            if lightPosition == lightPositionCorrect and control.up():
+                loaded = True
+                soundTorpedoLoad.play()
+                time.sleep(0.3)
+
+            print ('Light Position: ',lightPosition)
+            
+        else:
+            lightPositionChange = 0
+
+        # Change light position based on change
+        lightPosition += lightPositionChange   
+
+        
+        # Bounding the light position to the board
+        if lightPosition > 6:
+            lightPosition = 1
+        if lightPosition < 1:
+            lightPosition = 6
+
+        # Assign light position
+        light.all(0)
+        if lightPosition == 1:
+            light.LED1(1)
+        if lightPosition == 2:
+            light.LED2(1)
+        if lightPosition == 3:
+            light.LED3(1)
+        if lightPosition == 4:
+            light.LED4(1)
+        if lightPosition == 5:
+            light.LED5(1)
+        if lightPosition == 6:
+            light.all(0)        
+
+        # Check time for timeLoss
+        if pygame.time.get_ticks() > timeLoss:
+            fail()
+
+        if loaded == True and control.three():
+            global gateSuccess
+            gateSuccess = [False,False,True, False]        
+            soundTordedoFire.play()
+            light.all(0)  
+            time.sleep(0.5)
+            print('Gate 2: Success') 
+            gate2Success = True  
+
+    time.sleep(0.1)       
 
 def gate_3():
+    # Player must move light ('missle') to (torpedo bay)
+    time.sleep(1)
+    light.all(0)    
+    light.LED3(1)
+    time.sleep(1)
+    light.LED3(0)
 
-    pass
-    # Do something here.
-    
-    pygame.display.update()
-    clock.tick(60)
+    # light position
+    lightPosition = 6 # hidden to right of LED5
+    lightPositionChange = 0
+    lightPositionCorrect = 3
+    loaded = False 
+    gate3Success = False   
+
+    while not gate3Success:
+        
+        # Ability to quit
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit() 
+        
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+                    quitgame()
+                    quit()                
+        
+        if control.back():
+            pygame.quit()
+            quit()        
+        
+        if control.doorOpen():
+            game_intro()        
+        
+        # Game play controls
+        if control.buttonAny():
+            if control.back():
+                quitgame()
+
+            if control.right():
+                lightPositionChange = 1
+                soundInputPositive.play()
+                time.sleep(0.3)
+
+            if control.left():
+                lightPositionChange = -1
+                soundInputPositive.play()
+                time.sleep(0.3)
+
+            if control.down() or control.one() or control.two():
+                soundInputNegative.play()
+                time.sleep(0.3)
+            
+            if lightPosition != lightPositionCorrect and control.up():
+                soundVoiceUnableToComply.play()
+                time.sleep(0.3)
+            
+            if lightPosition == lightPositionCorrect and control.up():
+                loaded = True
+                soundTorpedoLoad.play()
+                time.sleep(0.3)
+
+            print ('Light Position: ',lightPosition)
+            
+        else:
+            lightPositionChange = 0
+
+        # Change light position based on change
+        lightPosition += lightPositionChange   
+
+        
+        # Bounding the light position to the board
+        if lightPosition > 6:
+            lightPosition = 1
+        if lightPosition < 1:
+            lightPosition = 6
+
+        # Assign light position
+        light.all(0)
+        if lightPosition == 1:
+            light.LED1(1)
+        if lightPosition == 2:
+            light.LED2(1)
+        if lightPosition == 3:
+            light.LED3(1)
+        if lightPosition == 4:
+            light.LED4(1)
+        if lightPosition == 5:
+            light.LED5(1)
+        if lightPosition == 6:
+            light.all(0)        
+
+        # Check time for timeLoss
+        if pygame.time.get_ticks() > timeLoss:
+            fail()
+            
+        if loaded == True and control.three():
+            global gateSuccess
+            gateSuccess = [False,False,False, True]        
+            soundTordedoFire.play()
+            light.all(0)  
+            time.sleep(0.5)
+            print('Gate 3: Success')  
+            gate3Success = True
+
+    time.sleep(0.1)      
 
 def game_loop():
     global gateSuccess
@@ -251,16 +460,21 @@ def game_loop():
 
     # Background display
     gameDisplay.blit(spaceship3, (0,0))    
-    pygame.display.update()
-
+    pygame.display.update()   
+    
     # Start the game play music
     pygame.mixer.music.stop()
     soundGameDoors.play()
-    time.sleep(4)
-    soundVoiceEnterAuthorizationCode.play()
+    time.sleep(0.5)
+    soundShipFlyBy.play()
+    time.sleep(5)
+    soundVoiceWarning.play()
+    soundExplodeSmall.play()
+    soundAlertRedAlarm.play(-1)
+
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)
-
+  
     # Game play loop
     while not control.doorOpen():
         
@@ -289,7 +503,7 @@ def game_loop():
 
         pygame.display.update()
         clock.tick(60)
-
+    
     # if door is not closed then go back to the game intro
     soundGameDoors.play()
     time.sleep(1)

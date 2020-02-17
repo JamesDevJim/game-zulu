@@ -1,10 +1,10 @@
 ##########################################################################
-# Title:        GAME YANKEE: Dog Fight
-# Description:  2nd in the 5 game series. Proof of concept for Perplesso.  
-# Game Play:    Player needs to launch torpedos based on visual clues from the lights
+# Title:        GAME YANKEE: Authorization Required
+# Description:  3rd in the 5 game series. Proof of concept for Perplesso.  
+# Game Play:    Players must push buttons 1, 2, and 3 in the correct sequence. Lights 1, 2, 3, 4, 5 with 
+#               consequitively illuminate when correct sequence is pushed. When an incorrect sequence is pushed. The 
+#               lights turn off and the play must start over. The player has X amount of attempts. 
 ##########################################################################
-
-# Sean - Do not touch. : )
 
 import pygame
 import random
@@ -25,43 +25,38 @@ light = Light()
 
 clock = pygame.time.Clock()
 
-pygame.display.set_caption('Game Yankee')
+pygame.display.set_caption('Game Xray')
 pygame.display.set_icon(gameIcon)
 
 def nextGame():
-    # os.system('whiskey.py')
-    time.sleep(2)
-    pygame.quit()
-    quit()
+    # os.system('xray.py')
+    # TODO: Figureout how to make next game play. If lose game subsequent game then go back to first game.
+    pass
 
 def success():
-    logging.info("Game Success")
+    logging.info('Game Success')
     #### DISPLAY ####
-    gameDisplay.blit(spaceship2Success, (0,0))  
-    pygame.display.update()     
-    clock.tick(15)
-
+    gameDisplay.blit(spaceship2Success, (0,0))     
+    pygame.display.update()
+    clock.tick(15) 
+    
     #### SOUNDS ####
     pygame.mixer.music.stop()    
-    soundVoiceEndSimulation.play()
-    time.sleep(2)
-    soundVoiceDiagnosticComplete.play()
+    soundVoiceAuthorizationAccepted.play()
     pygame.mixer.music.stop()
-
-    light.blink(0.2,6)
-
+   
+    # Ability to quit game
     while not control.doorOpen():
-        for event in pygame.event.get():
-            # Quit game from window screen            
+        for event in pygame.event.get():          
             if event.type == pygame.QUIT:
                 quitgame()
-            # Quit game from keyboard
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     quitgame()
-
-        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,nextGame)
         
+        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,nextGame)
+ 
         pygame.display.update()
         clock.tick(15) 
 
@@ -69,15 +64,14 @@ def fail():
     logging.info("Game Failure")
 
     #### DISPLAY #####
-    gameDisplay.blit(spaceship1Fail, (0,0))  
+    gameDisplay.blit(spaceship2Fail, (0,0))  
     pygame.display.update()  
-    clock.tick(15)       
+    clock.tick(15)   
 
     #### SOUNDS ####
+    time.sleep(1)
     pygame.mixer.music.stop()
-    soundVoiceEndSimulation.play()
-    time.sleep(2)  
-    soundVoiceAccessDenied.play()
+    soundVoiceNotAuthorized.play()
     
     light.all(0)
 
@@ -101,13 +95,10 @@ def game_intro():
     startMusicPlay = False
     
     while control.doorOpen():
-        # Abilty to quit the game
         for event in pygame.event.get():
-            # Quit game from window screen
             if event.type == pygame.QUIT:
                 quitgame()
 
-            # Quit game from keyboard
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     quitgame()
@@ -122,102 +113,132 @@ def game_intro():
         # Background and title
         gameDisplay.blit(stars, (0,0))
         largeText = pygame.font.SysFont("comicsansms",100)
-        TextSurf, TextRect = text_objects("Training Day", largeText)
+        TextSurf, TextRect = text_objects("Authorization Required", largeText)
         TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.5)))
         gameDisplay.blit(TextSurf, TextRect)
         
         pygame.display.update()
         clock.tick(15)
-    game_loop()
-        
+    game_loop()    
+
 def gate_1():
-    # Player must move light ('missle') to (torpedo bay) position 2
+    light.all(0)   
+
+    # Decrease this number to increase difficulty.
+    MAX_TRYS = 4
     
-    light.LED2(1)
-    time.sleep(1)
-    light.LED2(0)
+    # Initialize correctSteps. Number of steps in the sequence that the player must follow. Increase list to increase difficulty.
+    correctSteps = [0,0,0]
 
-    # light position
-    lightPosition = 6 # hidden to right of LED5
-    lightPositionChange = 0
-    loaded = False # TODO: must move this outside function so it does not keep replaying... 
+    # Select buttons to include in the game. Randomly assigns correct button order
+    # numberChoices = [1,2,3]
+    # for i in range(len(correctSteps)):
+    #      correctSteps[i] = random.choice(numberChoices)
+    # print(correctSteps)    
 
-    # Function to move lights on light module
+    #Comment line below and uncomment block above to randomly assign numbers and make game harderpygame.examples.aliens.main()
+    correctSteps = [2,3,2]
 
-    if control.buttonAny():
-        if control.back():
-            quitgame()
+    # Initialize the guess list
+    guesses = [0,0,0]
 
-        if control.right():
-            lightPositionChange = 1
+    # What step of the sequence is the player currently on? Initialize with 0 for first number in list.
+    currentStep = 0
 
-        if control.left():
-            lightPositionChange = -1
+    # Players attempts. Initialize as 1st attempt.
+    attempts = 1
 
-    if lightPosition == 2:
-        if control.up():
-            loaded = True
-            # play loaded sound
-
-    if loaded == True and control.three():
-        global gateSuccess
-        gateSuccess = [False,True,False, False]        
-        soundInputPositive.play()
-        light.all(0)  
-        time.sleep(0.5)
-        print('Gate 1: Success. ...Entering Gate 2.')           
-   
-    # TODO: make it so if lightPosition = >6, then lightPosition = 1
-    lightPosition += lightPositionChange
-
-    pygame.display.update()
-    clock.tick(60)
-   
-def gate_2():
-    light.buttonTwo(1)
-
-    if control.buttonAny():
-
-        if control.back():
-            quitgame()
-            quit()
-
-        if control.two():      
-            global gateSuccess
-            soundInputPositive.play()
-            light.all(0)   
-            
-            time.sleep(0.5)           
-            gateSuccess = [False, False, True, False] 
-            print('Gate 2 Success. ...Entering Gate 3.') 
-
-        if control.one():
-            fail()
+    # Leave game loop when players beat the game or maximum # of trys are reached.
+    logging.info('Gate 1: Enter while loop')
+    while currentStep < len(correctSteps) and attempts <= MAX_TRYS:# and not control.doorOpen():
+              
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit() 
         
-        if control.down() or control.up() or control.left() or control.right() or control.three():
-            soundInputNegative.play()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+                    quitgame()
+                    quit()                
+        
+        if control.back():
+            pygame.quit()
+            quit()        
+        
+        if control.doorOpen():
+            game_intro()
+
+        if control.buttonAny(): 
+            # These buttons do not do anything
+            if control.down() or control.up() or control.left() or control.right():
+                soundInputNegative.play()
+            
+            # These buttons are in gameplay
+            if control.one() or control.two() or control.three():
+
+                # User enters their guess and it stores in the guess list            
+                if control.one():
+                    guesses[currentStep] = 1
+                if control.two(): 
+                    guesses[currentStep] = 2
+                if control.three():
+                    guesses[currentStep] = 3                        
+                # TODO: Make class control able to return which button was pressed
+
+                # If the correct step equals the guess, then add a light
+                if  correctSteps[currentStep] == guesses[currentStep]:
+                    logging.info('Gate 1: Correct Input')
+                    soundInputPositive.play() 
+
+                    if currentStep == 0:
+                        light.LED2(1)
+                    if currentStep == 1:
+                        light.LED3(1)
+                    if currentStep == 2:
+                        light.LED4(1)         
+                    currentStep += 1 
+                
+                # If the guess does not equal the correct step, then turn off all lights
+                else:
+                    logging.info('Gate 1: Incorrect Input')
+                    currentStep = 0
+                    attempts += 1
+                    guesses = [0,0,0]
+                    light.all(0)
+                    
+                    soundInputDeny.play()
+                    time.sleep(1)
+                    # TODO: Change to "code incorrect"
+                    # This is a bad recording
+                    soundVoiceAccessDenied.play()
+
+            logging.info('Guess Array: ',guesses)
+            logging.info('Attempts: ', attempts) 
+            logging.info('Current Step: ', currentStep)
+            time.sleep(0.3)   
+    
+    # Check whether the puzzle has been solved
+    logging.info('Exit while loop')
+    if currentStep == len(correctSteps):      
+        global gateSuccess
+        gateSuccess = [False, False, False, True]
+    
+    else:
+        fail()
+        
+def gate_2():
+
+    pass
+    # Do something here.
 
     pygame.display.update()
     clock.tick(60)
 
 def gate_3():
-    light.LED3(1)
-   
-    if control.buttonAny():
 
-        if control.back():
-            pygame.quit()
-            quit()
-
-        if control.three():      
-            global gateSuccess
-            gateSuccess = [False, False, False, True]            
-            
-            light.all(0)     
-            print('Gate 3 Success.')
-
-        if control.one() or control.two() or control.down() or control.left() or control.right() or control.up():
-            fail()
+    pass
+    # Do something here.
     
     pygame.display.update()
     clock.tick(60)
@@ -227,17 +248,17 @@ def game_loop():
     gateSuccess = [True, False, False, False]
 
     # Background display
-    gameDisplay.blit(spaceship1, (0,0))    
-    pygame.display.update()   
-    
+    gameDisplay.blit(spaceship2, (0,0))    
+    pygame.display.update()
+
     # Start the game play music
     pygame.mixer.music.stop()
     soundGameDoors.play()
-    time.sleep(3)
-    soundVoiceWelcomeStarFleet.play()
+    time.sleep(4)
+    soundVoiceEnterAuthorizationCode.play()
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)
-  
+
     # Game play loop
     while not control.doorOpen():
         
@@ -266,10 +287,9 @@ def game_loop():
 
         pygame.display.update()
         clock.tick(60)
-    
+
     # if door is not closed then go back to the game intro
     soundGameDoors.play()
-    time.sleep(1)
     game_intro()
 
 game_intro()

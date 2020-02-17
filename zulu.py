@@ -29,10 +29,9 @@ pygame.display.set_caption('Game Zulu')
 pygame.display.set_icon(gameIcon)
 
 def nextGame():
-    os.system('xray.py')
-    time.sleep(2)
-    pygame.quit()
-    quit()
+    # os.system('yankee.py')
+    # TODO: Figureout how to make next game play. If lose game subsequent game then go back to first game.
+    pass
 
 def success():
     logging.info("Game Success")
@@ -42,7 +41,8 @@ def success():
     clock.tick(15)
 
     #### SOUNDS ####
-    pygame.mixer.music.stop()    
+    pygame.mixer.music.stop()  
+    pygame.mixer.stop()  
     soundVoiceEndSimulation.play()
     time.sleep(2)
     soundVoiceDiagnosticComplete.play()
@@ -75,6 +75,7 @@ def fail():
 
     #### SOUNDS ####
     pygame.mixer.music.stop()
+    pygame.mixer.stop()
     soundVoiceEndSimulation.play()
     time.sleep(2)  
     soundVoiceAccessDenied.play()
@@ -147,7 +148,7 @@ def gate_1():
             
             time.sleep(0.5)
             gateSuccess = [False,True,False, False]
-            print('Gate 1 Success. ...Entering Gate 2.')    
+            logging.info('Gate 1: Success.')    
 
         if control.two():
             fail()
@@ -171,7 +172,7 @@ def gate_2():
             
             time.sleep(0.5)           
             gateSuccess = [False, False, True, False] 
-            print('Gate 2 Success. ...Entering Gate 3.') 
+            logging.info('Gate 2: Success.') 
 
         if control.one():
             fail()
@@ -196,7 +197,7 @@ def gate_3():
             gateSuccess = [False, False, False, True]            
             
             light.all(0)     
-            print('Gate 3 Success.')
+            logging.info('Gate 3: Success.')
 
         if control.one() or control.two() or control.down() or control.left() or control.right() or control.up():
             fail()
@@ -220,6 +221,9 @@ def game_loop():
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)
   
+    # Game lights start at OFF
+    light.all(0)
+
     # Game play loop
     while not control.doorOpen():
         
@@ -251,7 +255,6 @@ def game_loop():
     
     # if door is not closed then go back to the game intro
     soundGameDoors.play()
-    time.sleep(1)
     game_intro()
 
 game_intro()
