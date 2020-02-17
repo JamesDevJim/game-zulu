@@ -6,7 +6,7 @@ from shared.screen import *
 gameIcon = pygame.image.load('images/space_ship_2.png')     # This broke the code when trying to load to big an image...
 
 # Common Images
-stars = fullScreenImage('images/galaxy1.jpg')
+stars = fullScreenImage('images/stars.png')
 
 # Game Zulu
 spaceship1 = fullScreenImage('images/game_play1.jpg')
