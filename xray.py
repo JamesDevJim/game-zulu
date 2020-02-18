@@ -39,7 +39,6 @@ def nextGame():
     pygame.quit()
     quit()
 
-
 def success():
     logging.info("Game Success")
     #### DISPLAY ####

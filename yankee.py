@@ -60,6 +60,8 @@ def success():
  
         pygame.display.update()
         clock.tick(15) 
+    soundGameDoors.play()
+    fail()
 
 def fail():
     logging.info("Game Failure")
@@ -89,6 +91,7 @@ def fail():
                     quitgame()
     
     # Go back to game Zulu
+    soundGameDoors.play()
     openNewGame('zulu.py')
     pygame.quit()
     quit()
@@ -173,7 +176,8 @@ def gate_1():
             quit()        
         
         if control.doorOpen():
-            game_intro()
+            soundGameDoors.play()
+            fail()
 
         if control.buttonAny(): 
             # These buttons do not do anything
@@ -296,7 +300,7 @@ def game_loop():
 
     # if door is not closed then go back to the game intro
     soundGameDoors.play()
-    game_intro()
+    fail()
 
 game_intro()
 game_loop()
