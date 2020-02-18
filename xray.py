@@ -33,9 +33,21 @@ pygame.display.set_icon(gameIcon)
 timeLimit = 3   # minutes
 setTime = pygame.time.get_ticks()
 timeLoss = setTime + timeLimit*1000*60   
-
 def nextGame():
-    openNewGame('whiskey.py')
+    openNewGame('whiskey.py') 
+    pygame.quit()
+    quit()
+
+def changeGame(mode):
+    # if lose, reset back to game zulu
+    if mode == 'reset':
+        openNewGame('zulu.py') 
+    
+    # if win, proceed to next game
+    if mode == 'next':
+        openNewGame('whiskey.py')
+    
+    # Quit current game
     pygame.quit()
     quit()
 
@@ -52,7 +64,6 @@ def success():
     time.sleep(2)
     pygame.mixer.music.stop()    
  
-
     light.blink(0.2,6)
 
     while not control.doorOpen():
@@ -65,7 +76,7 @@ def success():
                 if event.key == pygame.K_q:
                     quitgame()
 
-        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,nextGame)
+        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN, nextGame)
         
         pygame.display.update()
         clock.tick(15) 
@@ -97,7 +108,11 @@ def fail():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     quitgame()
-
+    
+    # Go back to game Zulu
+    soundGameDoors.play()
+    changeGame('reset')
+    
 def quitgame():
     pygame.quit()
     quit()
@@ -166,7 +181,8 @@ def gate_1():
             quit()        
         
         if control.doorOpen():
-            game_intro()        
+            soundGameDoors.play()
+            changeGame('reset')      
         
         # Game play controls
         if control.buttonAny():
@@ -273,7 +289,8 @@ def gate_2():
             quit()        
         
         if control.doorOpen():
-            game_intro()        
+            soundGameDoors.play()
+            changeGame('reset')       
         
         # Game play controls
         if control.buttonAny():
@@ -381,7 +398,8 @@ def gate_3():
             quit()        
         
         if control.doorOpen():
-            game_intro()        
+            soundGameDoors.play()
+            changeGame('reset')          
         
         # Game play controls
         if control.buttonAny():
@@ -507,9 +525,8 @@ def game_loop():
         clock.tick(60)
     
     # if door is not closed then go back to the game intro
-    soundGameDoors.play()
-    time.sleep(1)
-    game_intro()
+        soundGameDoors.play()
+        changeGame('reset')   
 
 game_intro()
 game_loop()

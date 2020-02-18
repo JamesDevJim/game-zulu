@@ -29,7 +29,17 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('Game Victor')
 pygame.display.set_icon(gameIcon)
 
-def nextGame():
+def changeGame(mode):
+    # if lose, reset back to game zulu
+    if mode == 'reset':
+        openNewGame('zulu.py') 
+    
+    # if win, proceed to next game
+    if mode == 'next':
+        # No more games to play. You Win!
+        pass
+    
+    # Quit current game
     pygame.quit()
     quit()
 
@@ -55,7 +65,7 @@ def success():
                 if event.key == pygame.K_q:
                     quitgame()
 
-        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,nextGame)
+        button("YOU WIN",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,pass)
         
         pygame.display.update()
         clock.tick(15) 
@@ -83,6 +93,9 @@ def fail():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     quitgame()
+    # Go back to game Zulu
+    soundGameDoors.play()
+    changeGame('reset')   
 
 def quitgame():
     pygame.quit()
@@ -166,7 +179,6 @@ def gate_2():
         if control.down() or control.up() or control.left() or control.right() or control.three():
             soundInputNegative.play()
 
-
 def gate_3():
     light.LED3(1)
    
@@ -185,7 +197,6 @@ def gate_3():
 
         if control.one() or control.two() or control.down() or control.left() or control.right() or control.up():
             fail()
-
 
 def game_loop():
     global gateSuccess
@@ -234,9 +245,9 @@ def game_loop():
         pygame.display.update()
         clock.tick(60)
     
-    # if door is not closed then go back to the game intro
+    # if door is open then go back to the beginning
     soundGameDoors.play()
-    game_intro()
+    changeGame('reset') 
 
 game_intro()
 game_loop()

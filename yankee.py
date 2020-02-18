@@ -30,7 +30,21 @@ pygame.display.set_caption('Game Xray')
 pygame.display.set_icon(gameIcon)
 
 def nextGame():
-    openNewGame('xray.py')
+    openNewGame('xray.py') 
+    pygame.quit()
+    quit()
+
+# TODO: Fix this so when I call funtion changeGame('next') it don't play immediately without button click.
+def changeGame(mode):
+    # if lose, reset back to game zulu
+    if mode == 'reset':
+        openNewGame('zulu.py') 
+    
+    # if win, proceed to next game
+    if mode == 'next':
+        openNewGame('xray.py')
+    
+    # Quit current game
     pygame.quit()
     quit()
 
@@ -56,7 +70,7 @@ def success():
                 if event.key == pygame.K_q:
                     quitgame()
         
-        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,nextGame)
+        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN, nextGame)
  
         pygame.display.update()
         clock.tick(15) 
@@ -92,9 +106,7 @@ def fail():
     
     # Go back to game Zulu
     soundGameDoors.play()
-    openNewGame('zulu.py')
-    pygame.quit()
-    quit()
+    changeGame('reset')
 
 def quitgame():
     pygame.quit()
@@ -103,6 +115,7 @@ def quitgame():
 def game_intro():
     startMusicPlay = False
     
+    # May need to remove this when playing in sequence with other games...
     while control.doorOpen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -177,7 +190,7 @@ def gate_1():
         
         if control.doorOpen():
             soundGameDoors.play()
-            fail()
+            changeGame('reset')
 
         if control.buttonAny(): 
             # These buttons do not do anything
@@ -238,21 +251,13 @@ def gate_1():
         fail()
         
 def gate_2():
-
     pass
     # Do something here.
 
-    pygame.display.update()
-    clock.tick(60)
-
 def gate_3():
-
     pass
     # Do something here.
     
-    pygame.display.update()
-    clock.tick(60)
-
 def game_loop():
     global gateSuccess
     gateSuccess = [True, False, False, False]
@@ -300,7 +305,7 @@ def game_loop():
 
     # if door is not closed then go back to the game intro
     soundGameDoors.play()
-    fail()
+    changeGame('reset')
 
 game_intro()
 game_loop()

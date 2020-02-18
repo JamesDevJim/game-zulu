@@ -18,6 +18,8 @@ from shared.sounds import *
 from shared.constants import *
 from game_changer import openNewGame
 
+logging.basicConfig(filename='example.log', filemode='w', level=logging.INFO)
+
 # Initialize pygame, pygame sounds, control class, and light classes
 pygame.init()
 pygame.mixer.init()
@@ -28,9 +30,21 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption('Game Zulu')
 pygame.display.set_icon(gameIcon)
-
 def nextGame():
-    openNewGame('yankee.py')
+    openNewGame('yankee.py') 
+    pygame.quit()
+    quit()
+
+def changeGame(mode):
+    # if lose, reset back to game zulu
+    if mode == 'reset':
+        openNewGame('zulu.py') 
+    
+    # if win, proceed to next game
+    if mode == 'next':
+        openNewGame('yankee.py')
+    
+    # Quit current game
     pygame.quit()
     quit()
 
@@ -61,7 +75,7 @@ def success():
                 if event.key == pygame.K_q:
                     quitgame()
 
-        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,nextGame)
+        button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN, nextGame )
         
         pygame.display.update()
         clock.tick(15)
@@ -98,7 +112,6 @@ def fail():
 def quitgame():
     pygame.quit()
     quit()
-
 
 def game_intro():
     startMusicPlay = False
@@ -158,7 +171,6 @@ def gate_1():
     pygame.display.update()
     clock.tick(60)
 
-
 def gate_2():
     light.buttonTwo(1)
 
@@ -186,7 +198,6 @@ def gate_2():
     pygame.display.update()
     clock.tick(60)
 
-
 def gate_3():
     light.LED3(1)
    
@@ -208,7 +219,6 @@ def gate_3():
     
     pygame.display.update()
     clock.tick(60)
-
 
 def game_loop():
     global gateSuccess
@@ -261,7 +271,6 @@ def game_loop():
     # if door is not closed then go back to the game intro
     soundGameDoors.play()
     game_intro()
-
 
 game_intro()
 game_loop()
