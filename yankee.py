@@ -9,7 +9,7 @@
 import pygame
 import random
 import logging
-import time
+import time 
 import os
 from shared.control import * 
 from shared.images import *
@@ -18,7 +18,7 @@ from shared.sounds import *
 from shared.constants import *
 from game_changer import openNewGame
 
-# Initialize pygame, pygame sounds, control class, and light classes
+# Initialize pygame, pygame sounds, control class,and light classes
 pygame.init()
 pygame.mixer.init()
 control = Control()
@@ -150,7 +150,7 @@ def gate_1():
     MAX_TRYS = 4
     
     # Initialize correctSteps. Number of steps in the sequence that the player must follow. Increase list to increase difficulty.
-    correctSteps = [0,0,0]
+    # correctSteps = [0,0,0]
 
     # Select buttons to include in the game. Randomly assigns correct button order
     # numberChoices = [1,2,3]
