@@ -1,9 +1,20 @@
 import pygame
 import time
 from pyfirmata import ArduinoMega, util
+import serial.tools.list_ports
+import serial
+
+a=serial.tools.list_ports.comports()
+for w in a:
+    print("Port:", w.device,"\tSerial#:", w.serial_number)
+
+# if w.Serial == 'GET SERIAL #'
+#   portArduinoMega = w.Serial
+# 
+# if w.Serial == 'other arduino'
+#   portArduinoNano = w.Serial 
 
 pygame.init
-
 clock = pygame.time.Clock()
 useArduino = True
 
