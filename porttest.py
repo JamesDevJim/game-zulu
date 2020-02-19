@@ -9,7 +9,7 @@ ArduinoNano2Port = 'None'
 
 # comment
 for w in a:
-    print("Port:", w.device,"\tSerial#:", w.serial_number, w.hwid, w.vid, w.name)
+    print("Port:", w.device,"\tSerial#:", w.serial_number, w.hwid, w.vid, w.name, w.pid)
     if w.serial_number == '558383437333512132D0':
         ArduinoMegaPort = w.device
 

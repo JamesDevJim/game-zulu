@@ -5,14 +5,20 @@ import serial.tools.list_ports
 import serial
 
 a=serial.tools.list_ports.comports()
-for w in a:
-    print("Port:", w.device,"\tSerial#:", w.serial_number)
 
-# if w.Serial == 'GET SERIAL #'
-#   portArduinoMega = w.Serial
-# 
-# if w.Serial == 'other arduino'
-#   portArduinoNano = w.Serial 
+ArduinoMegaPort = 'None'
+ArduinoNanoPort = 'None'
+
+# comment
+for w in a:
+    # print("Port:", w.device,"\tSerial#:", w.serial_number)
+    if w.serial_number == '558383437333512132D0':
+        ArduinoMegaPort = w.device
+
+    if w.serial_number == '5':
+        ArduinoNanoPort = w.device
+
+print('Arduino Mega Port: ', ArduinoMegaPort)
 
 pygame.init
 clock = pygame.time.Clock()
@@ -21,7 +27,10 @@ useArduino = True
 # Try to connect to the arduino board. If it fails, then we will use the keyboard.
 # TODO: create something that finds which port the arduino is connected to...
 try:
-    arduino = ArduinoMega('COM7')
+    arduino = ArduinoMega(ArduinoMegaPort)
+    # arduino = ArduinoMega('/dev/ttyACM1')    
+    # arduino = ArduinoMega('/dev/ttyACM0')
+    # arduino = ArduinoMega('COM7')
     time.sleep(0.2)  
     iterator = util.Iterator(arduino)
     iterator.start()
