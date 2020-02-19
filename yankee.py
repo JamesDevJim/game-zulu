@@ -269,7 +269,7 @@ def game_loop():
     # Start the game play music
     pygame.mixer.music.stop()
     soundGameDoors.play()
-    time.sleep(4)
+    time.sleep(3)
     soundVoiceEnterAuthorizationCode.play()
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)

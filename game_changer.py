@@ -1,7 +1,13 @@
 # This file will change between games as players win and lose.
 
-import os
+import subprocess, os, platform
 
+def openNewGame(fileOpen):
+    
+    if platform.system() == 'Windows':    # Windows
+        os.startfile(fileOpen)
+    else:                                   # linux variants
+        subprocess.call(('xdg-open', fileOpen))
 
 # def openNewGame(fileClose, fileOpen):
 #     #Close current file
@@ -18,13 +24,7 @@ import os
 #         print str(e)
 
 
-def openNewGame(fileOpen):
 
-    # Open new subsequent file
-    try:
-        os.startfile(fileOpen)
-    except:
-        pass
 
 
 
