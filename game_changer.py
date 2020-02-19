@@ -9,7 +9,9 @@ def openNewGame(fileOpen):
     else:                                   # linux variants
         #subprocess.call(('cmd', '/C', 'start', fileOpen))
         #subprocess.call(('open', fileOpen))
-        webbrowser.open(fileOpen)
+        # webbrowser.open(fileOpen)
+        opener ="open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, fileOpen])
 
 # def openNewGame(fileClose, fileOpen):
 #     #Close current file
