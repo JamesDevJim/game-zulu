@@ -1,6 +1,6 @@
 # This file will change between games as players win and lose.
 
-import subprocess, os, platform, webbrowser
+import subprocess, os, platform, webbrowser, sys
 
 def openNewGame(fileOpen):
     
