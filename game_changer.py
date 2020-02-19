@@ -7,7 +7,8 @@ def openNewGame(fileOpen):
     if platform.system() == 'Windows':    # Windows
         os.startfile(fileOpen)
     else:                                   # linux variants
-        subprocess.call(('xdg-open', fileOpen))
+        subprocess.call(('cmd', '/C', 'start', fileOpen))
+        #subprocess.call(('xdg-open', fileOpen))
 
 # def openNewGame(fileClose, fileOpen):
 #     #Close current file
