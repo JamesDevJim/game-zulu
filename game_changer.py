@@ -12,7 +12,7 @@ def openNewGame(fileOpen):
         # webbrowser.open(fileOpen)
         #opener ="open" if sys.platform == "darwin" else "xdg-open"
         #subprocess.call([opener, fileOpen])
-        subprocess.Popen(["python", fileOpen])
+        subprocess.Popen(["python3", fileOpen])
 
 # def openNewGame(fileClose, fileOpen):
 #     #Close current file
