@@ -8,7 +8,7 @@ def openNewGame(fileOpen):
         os.startfile(fileOpen)
     else:                                   # linux variants
         #subprocess.call(('cmd', '/C', 'start', fileOpen))
-        subprocess.call(['open', fileOpen])
+        subprocess.call(('open', fileOpen))
 
 # def openNewGame(fileClose, fileOpen):
 #     #Close current file
