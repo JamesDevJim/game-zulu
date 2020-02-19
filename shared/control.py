@@ -3,11 +3,38 @@ import time
 from pyfirmata import ArduinoMega, util
 import serial.tools.list_ports
 import serial
-
 a=serial.tools.list_ports.comports()
 
 ArduinoMegaPort = 'None'
 ArduinoNanoPort = 'None'
+
+useArduino2 = True
+
+try:
+    arduino2 = serial.Serial('COM11', 9600)
+    time.sleep(1)
+    print('Light strip connection: Successful')
+except NameError:
+    arduino2 = serial.Serial('/dev/ttyUSB0', 9600)
+except:
+    useArduino2 = False
+    print('Light strip connection: Unsuccessful')
+
+
+if useArduino2:
+    # Obtained structure from: https://github.com/bportaluri/AlaWeb/blob/master/AlaWeb.py
+    def arduino2_get_resp(s):
+        time.sleep(.1);
+        while (s.in_waiting > 0):
+            print(s.readline().decode(), end="");
+
+    def arduino2_send_cmd(s):
+        arduino2.flush();
+        s = s+'\n'
+        arduino2.write(s.encode());
+        arduino2_get_resp(arduino2);
+        time.sleep(.1);
+        arduino2.flush()
 
 # comment
 for w in a:
@@ -18,7 +45,7 @@ for w in a:
     if w.serial_number == '5':
         ArduinoNanoPort = w.device
 
-print('Arduino Mega Port: ', ArduinoMegaPort)
+# print('Arduino Mega Port: ', ArduinoMegaPort)
 
 pygame.init
 clock = pygame.time.Clock()
@@ -56,10 +83,11 @@ try:
     PIN_LED3 = arduino.get_pin('d:5:p')
     PIN_LED4 = arduino.get_pin('d:4:p')
     PIN_LED5 = arduino.get_pin('d:13:p')
+    print('Button box connection: Successful')
 
 except:
     useArduino = False
-    print('Button box failed to connect.')
+    print('Button box connection: Unsuccessful')
 
 # Set up a class to read all the inputs on the box. If box is not availabled then use the keyboard.
 class Control:
@@ -301,21 +329,22 @@ class Light:
         #           # LIGHT[i] OFF
         #           # time.sleep(rate)
 
-        # def strip(color, function, speed):
-        #     features
-        #         red alert: Blinking red
-        #         button box explosion: red and white flash
-        #         success condition: green
-        #         fail condition: red solid
-        #         gameplay: blueish whitish
-        #         game intro: very dim light
-        #     functions
-        #         chase sequence
-        #         blink
-        #         solid 
-        #         alternate (two colors)
+    if useArduino2:
+        def strip(animation, brightness=None, duration=None , color=None, palette=None):
+            if animation is not None:
+                arduino2_send_cmd(animation)    
+            if brightness is not None:   
+                arduino2_send_cmd(brightness)
+            if duration is not None:
+                arduino2_send_cmd(duration)
+            if duration is not None:
+                arduino2_send_cmd(duration)
+            if color is not None:      
+                arduino2_send_cmd(color)
+            if palette is not None:      
+                arduino2_send_cmd(palette)
 
-        #                      
+                     
 
     # TODO: If neccessary, create an list of simulated lights so tester w/o arduino board can see what is lit and what is not
     if not useArduino:   
@@ -336,4 +365,7 @@ class Light:
         def all(self, state):
             pass
         def blink(self,rate,times):
-            pass            
+            pass
+    if not useArduino2:    
+        def strip(animation, brightness=None, duration=None , color=None, palette=None):
+            pass          

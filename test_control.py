@@ -10,6 +10,8 @@ from shared.control import *
 from shared.constants import *
 from shared.screen import *
 
+print('------'+'Test Control'+'------ \n')
+
 # Initialize pygame and control & light classes
 pygame.init()
 control = Control()

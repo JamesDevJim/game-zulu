@@ -1,87 +1,169 @@
-# Light test
 import serial
 import time
-#ser = serial.Serial('/dev/ttyUSB0', 9600)
-ser = serial.Serial('COM11', 9600)
+
+print('-------------------------------------------------------------------------------------\n''Test Light Strip \n'+'')
+
+try:
+    #arduino2 = serial.Serial('/dev/ttyUSB0', 9600)
+    arduino2 = serial.Serial('COM11', 9600)
+    time.sleep(1)
+except:
+    pass
+# Obtained structure from: https://github.com/bportaluri/AlaWeb/blob/master/AlaWeb.py
+def arduino2_get_resp(s):
+    time.sleep(.1);
+    while (s.in_waiting > 0):
+        print(s.readline().decode(), end="");
+
+def arduino2_send_cmd(s):
+    arduino2.flush();
+    s = s+'\n'
+    arduino2.write(s.encode());
+    arduino2_get_resp(arduino2);
+    time.sleep(.1);
+    arduino2.flush()
+
+def strip(animation, brightness=None, duration=None , color=None, palette=None):
+    if animation is not None:
+        arduino2_send_cmd(animation)    
+    if brightness is not None:   
+        arduino2_send_cmd(brightness)
+    if duration is not None:
+        arduino2_send_cmd(duration)
+    if duration is not None:
+        arduino2_send_cmd(duration)
+    if color is not None:      
+        arduino2_send_cmd(color)
+    if palette is not None:      
+        arduino2_send_cmd(palette)
+
+##### TESTS #####
+
+# On test
+print('Light Test: ON')
+arduino2_send_cmd('A=101')
+time.sleep(2)
+arduino2_send_cmd('A=102')
 time.sleep(2)
 
+# Blink test maybe for alarm
+print('Light Test: BLINK')
+arduino2_send_cmd('D=500')
+arduino2_send_cmd('A=103')
+time.sleep(2)
+arduino2_send_cmd('A=102')
+time.sleep(2)
 
-print("Welcome to ALA RgbStripSerial example")
-print("A=[animation code] Set the animation. See https://github.com/bportaluri/ALA/blob/master/src/AlaLed.h")
-print("B=[brightness]     Set the brightness [0-100]")
-print("D=[duration]       Set the duration in milliseconds of the animation cycle")
-print("C=[color]          Set the color (hexadecimal RGB representation ex. 0xE8A240)")
-print("P=[palette]        Set the palette.")
+# Lars Scanner test
+print('Light Test: SCANNER')
+arduino2_send_cmd('D=1000')
+arduino2_send_cmd('P=5')
+arduino2_send_cmd('A=251')
+time.sleep(2)
+arduino2_send_cmd('A=102')
+time.sleep(2)
+
+# Battle test for Xray
+print('Light Test: BATTLE')
+arduino2_send_cmd('D=2000')
+arduino2_send_cmd('C=0xFF0000')
+arduino2_send_cmd('A=103')
+time.sleep(4)
+arduino2_send_cmd('A=102')
+time.sleep(2)
+
+# Plasma for Whiskey
+print('Light Test: PLASMA')
+arduino2_send_cmd('A=305')
+arduino2_send_cmd('P=5')
+time.sleep(2)
+arduino2_send_cmd('A=102')
+time.sleep(2)
+
+# Spark test 
+print('Light Test: SPARK')
+arduino2_send_cmd('D=1000')
+arduino2_send_cmd('P=0')
+arduino2_send_cmd('A=107')
+time.sleep(2)
+arduino2_send_cmd('A=102')
+time.sleep(2)
+
+# On test
+print('Light Test: ON FUNCTION TEST')
+strip('A=101')
+time.sleep(2)
+strip('A=102')
+time.sleep(2)
+
+# print("Welcome to ALA RgbStripSerial example")
+# print("A=[animation code] Set the animation. See https://github.com/bportaluri/ALA/blob/master/src/AlaLed.h")
+# print("B=[brightness]     Set the brightness [0-100]")
+# print("D=[duration]       Set the duration in milliseconds of the animation cycle")
+# print("C=[color]          Set the color (hexadecimal RGB representation ex. 0xE8A240)")
+# print("P=[palette]        Set the palette.")
 
 
-# From Raspi to Arduino
-ser.flush()
-messageSend = "D=500"
-messageSend = messageSend +'\n'
-ser.write(messageSend.encode())
-ser.flush()
-print('Human Read Version: ',messageSend,'Arduino Version: ', messageSend.encode())
+##### ANIMATIONS #####
+    #ON 101
+    #OFF 102
+    #BLINK 103
+    #BLINKALT 104
+    #SPARKLE 105
+    #SPARKLE2 106
+    #STROBO 107
 
-time.sleep(1)
-ser.flush()
-messageSend = "B=20"
-messageSend = messageSend +'\n'
-ser.write(messageSend.encode())
-ser.flush()
-print('Human Read Version: ',messageSend,'Arduino Version: ', messageSend.encode())
+    #CYCLECOLORS 151
 
-time.sleep(1)
-ser.flush()
-messageSend = "A=103"
-messageSend = messageSend +'\n'
-ser.write(messageSend.encode())
-ser.flush()
-print('Human Read Version: ',messageSend,'Arduino Version: ', messageSend.encode())
+    #PIXELSHIFTRIGHT 201
+    #PIXELSHIFTLEFT 202
+    #PIXELBOUNCE 203
+    #PIXELSMOOTHSHIFTRIGHT 211
+    #PIXELSMOOTHSHIFTLEFT 212
+    #PIXELSMOOTHBOUNCE 213
+    #COMET 221
+    #COMETCOL 222
+    #BARSHIFTRIGHT 231
+    #BARSHIFTLEFT 232
+    #MOVINGBARS 241
+    #MOVINGGRADIENT 242
+    #LARSONSCANNER 251
+    #LARSONSCANNER2 252
+
+    #FADEIN 301
+    #FADEOUT 302
+    #FADEINOUT 303
+    #GLOW 304
+    #PLASMA 305
+
+    #FADECOLORS 351
+    #FADECOLORSLOOP 352
+    #PIXELSFADECOLORS 353
+    #FLAME 354
+
+    #FIRE 501
+    #BOUNCINGBALLS 502
+    #BUBBLES 503
+
+    # ENDSEQ 0
+    # STOPSEQ 1
 
 
+##### COLORS #####
+    # Red #FF0000
+    # Yellow #FFFF00
+    # Green #00FF00
+    # Green D #008000
+    # Blue #0000FF
+    # Blue D #000080
+    # Fushia #FF00FF
 
+##### PALATE #####
+    # 0 - White
+    # 1
+    # 2
+    # 3 - Rambow?
+    # 4
+    # 5 - Fire
 
-
-## Animations
-#define ALA_ON 101
-#define ALA_OFF 102
-#define ALA_BLINK 103
-#define ALA_BLINKALT 104
-#define ALA_SPARKLE 105
-#define ALA_SPARKLE2 106
-#define ALA_STROBO 107
-
-#define ALA_CYCLECOLORS 151
-
-#define ALA_PIXELSHIFTRIGHT 201
-#define ALA_PIXELSHIFTLEFT 202
-#define ALA_PIXELBOUNCE 203
-#define ALA_PIXELSMOOTHSHIFTRIGHT 211
-#define ALA_PIXELSMOOTHSHIFTLEFT 212
-#define ALA_PIXELSMOOTHBOUNCE 213
-#define ALA_COMET 221
-#define ALA_COMETCOL 222
-#define ALA_BARSHIFTRIGHT 231
-#define ALA_BARSHIFTLEFT 232
-#define ALA_MOVINGBARS 241
-#define ALA_MOVINGGRADIENT 242
-#define ALA_LARSONSCANNER 251
-#define ALA_LARSONSCANNER2 252
-
-#define ALA_FADEIN 301
-#define ALA_FADEOUT 302
-#define ALA_FADEINOUT 303
-#define ALA_GLOW 304
-#define ALA_PLASMA 305
-
-#define ALA_FADECOLORS 351
-#define ALA_FADECOLORSLOOP 352
-#define ALA_PIXELSFADECOLORS 353
-#define ALA_FLAME 354
-
-#define ALA_FIRE 501
-#define ALA_BOUNCINGBALLS 502
-#define ALA_BUBBLES 503
-
-#define ALA_ENDSEQ 0
-#define ALA_STOPSEQ 1
+print('-------------------------------------------------------------------------------------\n''Test Light Strip Complete \n'+'')

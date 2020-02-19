@@ -96,6 +96,7 @@ def fail():
     soundVoiceAccessDenied.play()
     
     light.all(0)
+    light.strip('A=102')
 
     # Player cannot proceed. Must exit the room.
     while not control.doorOpen():
@@ -148,6 +149,7 @@ def game_intro():
         
 def gate_1():
     light.buttonOne(1)
+    light.strip('A=101')
 
     if control.buttonAny():
         if control.back():
