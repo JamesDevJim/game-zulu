@@ -1,6 +1,6 @@
 # This file will change between games as players win and lose.
 
-import subprocess, os, platform
+import subprocess, os, platform, webbrowser
 
 def openNewGame(fileOpen):
     
@@ -8,7 +8,8 @@ def openNewGame(fileOpen):
         os.startfile(fileOpen)
     else:                                   # linux variants
         #subprocess.call(('cmd', '/C', 'start', fileOpen))
-        subprocess.call(('open', fileOpen))
+        #subprocess.call(('open', fileOpen))
+        webbrowser.open(fileOpen)
 
 # def openNewGame(fileClose, fileOpen):
 #     #Close current file
