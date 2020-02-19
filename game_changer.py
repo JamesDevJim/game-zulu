@@ -1,6 +1,14 @@
 # This file will change between games as players win and lose.
 
 import subprocess, os, platform, webbrowser, sys
+from control import*
+
+openOnce = False
+
+if not openOnce:
+    fileOpen = 'zulu.py'
+    subprocess.Popen(["python3", fileOpen])
+    openOnce = True
 
 def openNewGame(fileOpen):
     

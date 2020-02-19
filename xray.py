@@ -30,7 +30,7 @@ pygame.display.set_caption('Game Yankee')
 pygame.display.set_icon(gameIcon)
 
 # Set time limit for game
-timeLimit = 3   # minutes
+timeLimit = 1.5   # minutes
 setTime = pygame.time.get_ticks()
 timeLoss = setTime + timeLimit*1000*60   
 def nextGame():
