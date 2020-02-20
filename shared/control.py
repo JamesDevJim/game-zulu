@@ -11,7 +11,8 @@ ArduinoNanoPort = 'None'
 useArduino2 = True
 
 try:
-    arduino2 = serial.Serial('COM11', 9600)
+    #arduino2 = serial.Serial('COM11', 9600)
+    arduino2 = serial.Serial('/dev/ttyUSB0', 9600)    
     time.sleep(1)
     print('Light strip connection: Successful')
 except NameError:
