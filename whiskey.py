@@ -230,7 +230,7 @@ def gate_1():
 def gate_2():
     #Decoy light
     light.buttonOne(1)
-    light.strip('A=107','B=100','D=1000',None,'P=0')    
+    light.strip('A=107','B=100','D=300',None,'P=0')    
     # Play panel explosion sounds. Players must get down!
     soundExplodeConsole1.play() 
     time.sleep(1)  
