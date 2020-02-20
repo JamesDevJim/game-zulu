@@ -236,7 +236,7 @@ def gate_2():
     time.sleep(1)  
     soundVoiceWarning.play()
     time.sleep(1)     
-    strip('A=251','B=100','D=1000',None,'P=0')
+    light.strip('A=251','B=100','D=1000',None,'P=0')
     soundExplodeConsole2.play() 
     time.sleep(1)      
     soundExplodeConsole2.play() 
