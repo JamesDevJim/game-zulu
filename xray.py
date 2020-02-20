@@ -34,11 +34,13 @@ timeLimit = 1.5   # minutes
 setTime = pygame.time.get_ticks()
 timeLoss = setTime + timeLimit*1000*60   
 def nextGame():
+    light.strip('A=102')
     openNewGame('whiskey.py') 
     pygame.quit()
     quit()
 
 def changeGame(mode):
+    light.strip('A=102')
     # if lose, reset back to game zulu
     if mode == 'reset':
         openNewGame('zulu.py') 
@@ -57,7 +59,8 @@ def success():
     gameDisplay.blit(spaceship3Success, (0,0))  
     pygame.display.update()     
     clock.tick(15)
-
+    light.strip('A=303',None,'D=2000','C=0x00FF00','P=0')
+    
     #### SOUNDS #### 
     pygame.mixer.stop()
     soundVoiceAutoDefenseInitiated.play()
@@ -88,6 +91,7 @@ def fail():
     gameDisplay.blit(spaceship3Fail, (0,0))  
     pygame.display.update()  
     clock.tick(15)       
+    light.strip('A=303',None,'D=2000','C=0xFF0000','P=0')
 
     #### SOUNDS ####
     pygame.mixer.music.stop()
@@ -495,7 +499,7 @@ def game_loop():
     pygame.mixer.music.play(-1)
     soundAlertRedAlarm.play(-1)
     light.strip('A=251','B=70','D=1000',None,'P=5')
-    
+
     # Game play loop
     while not control.doorOpen():
         

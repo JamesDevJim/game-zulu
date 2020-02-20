@@ -236,6 +236,7 @@ def gate_2():
     time.sleep(1)  
     soundVoiceWarning.play()
     time.sleep(1)     
+    strip('A=251','B=100','D=1000',None,'P=0')
     soundExplodeConsole2.play() 
     time.sleep(1)      
     soundExplodeConsole2.play() 
@@ -287,6 +288,7 @@ def gate_2():
         global gateSuccess
         gateSuccess = [False, False, True, False]        
         logging.info('Gate 2: Solved')
+        light.strip('A=305','B=80','D=3000',None,'P=5')
         soundVoiceReloadCircuitsInitializing.play()
         
         light.all(0)
