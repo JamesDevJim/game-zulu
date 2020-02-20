@@ -21,20 +21,20 @@ except:
     print('Light strip connection: Unsuccessful')
 
 
-if useArduino2:
-    # Obtained structure from: https://github.com/bportaluri/AlaWeb/blob/master/AlaWeb.py
-    def arduino2_get_resp(s):
-        time.sleep(.1);
-        while (s.in_waiting > 0):
-            print(s.readline().decode(), end="");
+# if useArduino2:
+#     # Obtained structure from: https://github.com/bportaluri/AlaWeb/blob/master/AlaWeb.py
+def arduino2_get_resp(s):
+    time.sleep(.1)
+    while (s.in_waiting > 0):
+        print(s.readline().decode(), end="")
 
-    def arduino2_send_cmd(s):
-        arduino2.flush();
-        s = s+'\n'
-        arduino2.write(s.encode());
-        arduino2_get_resp(arduino2);
-        time.sleep(.1);
-        arduino2.flush()
+def arduino2_send_cmd(s):
+    arduino2.flush()
+    s = s +'\n'
+    arduino2.write(s.encode())
+    arduino2_get_resp(arduino2)
+    time.sleep(.1)
+    arduino2.flush()
 
 # comment
 for w in a:
@@ -330,19 +330,18 @@ class Light:
         #           # time.sleep(rate)
 
     if useArduino2:
-        def strip(animation, brightness=None, duration=None , color=None, palette=None):
-            if animation is not None:
-                arduino2_send_cmd(animation)    
+        def strip(self, animation, brightness=None, duration=None , color=None, palette=None):
+            if palette is not None:      
+                arduino2_send_cmd(palette)            
+            if color is not None:      
+                arduino2_send_cmd(color)            
             if brightness is not None:   
                 arduino2_send_cmd(brightness)
             if duration is not None:
                 arduino2_send_cmd(duration)
-            if duration is not None:
-                arduino2_send_cmd(duration)
-            if color is not None:      
-                arduino2_send_cmd(color)
-            if palette is not None:      
-                arduino2_send_cmd(palette)
+            if animation is not None:
+                arduino2_send_cmd(animation) 
+
 
                      
 
@@ -367,5 +366,5 @@ class Light:
         def blink(self,rate,times):
             pass
     if not useArduino2:    
-        def strip(animation, brightness=None, duration=None , color=None, palette=None):
+        def strip(self,animation, brightness=None, duration=None , color=None, palette=None):
             pass          

@@ -6,21 +6,22 @@ print('-------------------------------------------------------------------------
 try:
     #arduino2 = serial.Serial('/dev/ttyUSB0', 9600)
     arduino2 = serial.Serial('COM11', 9600)
-    time.sleep(1)
+    time.sleep(1.5)
+    print('Using Arduino')
 except:
     pass
 # Obtained structure from: https://github.com/bportaluri/AlaWeb/blob/master/AlaWeb.py
 def arduino2_get_resp(s):
-    time.sleep(.1);
+    time.sleep(.1)
     while (s.in_waiting > 0):
-        print(s.readline().decode(), end="");
+        print(s.readline().decode(), end="")
 
 def arduino2_send_cmd(s):
-    arduino2.flush();
+    arduino2.flush()
     s = s+'\n'
-    arduino2.write(s.encode());
-    arduino2_get_resp(arduino2);
-    time.sleep(.1);
+    arduino2.write(s.encode())
+    arduino2_get_resp(arduino2)
+    time.sleep(.1)
     arduino2.flush()
 
 def strip(animation, brightness=None, duration=None , color=None, palette=None):
@@ -39,62 +40,100 @@ def strip(animation, brightness=None, duration=None , color=None, palette=None):
 
 ##### TESTS #####
 
-# On test
-print('Light Test: ON')
-arduino2_send_cmd('A=101')
-time.sleep(2)
-arduino2_send_cmd('A=102')
-time.sleep(2)
+# # On test
+# print('Light Test: ON')
+# arduino2_send_cmd('A=101')
+# time.sleep(2)
+# arduino2_send_cmd('A=102')
+# time.sleep(2)
 
-# Blink test maybe for alarm
-print('Light Test: BLINK')
-arduino2_send_cmd('D=500')
-arduino2_send_cmd('A=103')
-time.sleep(2)
-arduino2_send_cmd('A=102')
-time.sleep(2)
+# # Blink test maybe for alarm
+# print('Light Test: BLINK')
+# arduino2_send_cmd('D=500')
+# arduino2_send_cmd('A=103')
+# time.sleep(2)
+# arduino2_send_cmd('A=102')
+# time.sleep(2)
 
-# Lars Scanner test
-print('Light Test: SCANNER')
-arduino2_send_cmd('D=1000')
-arduino2_send_cmd('P=5')
-arduino2_send_cmd('A=251')
-time.sleep(2)
-arduino2_send_cmd('A=102')
-time.sleep(2)
+# # Lars Scanner test
+# print('Light Test: SCANNER')
+# arduino2_send_cmd('D=1000')
+# arduino2_send_cmd('P=5')
+# arduino2_send_cmd('A=251')
+# time.sleep(2)
+# arduino2_send_cmd('A=102')
+# time.sleep(2)
 
-# Battle test for Xray
-print('Light Test: BATTLE')
-arduino2_send_cmd('D=2000')
-arduino2_send_cmd('C=0xFF0000')
-arduino2_send_cmd('A=103')
-time.sleep(4)
-arduino2_send_cmd('A=102')
-time.sleep(2)
+# # Battle test for Xray
+# print('Light Test: BATTLE')
+# arduino2_send_cmd('D=2000')
+# arduino2_send_cmd('C=0xFF0000')
+# arduino2_send_cmd('A=103')
+# time.sleep(4)
+# arduino2_send_cmd('A=102')
+# time.sleep(2)
 
-# Plasma for Whiskey
-print('Light Test: PLASMA')
-arduino2_send_cmd('A=305')
-arduino2_send_cmd('P=5')
-time.sleep(2)
-arduino2_send_cmd('A=102')
-time.sleep(2)
+# # Plasma for Whiskey
+# print('Light Test: PLASMA')
+# arduino2_send_cmd('A=305')
+# arduino2_send_cmd('P=5')
+# time.sleep(2)
+# arduino2_send_cmd('A=102')
+# time.sleep(2)
 
 # Spark test 
 print('Light Test: SPARK')
-arduino2_send_cmd('D=1000')
-arduino2_send_cmd('P=0')
-arduino2_send_cmd('A=107')
-time.sleep(2)
-arduino2_send_cmd('A=102')
-time.sleep(2)
+# arduino2_send_cmd('D=200')
+# arduino2_send_cmd('P=0')
+# arduino2_send_cmd('A=107')
+# time.sleep(2)
+# arduino2_send_cmd('A=102')
+# time.sleep(2)
+
+
+# strip('A=107','B=100','D=200',None,'P=0')
+# time.sleep(4)
+
+# GAMEPLAY
+print('Light Test: GAMEPLAY')
+strip('A=101',None,None,'C=0x0000FF','P=0')
+time.sleep(4)
+
+
+
+# SUCCESS
+print('Light Test: Success')
+strip('A=303',None,'D=2000','C=0x00FF00','P=0')
+time.sleep(4)
+
+# FAIL
+print('Light Test: Fail')
+strip('A=303',None,'D=2000','C=0xFF0000','P=0')
+time.sleep(4)
+
+# ON
+print('Light Test: On')
+strip('A=101')
+time.sleep(4)
+
+# OFF
+print('Light Test: Off')
+strip('A=102')
+time.sleep(4)
 
 # On test
-print('Light Test: ON FUNCTION TEST')
-strip('A=101')
-time.sleep(2)
-strip('A=102')
-time.sleep(2)
+# print('Light Test: ON FUNCTION TEST')
+# strip('A=101')
+# time.sleep(2)
+# strip('A=102')
+# time.sleep(2)
+
+# On test
+# print('Light Test: ON FUNCTION TEST')
+# strip('A=305',None,'D=500',None,'P=5')
+# time.sleep(6)
+# strip('A=102')
+# time.sleep(2)
 
 # print("Welcome to ALA RgbStripSerial example")
 # print("A=[animation code] Set the animation. See https://github.com/bportaluri/ALA/blob/master/src/AlaLed.h")

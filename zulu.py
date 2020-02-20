@@ -31,6 +31,7 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('Game Zulu')
 pygame.display.set_icon(gameIcon)
 def nextGame():
+    light.strip('A=102')
     openNewGame('yankee.py') 
     pygame.quit()
     quit()
@@ -54,6 +55,7 @@ def success():
     gameDisplay.blit(spaceship1Success, (0,0))  
     pygame.display.update()     
     clock.tick(15)
+    light.strip('A=303',None,'D=2000','C=0x00FF00','P=0')
 
     #### SOUNDS ####
     pygame.mixer.music.stop()  
@@ -76,7 +78,6 @@ def success():
                     quitgame()
 
         button("Push to Proceed",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN, nextGame )
-        
         pygame.display.update()
         clock.tick(15)
 
@@ -87,6 +88,7 @@ def fail():
     gameDisplay.blit(spaceship1Fail, (0,0))  
     pygame.display.update()  
     clock.tick(15)       
+    light.strip('A=303',None,'D=2000','C=0xFF0000','P=0')
 
     #### SOUNDS ####
     pygame.mixer.music.stop()
@@ -96,7 +98,6 @@ def fail():
     soundVoiceAccessDenied.play()
     
     light.all(0)
-    light.strip('A=102')
 
     # Player cannot proceed. Must exit the room.
     while not control.doorOpen():
@@ -109,6 +110,7 @@ def fail():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     quitgame()
+    light.strip('A=102')
 
 def quitgame():
     pygame.quit()
@@ -149,7 +151,6 @@ def game_intro():
         
 def gate_1():
     light.buttonOne(1)
-    light.strip('A=101')
 
     if control.buttonAny():
         if control.back():
@@ -240,6 +241,8 @@ def game_loop():
   
     # Game lights start at OFF
     light.all(0)
+    light.strip('A=102')
+    light.strip('A=101',None,None,'C=0x0000FF','P=0')
 
     # Game play loop
     while not control.doorOpen():
