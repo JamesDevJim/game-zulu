@@ -15,7 +15,7 @@ try:
     time.sleep(1)
     print('Light strip connection: Successful')
 except NameError:
-    arduino2 = serial.Serial('/dev/ttyUSB0', 9600)
+    arduino2 = serial.Serial('/dev/ttyUSB1', 9600)
 except:
     useArduino2 = False
     print('Light strip connection: Unsuccessful')

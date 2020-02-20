@@ -31,7 +31,7 @@ def button(msg,x,y,w,h,ic,ac,action=None):
             action()         
     else:
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
-    smallText = pygame.font.SysFont("comicsansms",40)
+    smallText = pygame.font.SysFont("comicsansms",20)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ( (x+(w/2)), (y+(h/2)) )
     gameDisplay.blit(textSurf, textRect)
