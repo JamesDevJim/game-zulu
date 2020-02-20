@@ -54,7 +54,8 @@ def success():
     gameDisplay.blit(spaceship2Success, (0,0))     
     pygame.display.update()
     clock.tick(15) 
-    
+    light.strip('A=303',None,'D=2000','C=0x00FF00','P=0')
+       
     #### SOUNDS ####
     pygame.mixer.music.stop()    
     soundVoiceAuthorizationAccepted.play()
@@ -91,7 +92,7 @@ def fail():
     soundVoiceNotAuthorized.play()
     
     light.all(0)
-    strip('A=303',None,'D=2000','C=0xFF0000','P=0')
+    light.strip('A=303',None,'D=2000','C=0xFF0000','P=0')
     # Player cannot proceed. Must exit the room.
     while not control.doorOpen():
         for event in pygame.event.get():
