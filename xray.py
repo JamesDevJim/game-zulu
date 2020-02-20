@@ -494,7 +494,8 @@ def game_loop():
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)
     soundAlertRedAlarm.play(-1)
-
+    light.strip('A=251','B=70','D=1000',None,'P=5')
+    
     # Game play loop
     while not control.doorOpen():
         

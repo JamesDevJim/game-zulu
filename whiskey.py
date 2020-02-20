@@ -53,6 +53,7 @@ def success():
     gameDisplay.blit(spaceship4Success, (0,0))  
     pygame.display.update()     
     clock.tick(15)
+    light.strip('A=303',None,'D=2000','C=0x00FF00','P=0')
 
     #### SOUNDS ####
     time.sleep(1)
@@ -84,6 +85,7 @@ def fail():
     gameDisplay.blit(spaceship4Fail, (0,0))  
     pygame.display.update()  
     clock.tick(15)       
+    light.strip('A=303',None,'D=2000','C=0xFF0000','P=0')
 
     #### SOUNDS ####
     time.sleep(1)
@@ -389,6 +391,7 @@ def game_loop():
 
     pygame.mixer.music.load(gamePlayShip2)
     pygame.mixer.music.play(-1)
+    light.strip('A=305','B=80','D=3000',None,'P=5')
 
     # Game play loop
     while not control.doorOpen():

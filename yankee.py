@@ -59,7 +59,7 @@ def success():
     pygame.mixer.music.stop()    
     soundVoiceAuthorizationAccepted.play()
     pygame.mixer.music.stop()
-   
+    light.strip('A=303',None,'D=2000','C=0x00FF00','P=0')   
     # Ability to quit game
     while not control.doorOpen():
         for event in pygame.event.get():          
@@ -91,7 +91,7 @@ def fail():
     soundVoiceNotAuthorized.play()
     
     light.all(0)
-
+    strip('A=303',None,'D=2000','C=0xFF0000','P=0')
     # Player cannot proceed. Must exit the room.
     while not control.doorOpen():
         for event in pygame.event.get():
@@ -273,6 +273,7 @@ def game_loop():
     soundVoiceEnterAuthorizationCode.play()
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)
+    light.strip('A=101',None,None,'C=0x000080','P=0')
 
     # Game play loop
     while not control.doorOpen():

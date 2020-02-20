@@ -94,11 +94,30 @@ print('Light Test: SPARK')
 # strip('A=107','B=100','D=200',None,'P=0')
 # time.sleep(4)
 
-# GAMEPLAY
+# PLASMA
+print('Light Test: PLASMA')
+strip('A=305','B=80','D=3000',None,'P=5')
+time.sleep(4)
+
+# SPARK
+print('Light Test: SPARK')
+strip('A=251','B=100','D=1000',None,'P=0')
+time.sleep(4)
+
+# GAMEPLAY SPACESHIP
+print('Light Test: GAMEPLAY SPACESHIP')
+strip('A=251','B=70','D=1000',None,'P=5')
+time.sleep(4)
+
+# GAMEPLAY BLUE
 print('Light Test: GAMEPLAY')
 strip('A=101',None,None,'C=0x0000FF','P=0')
 time.sleep(4)
 
+# GAMEPLAY DARK BLUE
+print('Light Test: GAMEPLAY')
+strip('A=101',None,None,'C=0x000080','P=0')
+time.sleep(4)
 
 
 # SUCCESS
@@ -120,13 +139,6 @@ time.sleep(4)
 print('Light Test: Off')
 strip('A=102')
 time.sleep(4)
-
-# On test
-# print('Light Test: ON FUNCTION TEST')
-# strip('A=101')
-# time.sleep(2)
-# strip('A=102')
-# time.sleep(2)
 
 # On test
 # print('Light Test: ON FUNCTION TEST')
