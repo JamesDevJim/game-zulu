@@ -101,7 +101,7 @@ time.sleep(4)
 
 # SPARK
 print('Light Test: SPARK')
-strip('A=251','B=100','D=1000',None,'P=0')
+strip('A=107','B=100','D=1000',None,'P=0')
 time.sleep(4)
 
 # GAMEPLAY SPACESHIP
