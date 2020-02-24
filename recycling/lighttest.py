@@ -13,18 +13,19 @@ lightArray = [blue, Red]
 # def light(light, state):
 #     if(state == 'on'):
 #         for light in lightArray:
-#             lightArray[light] = True  
+#             lightArray[light] = True
 #     if(state == 'off'):
-#         for light in lightArray:  
+#         for light in lightArray:
 #             lightArray[light] = False
 
 on = True
 off = False
 
+
 def light(light, state):
 
     for light in lightArray:
-        lightArray[light] = state  
+        lightArray[light] = state
 
 
 print(lightArray[blue])

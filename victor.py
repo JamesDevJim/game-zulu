@@ -1,6 +1,6 @@
 ##########################################################################
 # Title:        GAME VICTOR
-# Description:  5th in the 5 game series. Proof of concept for Perplesso.  
+# Description:  5th in the 5 game series. Proof of concept for Perplesso.
 # Game Play:    The Escape scene. Must prepare for evacuation and leave ship in escape pods. Engineering. Warp Core. Escape pods.
 #
 #
@@ -11,7 +11,7 @@ import random
 import logging
 import time
 import os
-from shared.control import * 
+from shared.control import *
 from shared.images import *
 from shared.screen import *
 from shared.sounds import *
@@ -26,38 +26,39 @@ light = Light()
 
 clock = pygame.time.Clock()
 
-pygame.display.set_caption('Game Victor')
+pygame.display.set_caption("Game Victor")
 pygame.display.set_icon(gameIcon)
+
 
 def changeGame(mode):
     # if lose, reset back to game zulu
-    if mode == 'reset':
-        openNewGame('zulu.py') 
-    
+    if mode == "reset":
+        openNewGame("zulu.py")
+
     # if win, proceed to next game
-    if mode == 'next':
+    if mode == "next":
         # No more games to play. You Win!
         pass
-    
+
     # Quit current game
     pygame.quit()
     quit()
 
+
 def success():
     logging.info("Game Success")
     #### DISPLAY ####
-    gameDisplay.blit(spaceship5Success, (0,0))  
-    pygame.display.update()     
+    gameDisplay.blit(spaceship5Success, (0, 0))
+    pygame.display.update()
     clock.tick(15)
 
     #### SOUNDS ####
- 
 
-    light.blink(0.2,6)
+    light.blink(0.2, 6)
 
     while not control.doorOpen():
         for event in pygame.event.get():
-            # Quit game from window screen            
+            # Quit game from window screen
             if event.type == pygame.QUIT:
                 quitgame()
             # Quit game from keyboard
@@ -65,21 +66,30 @@ def success():
                 if event.key == pygame.K_q:
                     quitgame()
 
-        button("YOU WIN",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN)
-        
+        button(
+            "YOU WIN",
+            BUTTON_CENTER_HORIZONTAL,
+            round(DISPLAY_HEIGHT * 0.4),
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            GREEN,
+            BRIGHT_GREEN,
+        )
+
         pygame.display.update()
-        clock.tick(15) 
+        clock.tick(15)
+
 
 def fail():
     logging.info("Game Failure")
 
     #### DISPLAY #####
-    gameDisplay.blit(spaceship5Fail, (0,0))  
-    pygame.display.update()  
-    clock.tick(15)       
+    gameDisplay.blit(spaceship5Fail, (0, 0))
+    pygame.display.update()
+    clock.tick(15)
 
     #### SOUNDS ####
-    
+
     light.all(0)
 
     # Player cannot proceed. Must exit the room.
@@ -95,15 +105,17 @@ def fail():
                     quitgame()
     # Go back to game Zulu
     soundGameDoors.play()
-    changeGame('reset')   
+    changeGame("reset")
+
 
 def quitgame():
     pygame.quit()
     quit()
 
+
 def game_intro():
     startMusicPlay = False
-    
+
     while control.doorOpen():
         # Abilty to quit the game
         for event in pygame.event.get():
@@ -116,46 +128,54 @@ def game_intro():
                 if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     quitgame()
                     quit()
-        
+
         # Start intro music
         while not startMusicPlay:
             pygame.mixer.music.load(introMusicSpace)
-            pygame.mixer.music.play(-1)  
+            pygame.mixer.music.play(-1)
             startMusicPlay = True
 
         # Background and title
-        gameDisplay.blit(stars, (0,0))
-        largeText = pygame.font.SysFont("comicsansms",100)
+        gameDisplay.blit(stars, (0, 0))
+        largeText = pygame.font.SysFont("comicsansms", 100)
         TextSurf, TextRect = text_objects("Escape", largeText)
-        TextRect.center = ((round(DISPLAY_WIDTH * 0.5)),(round(DISPLAY_HEIGHT * 0.5)))
+        TextRect.center = ((round(DISPLAY_WIDTH * 0.5)), (round(DISPLAY_HEIGHT * 0.5)))
         gameDisplay.blit(TextSurf, TextRect)
-        
+
         pygame.display.update()
         clock.tick(15)
     game_loop()
-        
+
+
 def gate_1():
-    light.buttonOne(1) 
+    light.buttonOne(1)
 
     if control.buttonAny():
         if control.back():
             quitgame()
 
-        if control.down() or control.up() or control.left() or control.right() or control.three():
+        if (
+            control.down()
+            or control.up()
+            or control.left()
+            or control.right()
+            or control.three()
+        ):
             soundInputNegative.play()
-     
-        if control.one():      
+
+        if control.one():
             global gateSuccess
             soundInputPositive.play()
-            light.all(0)  
-            
+            light.all(0)
+
             time.sleep(0.5)
-            gateSuccess = [False,True,False, False]
-            logging.info('Gate 1: Success.')    
+            gateSuccess = [False, True, False, False]
+            logging.info("Gate 1: Success.")
 
         if control.two():
             fail()
-   
+
+
 def gate_2():
     light.buttonTwo(1)
 
@@ -164,67 +184,82 @@ def gate_2():
             quitgame()
             quit()
 
-        if control.two():      
+        if control.two():
             global gateSuccess
             soundInputPositive.play()
-            light.all(0)   
-            
-            time.sleep(0.5)           
-            gateSuccess = [False, False, True, False] 
-            logging.info('Gate 2: Success.') 
+            light.all(0)
+
+            time.sleep(0.5)
+            gateSuccess = [False, False, True, False]
+            logging.info("Gate 2: Success.")
 
         if control.one():
             fail()
-        
-        if control.down() or control.up() or control.left() or control.right() or control.three():
+
+        if (
+            control.down()
+            or control.up()
+            or control.left()
+            or control.right()
+            or control.three()
+        ):
             soundInputNegative.play()
+
 
 def gate_3():
     light.LED3(1)
-   
+
     if control.buttonAny():
 
         if control.back():
             pygame.quit()
             quit()
 
-        if control.three():      
+        if control.three():
             global gateSuccess
-            gateSuccess = [False, False, False, True]            
-            
-            light.all(0)     
-            logging.info('Gate 3: Success.')
+            gateSuccess = [False, False, False, True]
 
-        if control.one() or control.two() or control.down() or control.left() or control.right() or control.up():
+            light.all(0)
+            logging.info("Gate 3: Success.")
+
+        if (
+            control.one()
+            or control.two()
+            or control.down()
+            or control.left()
+            or control.right()
+            or control.up()
+        ):
             fail()
+
 
 def game_loop():
     global gateSuccess
     gateSuccess = [True, False, False, False]
 
     # Background display
-    gameDisplay.blit(spaceship5, (0,0))    
-    pygame.display.update()   
-    
+    gameDisplay.blit(spaceship5, (0, 0))
+    pygame.display.update()
+
     # Start the game play music
     pygame.mixer.music.stop()
     soundGameDoors.play()
     time.sleep(3)
     pygame.mixer.music.load(gamePlayBridge)
     pygame.mixer.music.play(-1)
-  
+
     # Game lights start at OFF
     light.all(0)
 
     # Game play loop
     while not control.doorOpen():
-        
+
         # Ability to quit from screen or keyboard
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     quitgame()
@@ -244,10 +279,11 @@ def game_loop():
 
         pygame.display.update()
         clock.tick(60)
-    
+
     # if door is open then go back to the beginning
     soundGameDoors.play()
-    changeGame('reset') 
+    changeGame("reset")
+
 
 game_intro()
 game_loop()

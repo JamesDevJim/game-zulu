@@ -6,14 +6,16 @@ pygame.mixer.init()
 #### Sounds ####
 
 ##### COMMON GAMEPLAY #####
-soundGameDoors = pygame.mixer.Sound("sound/ds9_door.wav") # play when door opens and closes
-#soundGameExit = pygame.mixer.Sound("sound/Shut_Off_Engine_SI_03.wav")
+soundGameDoors = pygame.mixer.Sound(
+    "sound/ds9_door.wav"
+)  # play when door opens and closes
+# soundGameExit = pygame.mixer.Sound("sound/Shut_Off_Engine_SI_03.wav")
 
 ##### ALERTS #####
 soundAlertCritical = pygame.mixer.Sound("sound/critical.wav")
 soundAlertDamage = pygame.mixer.Sound("sound/damagealarm.wav")
 soundAlertRedAlarm = pygame.mixer.Sound("sound/voy_redalert.wav")
-#soundAlertAlarm = pygame.mixer.Sound("sound/alarm_loops_08.wav")
+# soundAlertAlarm = pygame.mixer.Sound("sound/alarm_loops_08.wav")
 
 ##### BUTTON INPUTS #####
 soundInputDeny = pygame.mixer.Sound("sound/denybeep4.wav")
@@ -41,16 +43,28 @@ soundVoiceEndSimulation = pygame.mixer.Sound("sound/026_end_simulation.wav")
 soundVoiceAccessDenied = pygame.mixer.Sound("sound/003_access_denied.wav")
 soundVoiceEnterAuthorizationCode = pygame.mixer.Sound("sound/029_enter_auth_code.wav")
 soundVoiceAuthorizationDenied = pygame.mixer.Sound("sound/008_authorization_denied.wav")
-soundVoiceAuthorizationAccepted = pygame.mixer.Sound("sound/075_security_auth_accepted.wav")
+soundVoiceAuthorizationAccepted = pygame.mixer.Sound(
+    "sound/075_security_auth_accepted.wav"
+)
 
 # Ship Functions
-soundVoiceDilithiumAdjustmentsComplete = pygame.mixer.Sound("sound/005_dilithium_adjustments_complete.wav")
-soundVoiceShieldFailureRadiation = pygame.mixer.Sound("sound/020_shield_failure_radiation_ lethal.wav")
-soundVoiceAutoDefenseInitiated = pygame.mixer.Sound("sound/009_auto_defense_initiated.wav")
-soundVoiceReloadCircuitsInitializing = pygame.mixer.Sound("sound/072_reload_circuits_initializing.wav")
+soundVoiceDilithiumAdjustmentsComplete = pygame.mixer.Sound(
+    "sound/005_dilithium_adjustments_complete.wav"
+)
+soundVoiceShieldFailureRadiation = pygame.mixer.Sound(
+    "sound/020_shield_failure_radiation_ lethal.wav"
+)
+soundVoiceAutoDefenseInitiated = pygame.mixer.Sound(
+    "sound/009_auto_defense_initiated.wav"
+)
+soundVoiceReloadCircuitsInitializing = pygame.mixer.Sound(
+    "sound/072_reload_circuits_initializing.wav"
+)
 soundVoiceWarpEnergyIncrease = pygame.mixer.Sound("sound/101_warp_energy_increase.wav")
 soundVoiceInitiatingUpdate = pygame.mixer.Sound("sound/035_initiating_update.wav")
-soundVoiceLifeSupportTerminated = pygame.mixer.Sound("sound/017_deck_lifesupport_terminated.wav")
+soundVoiceLifeSupportTerminated = pygame.mixer.Sound(
+    "sound/017_deck_lifesupport_terminated.wav"
+)
 # soundVoiceLifeSupportFailure = pygame.mixer.Sound("sound/")
 # soundVoiceDangerSafteyLimits = pygame.mixer.Sound("sound/")
 # soundVoiceAuthorizationRequired = pygame.mixer.Sound("sound/")
@@ -68,4 +82,3 @@ gamePlayMusic = "sound/spooky_gameplay.wav"
 gamePlayBridge = "sound/tng_bridge_1.wav"
 gamePlayShip = "sound/tng_lab.wav"
 gamePlayShip2 = "sound/ship_noise.wav"
-
