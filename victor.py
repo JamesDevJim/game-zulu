@@ -65,7 +65,7 @@ def success():
                 if event.key == pygame.K_q:
                     quitgame()
 
-        button("YOU WIN",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN,pass)
+        button("YOU WIN",BUTTON_CENTER_HORIZONTAL,round(DISPLAY_HEIGHT * 0.4),BUTTON_WIDTH,BUTTON_HEIGHT,GREEN,BRIGHT_GREEN)
         
         pygame.display.update()
         clock.tick(15) 
