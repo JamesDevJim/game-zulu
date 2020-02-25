@@ -21,6 +21,8 @@ from game_changer import openNewGame
 from .exceptions import QuitGame
 
 
+logger = logging.getLogger(__name__)
+
 def run():
     control = Control()
     light = Light()
@@ -52,7 +54,7 @@ def run():
 
 
     def success():
-        logging.info("Game Success")
+        logger.info("Game Success")
         #### DISPLAY ####
         gameDisplay.blit(spaceship4Success, (0, 0))
         pygame.display.update()
@@ -93,7 +95,7 @@ def run():
 
 
     def fail():
-        logging.info("Game Failure")
+        logger.info("Game Failure")
 
         #### DISPLAY #####
         gameDisplay.blit(spaceship4Fail, (0, 0))
@@ -213,7 +215,7 @@ def run():
 
                 if buttonOneLight and control.one():
                     soundInputPositive.play()
-                    logging.info("Correct button. Button push count: ", buttonPushes)
+                    logger.info("Correct button. Button push count: ", buttonPushes)
                     buttonOneLight = not buttonOneLight
                     buttonTwoLight = not buttonTwoLight
                     buttonPushes += 1
@@ -224,8 +226,8 @@ def run():
 
                 if buttonTwoLight and control.two():
                     soundInputPositive.play()
-                    logging.info("Correct button")
-                    logging.info("button pushes", buttonPushes)
+                    logger.info("Correct button")
+                    logger.info("button pushes", buttonPushes)
                     buttonOneLight = not buttonOneLight
                     buttonTwoLight = not buttonTwoLight
                     buttonPushes += 1
@@ -240,11 +242,11 @@ def run():
                     playSoundFX1 = False
 
         # Check whether the gate has been solved
-        logging.info("Gate 1: Exit while loop")
+        logger.info("Gate 1: Exit while loop")
         if buttonPushes == requiredButtonPushes:
             global gateSuccess
             gateSuccess = [False, True, False, False]
-            logging.info("Gate 1: Solved! Entering Gate 2")
+            logger.info("Gate 1: Solved! Entering Gate 2")
             light.all(0)
             time.sleep(0.5)
         else:
@@ -276,7 +278,7 @@ def run():
         setTime = pygame.time.get_ticks()
 
         releaseTime = setTime + attackTime
-        logging.info(control.motion())
+        logger.info(control.motion())
         while setTime < releaseTime:
             setTime = pygame.time.get_ticks()
 
@@ -303,22 +305,22 @@ def run():
                 fail()
 
             if control.motion():
-                logging.info("Detected Motion")
+                logger.info("Detected Motion")
                 fail()
 
         # Check whether the gate has been solved
-        logging.info("Exit while loop")
+        logger.info("Exit while loop")
         if setTime >= releaseTime:
             global gateSuccess
             gateSuccess = [False, False, True, False]
-            logging.info("Gate 2: Solved")
+            logger.info("Gate 2: Solved")
             light.strip("A=305", "B=80", "D=3000", None, "P=5")
             soundVoiceReloadCircuitsInitializing.play()
 
             light.all(0)
             time.sleep(0.5)
         else:
-            logging.info("Fail Condition")
+            logger.info("Fail Condition")
             fail()
 
 
@@ -379,8 +381,8 @@ def run():
 
                 if buttonTwoLight and control.two():
                     soundInputPositive.play()
-                    logging.info("Correct button")
-                    logging.info("button pushes", buttonPushes)
+                    logger.info("Correct button")
+                    logger.info("button pushes", buttonPushes)
                     buttonOneLight = not buttonOneLight
                     buttonTwoLight = not buttonTwoLight
                     buttonPushes += 1
@@ -397,14 +399,14 @@ def run():
             time.sleep(0.1)
 
         # Check whether the gate has been solved
-        logging.info("Exit while loop 3")
+        logger.info("Exit while loop 3")
         if buttonPushes == requiredButtonPushes:
             global gateSuccess
-            logging.info("Solved! Running success.")
+            logger.info("Solved! Running success.")
             gateSuccess = [False, False, False, True]
             time.sleep(0.5)
         else:
-            logging.info("Fail Condition")
+            logger.info("Fail Condition")
             fail()
 
 

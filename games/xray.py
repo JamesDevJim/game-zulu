@@ -19,6 +19,8 @@ from shared.constants import *
 from game_changer import openNewGame
 from .exceptions import QuitGame
 
+logger = logging.getLogger(__name__)
+
 
 def run():
     # Initialize pygame, pygame sounds, control class, and light classes
@@ -61,7 +63,7 @@ def run():
 
 
     def success():
-        logging.info("Game Success")
+        logger.info("Game Success")
         #### DISPLAY ####
         gameDisplay.blit(spaceship3Success, (0, 0))
         pygame.display.update()
@@ -102,7 +104,7 @@ def run():
 
 
     def fail():
-        logging.info("Game Failure")
+        logger.info("Game Failure")
 
         #### DISPLAY #####
         gameDisplay.blit(spaceship3Fail, (0, 0))

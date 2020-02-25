@@ -20,6 +20,9 @@ from game_changer import openNewGame
 from .exceptions import QuitGame
 
 
+
+logger = logging.getLogger(__name__)
+
 def run():
     #init control class,and light classes
     control = Control()
@@ -53,7 +56,7 @@ def run():
 
 
     def success():
-        logging.info("Game Success")
+        logger.info("Game Success")
         #### DISPLAY ####
         gameDisplay.blit(spaceship2Success, (0, 0))
         pygame.display.update()
@@ -93,7 +96,7 @@ def run():
 
 
     def fail():
-        logging.info("Game Failure")
+        logger.info("Game Failure")
 
         #### DISPLAY #####
         gameDisplay.blit(spaceship2Fail, (0, 0))
@@ -189,7 +192,7 @@ def run():
         attempts = 1
 
         # Leave game loop when players beat the game or maximum # of trys are reached.
-        logging.info("Gate 1: Enter while loop")
+        logger.info("Gate 1: Enter while loop")
         while (
             currentStep < len(correctSteps) and attempts <= MAX_TRYS
         ):  # and not control.doorOpen():
@@ -231,7 +234,7 @@ def run():
 
                     # If the correct step equals the guess, then add a light
                     if correctSteps[currentStep] == guesses[currentStep]:
-                        logging.info("Gate 1: Correct Input")
+                        logger.info("Gate 1: Correct Input")
                         soundInputPositive.play()
 
                         if currentStep == 0:
@@ -244,7 +247,7 @@ def run():
 
                     # If the guess does not equal the correct step, then turn off all lights
                     else:
-                        logging.info("Gate 1: Incorrect Input")
+                        logger.info("Gate 1: Incorrect Input")
                         currentStep = 0
                         attempts += 1
                         guesses = [0, 0, 0]
@@ -256,13 +259,13 @@ def run():
                         # This is a bad recording
                         soundVoiceAccessDenied.play()
 
-                logging.info("Guess Array: ", guesses)
-                logging.info("Attempts: ", attempts)
-                logging.info("Current Step: ", currentStep)
+                logger.info("Guess Array: ", guesses)
+                logger.info("Attempts: ", attempts)
+                logger.info("Current Step: ", currentStep)
                 time.sleep(0.3)
 
         # Check whether the puzzle has been solved
-        logging.info("Exit while loop")
+        logger.info("Exit while loop")
         if currentStep == len(correctSteps):
             global gateSuccess
             gateSuccess = [False, False, False, True]

@@ -20,6 +20,8 @@ from game_changer import openNewGame
 from .exceptions import QuitGame
 
 
+logger = logging.getLogger(__name__)
+
 def run():
     # Initialize pygame, pygame sounds, control class, and light classes
 
@@ -48,7 +50,7 @@ def run():
 
 
     def success():
-        logging.info("Game Success")
+        logger.info("Game Success")
         #### DISPLAY ####
         gameDisplay.blit(spaceship5Success, (0, 0))
         pygame.display.update()
@@ -83,7 +85,7 @@ def run():
 
 
     def fail():
-        logging.info("Game Failure")
+        logger.info("Game Failure")
 
         #### DISPLAY #####
         gameDisplay.blit(spaceship5Fail, (0, 0))
@@ -172,7 +174,7 @@ def run():
 
                 time.sleep(0.5)
                 gateSuccess = [False, True, False, False]
-                logging.info("Gate 1: Success.")
+                logger.info("Gate 1: Success.")
 
             if control.two():
                 fail()
@@ -193,7 +195,7 @@ def run():
 
                 time.sleep(0.5)
                 gateSuccess = [False, False, True, False]
-                logging.info("Gate 2: Success.")
+                logger.info("Gate 2: Success.")
 
             if control.one():
                 fail()
@@ -222,7 +224,7 @@ def run():
                 gateSuccess = [False, False, False, True]
 
                 light.all(0)
-                logging.info("Gate 3: Success.")
+                logger.info("Gate 3: Success.")
 
             if (
                 control.one()
