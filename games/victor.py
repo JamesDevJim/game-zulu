@@ -21,6 +21,10 @@ from .exceptions import QuitGame, ChangeGame
 
 logger = logging.getLogger(__name__)
 
+# TODO clean this init structure up
+control = Control()
+light = Light()
+
 
 def changeGame(mode):
     # if lose, reset back to game zulu
@@ -40,11 +44,7 @@ def quitgame():
     raise QuitGame
 
 def run():
-    # Initialize pygame, pygame sounds, control class, and light classes
-
-    control = Control()
-    light = Light()
-
+    # Initialize pygame, pygame sounds
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("Game Victor")

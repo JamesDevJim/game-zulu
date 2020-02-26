@@ -22,6 +22,10 @@ from .exceptions import QuitGame, ChangeGame
 
 logger = logging.getLogger(__name__)
 
+# TODO clean this init structure up
+control = Control()
+light = Light()
+
 
 def quitgame():
     raise QuitGame
@@ -45,14 +49,10 @@ def changeGame(mode):
 
 
 def run():
-    control = Control()
-    light = Light()
-
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("Game Whiskey")
     pygame.display.set_icon(gameIcon)
-
 
 
     def success():

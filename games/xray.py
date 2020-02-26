@@ -16,10 +16,13 @@ from .shared.images import *
 from .shared.screen import *
 from .shared.sounds import *
 from .shared.constants import *
-
 from .exceptions import QuitGame, ChangeGame
 
 logger = logging.getLogger(__name__)
+
+# TODO clean this init structure up
+control = Control()
+light = Light()
 
 
 def quitgame():
@@ -46,7 +49,7 @@ def changeGame(mode):
 
 
 def run():
-    # Initialize pygame, pygame sounds, control class, and light classes
+    # Initialize pygame, pygame sounds
     pygame.init()
     pygame.mixer.init()
 

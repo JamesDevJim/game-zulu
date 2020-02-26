@@ -20,6 +20,10 @@ from .exceptions import QuitGame, ChangeGame
 
 logger = logging.getLogger(__name__)
 
+# TODO clean this init structure up
+control = Control()
+light = Light()
+
 
 def quitgame():
     raise QuitGame
@@ -42,11 +46,7 @@ def changeGame(mode):
     raise QuitGame("Unknown mode: "+str(mode)+" quitting")
 
 
-def run()
-    # Initialize control class, and light classes
-    control = Control()
-    light = Light()
-
+def run():
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("Game Zulu")
