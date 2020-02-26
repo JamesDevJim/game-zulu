@@ -1,5 +1,5 @@
 import pygame
-from .screen import *
+from .screen import fullScreenImage
 
 ###### IMAGES #####
 
