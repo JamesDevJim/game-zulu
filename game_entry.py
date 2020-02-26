@@ -6,6 +6,13 @@ from games import LAST_GAME, FIRST_GAME
 from games.exceptions import QuitGame
 
 game_sequence = [zulu, yankee, xray, whiskey, victor]
+game_names = {
+    "zulu": zulu,
+    "yankee": yankee,
+    "xray": xray,
+    "whiskey": whiskey,
+    "victor": victor,
+}
 
 current_game = zulu
 
@@ -16,9 +23,17 @@ pygame.mixer.init()
 
 try:
     while current_game is not LAST_GAME:
-        current_game = current_game.run()
-        if current_game is FIRST_GAME:
-            current_game = zulu
+        try:
+            current_game = current_game.run()
+        except ChangeGame as ex:
+            next_game = ex.new_game
+            if isinstance(new_game, str):
+                current_game = game_names[new_game]
+            elif hasattr(next_game, "run"):
+                current_game = new_game
+        else:
+            if current_game is FIRST_GAME:
+                current_game = zulu
 except QuitGame:
     print("Quitting game via exception...")
 
