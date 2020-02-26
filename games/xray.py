@@ -41,9 +41,8 @@ def changeGame(mode):
     if mode == "next":
         raise ChangeGame(new_game="whiskey")
 
-    # Quit current game
-    raise QuitGame()
-
+    logger.error("Unknown mode: %s quitting", mode)
+    raise QuitGame("Unknown mode: "+str(mode)+" quitting")
 
 
 def run():
