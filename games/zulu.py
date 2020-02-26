@@ -28,6 +28,7 @@ light = Light()
 def quitgame():
     raise QuitGame
 
+
 def nextGame():
     light.strip("A=102")
     raise ChangeGame(new_game="yankee")
@@ -43,7 +44,7 @@ def changeGame(mode):
         raise ChangeGame(new_game="yankee")
 
     logger.error("Unknown mode: %s quitting", mode)
-    raise QuitGame("Unknown mode: "+str(mode)+" quitting")
+    raise QuitGame("Unknown mode: " + str(mode) + " quitting")
 
 
 def run():
@@ -51,7 +52,6 @@ def run():
 
     pygame.display.set_caption("Game Zulu")
     pygame.display.set_icon(gameIcon)
-
 
     def success():
         logger.info("Game Success")
@@ -94,7 +94,6 @@ def run():
             pygame.display.update()
             clock.tick(15)
 
-
     def fail():
         logger.info("Game Failure")
 
@@ -126,7 +125,6 @@ def run():
                         quitgame()
         light.strip("A=102")
 
-
     def game_intro():
         startMusicPlay = False
 
@@ -153,13 +151,15 @@ def run():
             gameDisplay.blit(stars, (0, 0))
             largeText = pygame.font.SysFont("comicsansms", 100)
             TextSurf, TextRect = text_objects("Training Day", largeText)
-            TextRect.center = ((round(DISPLAY_WIDTH * 0.5)), (round(DISPLAY_HEIGHT * 0.5)))
+            TextRect.center = (
+                (round(DISPLAY_WIDTH * 0.5)),
+                (round(DISPLAY_HEIGHT * 0.5)),
+            )
             gameDisplay.blit(TextSurf, TextRect)
 
             pygame.display.update()
             clock.tick(15)
         game_loop()
-
 
     def gate_1():
         light.buttonOne(1)
@@ -191,7 +191,6 @@ def run():
 
         pygame.display.update()
         clock.tick(60)
-
 
     def gate_2():
         light.buttonTwo(1)
@@ -226,7 +225,6 @@ def run():
         pygame.display.update()
         clock.tick(60)
 
-
     def gate_3():
         light.LED3(1)
 
@@ -255,7 +253,6 @@ def run():
 
         pygame.display.update()
         clock.tick(60)
-
 
     def game_loop():
         global gateSuccess
@@ -310,7 +307,6 @@ def run():
         # if door is not closed then go back to the game intro
         soundGameDoors.play()
         game_intro()
-
 
     game_intro()
     game_loop()

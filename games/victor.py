@@ -34,14 +34,17 @@ def changeGame(mode):
     # if win, proceed to next game
     if mode == "next":
         # No more games to play. You Win!
-        raise QuitGame("Last game") # TODO change this to use the ChangeGame functionality plus some sentinel value that indicates this is the last game, handle that this is the last game somewhere else
+        raise QuitGame(
+            "Last game"
+        )  # TODO change this to use the ChangeGame functionality plus some sentinel value that indicates this is the last game, handle that this is the last game somewhere else
 
     logger.error("Unknown mode: %s quitting", mode)
-    raise QuitGame("Unknown mode: "+str(mode)+" quitting")
+    raise QuitGame("Unknown mode: " + str(mode) + " quitting")
 
 
 def quitgame():
     raise QuitGame
+
 
 def run():
     # Initialize pygame, pygame sounds
@@ -84,7 +87,6 @@ def run():
             pygame.display.update()
             clock.tick(15)
 
-
     def fail():
         logger.info("Game Failure")
 
@@ -112,8 +114,6 @@ def run():
         soundGameDoors.play()
         changeGame("reset")
 
-
-
     def game_intro():
         startMusicPlay = False
 
@@ -140,13 +140,15 @@ def run():
             gameDisplay.blit(stars, (0, 0))
             largeText = pygame.font.SysFont("comicsansms", 100)
             TextSurf, TextRect = text_objects("Escape", largeText)
-            TextRect.center = ((round(DISPLAY_WIDTH * 0.5)), (round(DISPLAY_HEIGHT * 0.5)))
+            TextRect.center = (
+                (round(DISPLAY_WIDTH * 0.5)),
+                (round(DISPLAY_HEIGHT * 0.5)),
+            )
             gameDisplay.blit(TextSurf, TextRect)
 
             pygame.display.update()
             clock.tick(15)
         game_loop()
-
 
     def gate_1():
         light.buttonOne(1)
@@ -175,7 +177,6 @@ def run():
 
             if control.two():
                 fail()
-
 
     def gate_2():
         light.buttonTwo(1)
@@ -206,7 +207,6 @@ def run():
             ):
                 soundInputNegative.play()
 
-
     def gate_3():
         light.LED3(1)
 
@@ -232,7 +232,6 @@ def run():
                 or control.up()
             ):
                 fail()
-
 
     def game_loop():
         global gateSuccess

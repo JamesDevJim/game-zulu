@@ -30,6 +30,7 @@ light = Light()
 def quitgame():
     raise QuitGame
 
+
 def nextGame():
     raise ChangeGame(new_game="xray")
 
@@ -45,7 +46,7 @@ def changeGame(mode):
         raise ChangeGame(new_game="xray")
 
     logger.error("Unknown mode: %s quitting", mode)
-    raise QuitGame("Unknown mode: "+str(mode)+" quitting")
+    raise QuitGame("Unknown mode: " + str(mode) + " quitting")
 
 
 def run():
@@ -53,7 +54,6 @@ def run():
 
     pygame.display.set_caption("Game Xray")
     pygame.display.set_icon(gameIcon)
-
 
     def success():
         logger.info("Game Success")
@@ -94,7 +94,6 @@ def run():
         soundGameDoors.play()
         fail()
 
-
     def fail():
         logger.info("Game Failure")
 
@@ -126,7 +125,6 @@ def run():
         soundGameDoors.play()
         changeGame("reset")
 
-
     def game_intro():
         startMusicPlay = False
 
@@ -151,13 +149,15 @@ def run():
             gameDisplay.blit(stars, (0, 0))
             largeText = pygame.font.SysFont("comicsansms", 100)
             TextSurf, TextRect = text_objects("Authorization Required", largeText)
-            TextRect.center = ((round(DISPLAY_WIDTH * 0.5)), (round(DISPLAY_HEIGHT * 0.5)))
+            TextRect.center = (
+                (round(DISPLAY_WIDTH * 0.5)),
+                (round(DISPLAY_HEIGHT * 0.5)),
+            )
             gameDisplay.blit(TextSurf, TextRect)
 
             pygame.display.update()
             clock.tick(15)
         game_loop()
-
 
     def gate_1():
         light.all(0)
@@ -268,16 +268,13 @@ def run():
         else:
             fail()
 
-
     def gate_2():
         pass
         # Do something here.
 
-
     def gate_3():
         pass
         # Do something here.
-
 
     def game_loop():
         global gateSuccess
@@ -329,8 +326,6 @@ def run():
         soundGameDoors.play()
         changeGame("reset")
 
-
     game_intro()
     game_loop()
     raise QuitGame("Quitting game yankee")
-

@@ -45,7 +45,7 @@ def changeGame(mode):
         raise ChangeGame(new_game="whiskey")
 
     logger.error("Unknown mode: %s quitting", mode)
-    raise QuitGame("Unknown mode: "+str(mode)+" quitting")
+    raise QuitGame("Unknown mode: " + str(mode) + " quitting")
 
 
 def run():
@@ -62,7 +62,6 @@ def run():
     timeLimit = 1.5  # minutes
     setTime = pygame.time.get_ticks()
     timeLoss = setTime + timeLimit * 1000 * 60
-
 
     def success():
         logger.info("Game Success")
@@ -104,7 +103,6 @@ def run():
             pygame.display.update()
             clock.tick(15)
 
-
     def fail():
         logger.info("Game Failure")
 
@@ -138,7 +136,6 @@ def run():
         soundGameDoors.play()
         changeGame("reset")
 
-
     def game_intro():
         startMusicPlay = False
 
@@ -165,13 +162,15 @@ def run():
             gameDisplay.blit(stars, (0, 0))
             largeText = pygame.font.SysFont("comicsansms", 100)
             TextSurf, TextRect = text_objects("Dog Fight", largeText)
-            TextRect.center = ((round(DISPLAY_WIDTH * 0.5)), (round(DISPLAY_HEIGHT * 0.5)))
+            TextRect.center = (
+                (round(DISPLAY_WIDTH * 0.5)),
+                (round(DISPLAY_HEIGHT * 0.5)),
+            )
             gameDisplay.blit(TextSurf, TextRect)
 
             pygame.display.update()
             clock.tick(15)
         game_loop()
-
 
     def gate_1():
         # Player must move light ('missle') to (torpedo bay) position 2
@@ -184,9 +183,7 @@ def run():
         lightPosition = 6  # hidden to right of LED5
         lightPositionChange = 0
         lightPositionCorrect = 2
-        loaded = (
-            False  # TODO: must move this outside function so it does not keep replaying...
-        )
+        loaded = False  # TODO: must move this outside function so it does not keep replaying...
         gate1Success = False
 
         while not gate1Success:
@@ -280,7 +277,6 @@ def run():
                 gate1Success = True
 
         time.sleep(0.1)
-
 
     def gate_2():
         # Player must move light ('missle') to (torpedo bay) position 2
@@ -390,7 +386,6 @@ def run():
 
         time.sleep(0.1)
 
-
     def gate_3():
         # Player must move light ('missle') to (torpedo bay)
         time.sleep(1)
@@ -499,7 +494,6 @@ def run():
 
         time.sleep(0.1)
 
-
     def game_loop():
         global gateSuccess
         gateSuccess = [True, False, False, False]
@@ -554,7 +548,6 @@ def run():
             # if door is not closed then go back to the game intro
             soundGameDoors.play()
             changeGame("reset")
-
 
     game_intro()
     game_loop()

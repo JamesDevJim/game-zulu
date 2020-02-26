@@ -45,7 +45,7 @@ def changeGame(mode):
         raise ChangeGame(new_game="victor")
 
     logger.error("Unknown mode: %s quitting", mode)
-    raise QuitGame("Unknown mode: "+str(mode)+" quitting")
+    raise QuitGame("Unknown mode: " + str(mode) + " quitting")
 
 
 def run():
@@ -53,7 +53,6 @@ def run():
 
     pygame.display.set_caption("Game Whiskey")
     pygame.display.set_icon(gameIcon)
-
 
     def success():
         logger.info("Game Success")
@@ -95,7 +94,6 @@ def run():
             pygame.display.update()
             clock.tick(15)
 
-
     def fail():
         logger.info("Game Failure")
 
@@ -131,7 +129,6 @@ def run():
         soundGameDoors.play()
         changeGame("reset")
 
-
     def game_intro():
         startMusicPlay = False
 
@@ -158,13 +155,15 @@ def run():
             gameDisplay.blit(stars, (0, 0))
             largeText = pygame.font.SysFont("comicsansms", 100)
             TextSurf, TextRect = text_objects("Jeffrey Tube Repair", largeText)
-            TextRect.center = ((round(DISPLAY_WIDTH * 0.5)), (round(DISPLAY_HEIGHT * 0.5)))
+            TextRect.center = (
+                (round(DISPLAY_WIDTH * 0.5)),
+                (round(DISPLAY_HEIGHT * 0.5)),
+            )
             gameDisplay.blit(TextSurf, TextRect)
 
             pygame.display.update()
             clock.tick(15)
         game_loop()
-
 
     def gate_1():
         requiredButtonPushes = 4
@@ -249,7 +248,6 @@ def run():
         else:
             fail()
 
-
     def gate_2():
         # Decoy light
         light.buttonOne(1)
@@ -319,7 +317,6 @@ def run():
         else:
             logger.info("Fail Condition")
             fail()
-
 
     def gate_3():
 
@@ -406,7 +403,6 @@ def run():
             logger.info("Fail Condition")
             fail()
 
-
     def game_loop():
         global gateSuccess
         gateSuccess = [True, False, False, False]
@@ -459,8 +455,6 @@ def run():
         soundGameDoors.play()
         changeGame("reset")
 
-
     game_intro()
     game_loop()
     raise QuitGame("Quitting game whiskey")
-
