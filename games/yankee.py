@@ -16,8 +16,7 @@ from shared.images import *
 from shared.screen import *
 from shared.sounds import *
 from shared.constants import *
-from game_changer import openNewGame
-from .exceptions import QuitGame
+from .exceptions import QuitGame, ChangeGame
 
 
 logger = logging.getLogger(__name__)
@@ -26,6 +25,22 @@ logger = logging.getLogger(__name__)
 def quitgame():
     raise QuitGame
 
+def nextGame():
+    raise ChangeGame(new_game="xray")
+
+
+# TODO: Fix this so when I call funtion changeGame('next') it don't play immediately without button click.
+def changeGame(mode):
+    # if lose, reset back to game zulu
+    if mode == "reset":
+        raise ChangeGame(new_game="zulu")
+
+    # if win, proceed to next game
+    if mode == "next":
+        raise ChangeGame(new_game="xray")
+
+    # Quit current game
+    raise QuitGame
 
 def run():
     #init control class,and light classes
@@ -36,27 +51,6 @@ def run():
 
     pygame.display.set_caption("Game Xray")
     pygame.display.set_icon(gameIcon)
-
-
-    def nextGame():
-        openNewGame("xray.py")
-        pygame.quit()
-        quit()
-
-
-    # TODO: Fix this so when I call funtion changeGame('next') it don't play immediately without button click.
-    def changeGame(mode):
-        # if lose, reset back to game zulu
-        if mode == "reset":
-            openNewGame("zulu.py")
-
-        # if win, proceed to next game
-        if mode == "next":
-            openNewGame("xray.py")
-
-        # Quit current game
-        pygame.quit()
-        quit()
 
 
     def success():
