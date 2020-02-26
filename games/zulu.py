@@ -27,8 +27,6 @@ def quitgame():
 def nextGame():
     light.strip("A=102")
     raise ChangeGame(new_game="yankee")
-    pygame.quit()
-    quit()
 
 
 def changeGame(mode):
@@ -317,4 +315,4 @@ def run()
 
     game_intro()
     game_loop()
-    raise QuitGame("Quitting game")
+    raise QuitGame("Quitting game zulu")

@@ -558,4 +558,4 @@ def run():
 
     game_intro()
     game_loop()
-    raise QuitGame("Quitting game")
+    raise QuitGame("Quitting game xray")
