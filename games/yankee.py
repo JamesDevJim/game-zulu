@@ -254,9 +254,9 @@ def run():
                         # This is a bad recording
                         soundVoiceAccessDenied.play()
 
-                logger.info("Guess Array: ", guesses)
-                logger.info("Attempts: ", attempts)
-                logger.info("Current Step: ", currentStep)
+                logger.info("Guess Array: %d", guesses)
+                logger.info("Attempts: %d", attempts)
+                logger.info("Current Step: %s", currentStep)
                 time.sleep(0.3)
 
         # Check whether the puzzle has been solved
