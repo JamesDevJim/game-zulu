@@ -11,13 +11,13 @@ import random
 import logging
 import time
 import os
-from shared.control import *
-from shared.images import *
-from shared.screen import *
-from shared.sounds import *
-from shared.constants import *
-from game_changer import openNewGame
-from .exceptions import QuitGame
+from .shared.control import *
+from .shared.images import *
+from .shared.screen import *
+from .shared.sounds import *
+from .shared.constants import *
+
+from .exceptions import QuitGame, ChangeGame
 
 logger = logging.getLogger(__name__)
 
@@ -49,8 +49,6 @@ def run():
     # Initialize pygame, pygame sounds, control class, and light classes
     pygame.init()
     pygame.mixer.init()
-    control = Control()
-    light = Light()
 
     clock = pygame.time.Clock()
 

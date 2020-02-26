@@ -11,11 +11,11 @@ import random
 import logging
 import time
 import os
-from shared.control import *
-from shared.images import *
-from shared.screen import *
-from shared.sounds import *
-from shared.constants import *
+from .shared.control import *
+from .shared.images import *
+from .shared.screen import *
+from .shared.sounds import *
+from .shared.constants import *
 from .exceptions import QuitGame, ChangeGame
 
 logger = logging.getLogger(__name__)
