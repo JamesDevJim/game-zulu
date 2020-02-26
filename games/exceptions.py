@@ -5,6 +5,6 @@ class QuitGame(Exception):
 
 
 class ChangeGame(Exception):
-    def __init__(self, message, *, new_game):
+    def __init__(self, message="", *, new_game):
         super().__init__(message)
         self.new_game = new_game
