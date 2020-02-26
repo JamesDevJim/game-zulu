@@ -20,8 +20,12 @@ from game_changer import openNewGame
 from .exceptions import QuitGame
 
 
-
 logger = logging.getLogger(__name__)
+
+
+def quitgame():
+    raise QuitGame
+
 
 def run():
     #init control class,and light classes
@@ -125,11 +129,6 @@ def run():
         # Go back to game Zulu
         soundGameDoors.play()
         changeGame("reset")
-
-
-    def quitgame():
-        pygame.quit()
-        quit()
 
 
     def game_intro():

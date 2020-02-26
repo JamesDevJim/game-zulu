@@ -22,6 +22,12 @@ from .exceptions import QuitGame
 logger = logging.getLogger(__name__)
 
 
+
+
+def quitgame():
+    raise QuitGame
+
+
 def run()
     # Initialize control class, and light classes
     control = Control()
@@ -126,11 +132,6 @@ def run()
                     if event.key == pygame.K_q:
                         quitgame()
         light.strip("A=102")
-
-
-    def quitgame():
-        pygame.quit()
-        quit()
 
 
     def game_intro():

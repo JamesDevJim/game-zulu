@@ -16,11 +16,26 @@ from shared.images import *
 from shared.screen import *
 from shared.sounds import *
 from shared.constants import *
-from game_changer import openNewGame
-from .exceptions import QuitGame
+from .exceptions import QuitGame, ChangeGame
 
 
 logger = logging.getLogger(__name__)
+
+
+def changeGame(mode):
+    # if lose, reset back to game zulu
+    if mode == "reset":
+        raise ChangeGame(new_game="zulu")
+
+    # if win, proceed to next game
+    if mode == "next":
+        # No more games to play. You Win!
+        raise QuitGame("Last game")
+    raise QuitGame("Unknown mode: "+str(mode)+" quitting")
+
+
+def quitgame():
+    raise QuitGame
 
 def run():
     # Initialize pygame, pygame sounds, control class, and light classes
@@ -32,22 +47,6 @@ def run():
 
     pygame.display.set_caption("Game Victor")
     pygame.display.set_icon(gameIcon)
-
-
-    def changeGame(mode):
-        # if lose, reset back to game zulu
-        if mode == "reset":
-            openNewGame("zulu.py")
-
-        # if win, proceed to next game
-        if mode == "next":
-            # No more games to play. You Win!
-            pass
-
-        # Quit current game
-        pygame.quit()
-        quit()
-
 
     def success():
         logger.info("Game Success")
@@ -111,10 +110,6 @@ def run():
         soundGameDoors.play()
         changeGame("reset")
 
-
-    def quitgame():
-        pygame.quit()
-        quit()
 
 
     def game_intro():

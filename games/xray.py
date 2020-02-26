@@ -22,6 +22,9 @@ from .exceptions import QuitGame
 logger = logging.getLogger(__name__)
 
 
+def quitgame():
+    raise QuitGame
+
 def run():
     # Initialize pygame, pygame sounds, control class, and light classes
     pygame.init()
@@ -135,11 +138,6 @@ def run():
         # Go back to game Zulu
         soundGameDoors.play()
         changeGame("reset")
-
-
-    def quitgame():
-        pygame.quit()
-        quit()
 
 
     def game_intro():
