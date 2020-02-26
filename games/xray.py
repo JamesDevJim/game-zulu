@@ -25,6 +25,27 @@ logger = logging.getLogger(__name__)
 def quitgame():
     raise QuitGame
 
+
+def nextGame():
+    light.strip("A=102")
+    raise ChangeGame(new_game="whiskey")
+
+
+def changeGame(mode):
+    light.strip("A=102")
+    # if lose, reset back to game zulu
+    if mode == "reset":
+        raise ChangeGame(new_game="zulu")
+
+    # if win, proceed to next game
+    if mode == "next":
+        raise ChangeGame(new_game="whiskey")
+
+    # Quit current game
+    raise QuitGame()
+
+
+
 def run():
     # Initialize pygame, pygame sounds, control class, and light classes
     pygame.init()
@@ -41,28 +62,6 @@ def run():
     timeLimit = 1.5  # minutes
     setTime = pygame.time.get_ticks()
     timeLoss = setTime + timeLimit * 1000 * 60
-
-
-    def nextGame():
-        light.strip("A=102")
-        openNewGame("whiskey.py")
-        pygame.quit()
-        quit()
-
-
-    def changeGame(mode):
-        light.strip("A=102")
-        # if lose, reset back to game zulu
-        if mode == "reset":
-            openNewGame("zulu.py")
-
-        # if win, proceed to next game
-        if mode == "next":
-            openNewGame("whiskey.py")
-
-        # Quit current game
-        pygame.quit()
-        quit()
 
 
     def success():
