@@ -6,7 +6,7 @@ from games import whiskey, victor, zulu, xray, yankee
 
 from games import LAST_GAME, FIRST_GAME
 
-from games.exceptions import QuitGame
+from games.exceptions import QuitGame, ChangeGame
 
 game_sequence = [zulu, yankee, xray, whiskey, victor]
 game_names = {
