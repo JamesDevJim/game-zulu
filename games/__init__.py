@@ -2,4 +2,4 @@
 FIRST_GAME = object()
 
 # Sentinel object for the last game in the series
-LAST_GAME = object
+LAST_GAME = object()
