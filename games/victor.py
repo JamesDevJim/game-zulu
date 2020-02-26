@@ -30,7 +30,9 @@ def changeGame(mode):
     # if win, proceed to next game
     if mode == "next":
         # No more games to play. You Win!
-        raise QuitGame("Last game")
+        raise QuitGame("Last game") # TODO change this to use the ChangeGame functionality plus some sentinel value that indicates this is the last game, handle that this is the last game somewhere else
+
+    logger.error("Unknown mode: %s quitting", mode)
     raise QuitGame("Unknown mode: "+str(mode)+" quitting")
 
 
