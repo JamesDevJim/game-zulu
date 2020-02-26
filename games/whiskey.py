@@ -17,8 +17,7 @@ from shared.images import *
 from shared.screen import *
 from shared.sounds import *
 from shared.constants import *
-from game_changer import openNewGame
-from .exceptions import QuitGame
+from .exceptions import QuitGame, ChangeGame
 
 
 logger = logging.getLogger(__name__)
@@ -27,6 +26,21 @@ logger = logging.getLogger(__name__)
 def quitgame():
     raise QuitGame
 
+
+def nextGame():
+    raise ChangeGame(new_game="victor")
+
+
+def changeGame(mode):
+    # if lose, reset back to game zulu
+    if mode == "reset":
+        raise ChangeGame(new_game="zulu")
+
+    # if win, proceed to next game
+    if mode == "next":
+        raise ChangeGame(new_game="victor")
+
+    raise QuitGame
 
 def run():
     control = Control()
@@ -37,25 +51,6 @@ def run():
     pygame.display.set_caption("Game Whiskey")
     pygame.display.set_icon(gameIcon)
 
-
-    def nextGame():
-        openNewGame("victor.py")
-        pygame.quit()
-        quit()
-
-
-    def changeGame(mode):
-        # if lose, reset back to game zulu
-        if mode == "reset":
-            openNewGame("zulu.py")
-
-        # if win, proceed to next game
-        if mode == "next":
-            openNewGame("victor.py")
-
-        # Quit current game
-        pygame.quit()
-        quit()
 
 
     def success():
