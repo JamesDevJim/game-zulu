@@ -6,9 +6,9 @@
 
 import pygame
 import time
-from shared.control import *
-from shared.constants import *
-from shared.screen import *
+from games.shared.control import *
+from games.shared.constants import *
+from games.shared.screen import *
 
 print("------" + "Test Control" + "------ \n")
 
