@@ -1,5 +1,5 @@
 import pygame
-from shared.screen import *
+from .screen import *
 
 ###### IMAGES #####
 
