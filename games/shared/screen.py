@@ -1,5 +1,5 @@
 import pygame
-from shared.constants import *
+from .constants import *
 
 # Use this screen size for testing purposes
 # SCREEN_SIZE = (1200, 800)   #James work PC is 1920 1080

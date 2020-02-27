@@ -3,6 +3,7 @@
 import subprocess, os, platform, webbrowser, sys
 from shared.control import *
 
+
 def openNewGame(fileOpen):
     if platform.system() == "Windows":  # Windows
         os.startfile(fileOpen)
