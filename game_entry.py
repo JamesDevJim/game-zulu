@@ -30,9 +30,9 @@ try:
         except ChangeGame as ex:
             next_game = ex.new_game
             if isinstance(next_game, str):
-                current_game = game_names[new_game]
+                current_game = game_names[next_game]
             elif hasattr(next_game, "run"):
-                current_game = new_game
+                current_game = next_game
         else:
             if current_game is FIRST_GAME:
                 current_game = zulu
