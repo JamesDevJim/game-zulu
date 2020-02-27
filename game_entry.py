@@ -29,7 +29,7 @@ try:
             current_game = current_game.run()
         except ChangeGame as ex:
             next_game = ex.new_game
-            if isinstance(new_game, str):
+            if isinstance(next_game, str):
                 current_game = game_names[new_game]
             elif hasattr(next_game, "run"):
                 current_game = new_game
