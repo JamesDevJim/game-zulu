@@ -211,7 +211,7 @@ def run():
 
                 if buttonOneLight and control.one():
                     soundInputPositive.play()
-                    logger.info("Correct button. Button push count: ", buttonPushes)
+                    logger.info("Correct button. Button push count: %d", buttonPushes)
                     buttonOneLight = not buttonOneLight
                     buttonTwoLight = not buttonTwoLight
                     buttonPushes += 1
@@ -223,7 +223,7 @@ def run():
                 if buttonTwoLight and control.two():
                     soundInputPositive.play()
                     logger.info("Correct button")
-                    logger.info("button pushes", buttonPushes)
+                    logger.info("button pushes %d", buttonPushes)
                     buttonOneLight = not buttonOneLight
                     buttonTwoLight = not buttonTwoLight
                     buttonPushes += 1
@@ -376,7 +376,7 @@ def run():
                 if buttonTwoLight and control.two():
                     soundInputPositive.play()
                     logger.info("Correct button")
-                    logger.info("button pushes", buttonPushes)
+                    logger.info("button pushes %d", buttonPushes)
                     buttonOneLight = not buttonOneLight
                     buttonTwoLight = not buttonTwoLight
                     buttonPushes += 1
