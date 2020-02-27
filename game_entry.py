@@ -18,7 +18,9 @@ game_names = {
 
 current_game = zulu
 
-logging.basicConfig(filename="example.log", filemode="w", level=logging.INFO)
+
+LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+logging.basicConfig(filename="example.log", filemode="w", level=logging.INFO, format=LOG_FORMAT)
 
 pygame.init()
 pygame.mixer.init()
