@@ -22,8 +22,12 @@ current_game = zulu
 LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 logging.basicConfig(filename="example.log", filemode="w", level=logging.INFO, format=LOG_FORMAT)
 
+logger = logging.getLogger(__name__)
+
 pygame.init()
 pygame.mixer.init()
+
+logger.info("Pygame initialized")
 
 try:
     while current_game is not LAST_GAME:
@@ -39,6 +43,7 @@ try:
             if current_game is FIRST_GAME:
                 current_game = zulu
 except QuitGame:
+    logger.info("Quitting game via exception")
     print("Quitting game via exception...")
 
 pygame.quit()
